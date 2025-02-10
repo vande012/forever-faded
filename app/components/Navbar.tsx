@@ -44,7 +44,7 @@ export default function Navbar() {
   }, [scrollPosition]);
 
   return (
-    <header className="fixed w-full z-30 font-urbanist">
+    <header className="fixed w-full z-50 font-urbanist">
       {/* Top Bar */}
       <div className="bg-black font-bold py-1 px-4 md:px-6">
         <div className="container mx-auto flex justify-between items-center text-sm">
@@ -81,17 +81,17 @@ export default function Navbar() {
       <nav
         className={`${navBgClass} transition-all duration-300 py-4 px-4 md:px-6 w-full left-0`}
       >
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between z-50">
           <Link
             href="/"
-            className="flex items-center hover:text-[#CA2C2B] transition-colors"
+            className="hidden md:flex items-center hover:text-[#CA2C2B] transition-colors"
           >
             <Image
               src="/logo.png"
               alt="Logo Title"
               width={50} // adjust based on your logo size
               height={50} // adjust based on your logo size
-              className="object-contain ml-5"
+              className="object-contain ml-5 "
             />
           </Link>
 
@@ -122,7 +122,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-[#CA2C2B] drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
+            className="md:hidden text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -131,8 +131,11 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden md:hidden bg-black text-white mt-4 py-4 px-4">
+          <div className="lg:hidden md:hidden bg-black text-white mt-4 py-4 px-4 ">
             <div className="grid grid-cols-2 gap-8">
+            <NavLink href="/" mobile>
+                Home
+              </NavLink>
               <NavLink href="/about" mobile>
                 About Us
               </NavLink>
