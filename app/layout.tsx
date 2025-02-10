@@ -32,7 +32,7 @@ export default function RootLayout({
         className={`${urbanist.variable} ${roboto.variable} ${italianno.variable} font-roboto`}
       >
         <Navbar />
-        <main className="pt-32">{children}</main>
+        <main>{children}</main>
       </body>
     </html>
   );

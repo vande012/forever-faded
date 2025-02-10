@@ -6,6 +6,24 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.gold-gradient-text {
+  background: linear-gradient(90deg, #A47A1E, #D3A84C, #D3A84C, #E6BE69, #A98A48, #B58F3E);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+ 
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(90deg, #A47A1E, #D3A84C, #D3A84C, #E6BE69, #A98A48, #B58F3E);
+  color: black;
+}
+
+.custom-icon svg {
+  width: 3rem !important;
+  height: 3rem !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

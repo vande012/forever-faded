@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useScrollPosition } from "../hooks/useScrollPosition";
-import { Phone, MapPin, Clock, Menu, X } from "lucide-react";
+import { Phone, MapPin, Clock, Menu, X, ShoppingCart } from "lucide-react";
 import type React from "react"; // Added import for React
 
 export default function Navbar() {
   const scrollPosition = useScrollPosition();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentDay, setCurrentDay] = useState<string>("");
+  const [navBgClass, setNavBgClass] = useState<string>("bg-transparent");
 
   useEffect(() => {
     const days = [
@@ -23,30 +24,43 @@ export default function Navbar() {
       "Saturday",
     ];
     setCurrentDay(days[new Date().getDay()]);
-  }, []);
 
-  // Update the navBgClass calculation
-  const navBgClass =
-    scrollPosition > 0 ? "bg-black/50 backdrop-blur-sm" : "bg-transparent";
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setNavBgClass(
+          scrollPosition > 0 ? "bg-black/50 backdrop-blur-sm" : "bg-transparent"
+        );
+      } else {
+        setNavBgClass("bg-transparent");
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [scrollPosition]);
 
   return (
-    <header className="fixed w-full z-50 font-urbanist">
+    <header className="fixed w-full z-30 font-urbanist">
       {/* Top Bar */}
-      <div className="bg-[#CA2C2B] text-white py-1 px-4 md:px-6">
+      <div className="bg-black font-bold py-1 px-4 md:px-6">
         <div className="container mx-auto flex justify-between items-center text-sm">
           {/* Left Section */}
           <div className="flex items-center space-x-10">
             <a
               href="tel:+1234567890"
-              className="flex items-center hover:text-[#393d41] transition-colors"
+              className="flex items-center hover:text-[#D1DCE5] text-white transition-colors"
             >
-              <Phone size={16} className="mr-2" />
+              <Phone size={16} className="mr-3" />
               (123) 456-7890
             </a>
           </div>
 
           {/* Center Section */}
-          <div className="flex items-center absolute left-1/2 transform -translate-x-1/2">
+          <div className="hidden md:flex items-center text-white absolute left-1/2 transform -translate-x-1/2">
             <Clock size={16} className="mr-2" />
             <span>{currentDay} Hours: 9AM - 5PM</span>
           </div>
@@ -55,7 +69,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <a
               href="#"
-              className="hidden md:flex items-center hover:text-[#D1DCE5] transition-colors"
+              className="flex items-center text-white hover:text-[#D1DCE5] transition-colors"
             >
               <MapPin size={16} className="mr-2" />
               Directions
@@ -64,9 +78,8 @@ export default function Navbar() {
         </div>
       </div>
       {/* Main Navigation */}
-      {/* Update the main navigation section */}
       <nav
-        className={`${navBgClass} transition-all duration-300 py-4 px-4 md:px-6 fixed w-full left-0`}
+        className={`${navBgClass} transition-all duration-300 py-4 px-4 md:px-6 w-full left-0`}
       >
         <div className="flex items-center justify-between">
           <Link
@@ -83,24 +96,27 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-9">
             <NavLink href="/about">About Us</NavLink>
             <NavLink href="/shop">Shop Merch</NavLink>
-            <NavLink href="/contact">Contact Us</NavLink>
+            <NavLink href="/gallery">Gallery</NavLink>
+            <NavLink href="/testimonials">Testimonials</NavLink>
+            <NavLink href="/contact">Contact</NavLink>
+            <NavLink href="/blog">Blog</NavLink>
           </div>
 
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-6">
             <Link
               href="/book"
-              className="bg-[#CA2C2B] text-white px-6 py-2 rounded hover:bg-[#262974] transition-colors shadow-md"
+              className="gold-gradient-bg text-white px-6 py-2 rounded hover:bg-[#262974] transition-colors shadow-md"
             >
               Book Now
             </Link>
             <Link
-              href="/new-page"
-              className="bg-[#262974] text-white px-6 py-2 rounded hover:bg-[#CA2C2B] transition-colors shadow-md"
+              href="/cart"
+              className="text-white hover:text-[#CA2C2B] transition-colors"
             >
-              Podcast
+              <ShoppingCart size={24} />
             </Link>
           </div>
 
@@ -115,20 +131,29 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden md:hidden bg-black/50 text-white mt-4 py-4 px-4">
-            <div className="flex flex-col space-y-4">
+          <div className="lg:hidden md:hidden bg-black text-white mt-4 py-4 px-4">
+            <div className="grid grid-cols-2 gap-8">
               <NavLink href="/about" mobile>
                 About Us
               </NavLink>
               <NavLink href="/shop" mobile>
                 Shop Merch
               </NavLink>
+              <NavLink href="/gallery" mobile>
+                Gallery
+              </NavLink>
+              <NavLink href="/testimonials" mobile>
+                Testimonials
+              </NavLink>
               <NavLink href="/contact" mobile>
                 Contact Us
               </NavLink>
+              <NavLink href="/blog" mobile>
+                Blog
+              </NavLink>
               <Link
                 href="/book"
-                className="bg-[#CA2C2B] text-white px-6 py-2 rounded text-center hover:bg-[#262974] transition-colors"
+                className="col-span-2 gold-gradient-bg text-white px-6 py-2 rounded text-center hover:bg-[#262974] transition-colors"
               >
                 Book Now
               </Link>
