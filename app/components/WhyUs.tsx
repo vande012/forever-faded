@@ -11,7 +11,7 @@ const BarberServicesSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Left Content */}
           <div className="space-y-8">
-          <motion.h2
+            <motion.h2
               className="text-3xl md:text-4xl lg:text-7xl font-bold gold-gradient-text"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
