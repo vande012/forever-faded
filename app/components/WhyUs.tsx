@@ -1,8 +1,9 @@
 "use client";
 
-import React from 'react';
-import CountUp from 'react-countup';
-import { motion } from 'framer-motion';
+import React from "react";
+import CountUp from "react-countup";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 const BarberServicesSection = () => {
   return (
@@ -21,24 +22,28 @@ const BarberServicesSection = () => {
               <br />
               Services in Waukesha
             </motion.h2>
-            
+
             <div className="space-y-4">
-              <h3 className="text-white text-xl font-semibold">Why Choose Us?</h3>
+              <h3 className="text-white text-xl font-semibold">
+                Why Choose Us?
+              </h3>
               <p className="text-gray-400">
-                Lorem ipsum dolor sit amet consectetur. Diam elementum nunc nequa da et
-                argu sed fringilla cursus. Bibendum et pet pellentesque vitae duis amet.
-                Lorem ipsum dolor sit amet consectetur. Diam elementum nunc nequa da et
-                argu sed fringilla cursus. Bibendum et pet pellentesque vitae duis amet.
+                Lorem ipsum dolor sit amet consectetur. Diam elementum nunc
+                nequa da et argu sed fringilla cursus. Bibendum et pet
+                pellentesque vitae duis amet. Lorem ipsum dolor sit amet
+                consectetur. Diam elementum nunc nequa da et argu sed fringilla
+                cursus. Bibendum et pet pellentesque vitae duis amet.
                 <br></br>
-                Lorem ipsum dolor sit amet consectetur. Diam elementum nunc nequa da et
-                argu sed fringilla cursus. Bibendum et pet pellentesque vitae duis amet.
+                Lorem ipsum dolor sit amet consectetur. Diam elementum nunc
+                nequa da et argu sed fringilla cursus. Bibendum et pet
+                pellentesque vitae duis amet.
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
                 <span className="text-5xl font-bold gold-gradient-text">
-                  <CountUp end={99} duration={2} suffix='%'/>
+                  <CountUp end={99} duration={2} suffix="%" />
                 </span>
                 <p className="text-sm text-white">CUSTOMER SATISFACTION</p>
               </div>
@@ -53,10 +58,12 @@ const BarberServicesSection = () => {
 
           {/* Right Image */}
           <div className="relative h-[300px] lg:h-[500px]">
-            <img
-              src="whyus.jpg"
+            <Image
+              src="/whyus.jpg"
               alt="Barber Service"
-              className="rounded-lg w-full h-full object-cover"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-lg"
             />
           </div>
         </div>

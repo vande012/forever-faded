@@ -63,7 +63,7 @@ const MerchItem = ({ item, index }: { item: (typeof merchItems)[0]; index: numbe
 };
 
 export default function MerchSection() {
-    const [scrollY, setScrollY] = useState(0);
+    const [, setScrollY] = useState(0);
     const [stars, setStars] = useState<{ x: number; y: number; opacity: number; id: number }[]>([]);
     const sectionRef = useRef<HTMLElement>(null);
   
