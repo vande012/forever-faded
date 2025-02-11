@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Urbanist, Roboto, Italianno } from "next/font/google";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import type React from "react"; // Import React
 
 const urbanist = Urbanist({ subsets: ["latin"], variable: "--font-urbanist" });
@@ -33,6 +34,7 @@ export default function RootLayout({
       >
         <Navbar />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

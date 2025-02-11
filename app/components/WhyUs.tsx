@@ -61,8 +61,8 @@ const BarberServicesSection = () => {
             <Image
               src="/whyus.jpg"
               alt="Barber Service"
-              layout="fill"
-              objectFit="cover"
+              fill
+              style={{ objectFit: "cover" }}
               className="rounded-lg"
             />
           </div>
