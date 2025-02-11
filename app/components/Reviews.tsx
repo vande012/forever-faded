@@ -6,7 +6,6 @@ type Review = {
   name: string
   text: string
   rating: number
-  image: string
 }
 
 const reviews: Review[] = [
@@ -15,21 +14,18 @@ const reviews: Review[] = [
     name: "John Doe",
     text: "Incredible experience at Forever Faded! The attention to detail and skill of the barbers is unmatched. Highly recommend!",
     rating: 5,
-    image: "/placeholder.svg?height=80&width=80",
   },
   {
     id: 2,
     name: "Sarah Smith",
     text: "I've been coming to Forever Faded for years, and they never disappoint. Always leave feeling confident and looking sharp!",
     rating: 5,
-    image: "/placeholder.svg?height=80&width=80",
   },
   {
     id: 3,
     name: "Mike Johnson",
     text: "Great atmosphere, friendly staff, and top-notch service. It's more than just a haircut - it's an experience!",
     rating: 4,
-    image: "/placeholder.svg?height=80&width=80",
   },
 ]
 
