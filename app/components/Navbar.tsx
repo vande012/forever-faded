@@ -46,33 +46,33 @@ export default function Navbar() {
   return (
     <header className="fixed w-full z-50 font-urbanist">
       {/* Top Bar */}
-      <div className="bg-black font-bold py-1 px-4 md:px-6">
-        <div className="container mx-auto flex justify-between items-center text-sm">
+      <div className="bg-black font-bold py-1 md:px-3">
+        <div className="container mx-auto flex justify-between items-center text-xs sm:text-sm gap-3 sm:gap-6">
           {/* Left Section */}
           <div className="flex items-center space-x-10">
             <a
               href="tel:+1234567890"
               className="flex items-center hover:text-[#D1DCE5] text-white transition-colors"
             >
-              <Phone size={16} className="mr-3" />
+              <Phone size={14} className="mr-2" />
               (123) 456-7890
             </a>
           </div>
 
           {/* Center Section */}
           <div className="hidden md:flex items-center text-white absolute left-1/2 transform -translate-x-1/2">
-            <Clock size={16} className="mr-2" />
+            <Clock size={14} className="mr-2" />
             <span>{currentDay} Hours: 9AM - 5PM</span>
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center">
+          <div className="flex ml-8">
             <a
-              href="#"
+              href="https://www.google.com/maps/place/Forever+Faded+Barber+Shop/data=!4m2!3m1!1s0x0:0x47c786d2974d42c9?sa=X&ved=1t:2428&ictx=111"
               className="flex items-center text-white hover:text-[#D1DCE5] transition-colors"
             >
-              <MapPin size={16} className="mr-2" />
-              Directions
+              <MapPin size={14} className="mr-2" />
+              1427 E Racine Ave # H, Waukesha, WI 53186
             </a>
           </div>
         </div>
@@ -133,7 +133,7 @@ export default function Navbar() {
         {isMenuOpen && (
           <div className="lg:hidden md:hidden bg-black text-white mt-4 py-4 px-4 ">
             <div className="grid grid-cols-2 gap-8">
-            <NavLink href="/" mobile>
+              <NavLink href="/" mobile>
                 Home
               </NavLink>
               <NavLink href="/about" mobile>
