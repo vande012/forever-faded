@@ -84,7 +84,7 @@ export default function MerchSlider() {
               Merch line is crafted with premium materials to ensure durability
               and comfort. Our design process is meticulous, starting with trend
               research and customer feedback to create styles that are both
-              timeless and contemporary. Whether you're looking for a classic black hoodie,
+              timeless and contemporary. Whether you are looking for a classic black hoodie,
               a premium t-shirt, or a signature cap, our merch is designed to
               match your fresh cut and elevate your wardrobe. Shop now to
               experience the perfect blend of style and quality.

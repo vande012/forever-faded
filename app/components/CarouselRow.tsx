@@ -17,25 +17,21 @@ const images = [
 ];
 
 export function CarouselRow() {
-  const [current, setCurrent] = useState(0);
+  const [, setCurrent] = useState(0);
   const count = images.length;
 
   const scrollPrev = () => {
     setCurrent((prev) => (prev === 0 ? count - 1 : prev - 1));
   };
 
-  const scrollNext = () => {
+  const scrollNext = useCallback(() => {
     setCurrent((prev) => (prev === count - 1 ? 0 : prev + 1));
-  };
-
-  const autoPlay = useCallback(() => {
-    scrollNext();
-  }, [current, count]);
+  }, [count]);
 
   useEffect(() => {
-    const timer = setInterval(autoPlay, 5000);
+    const timer = setInterval(scrollNext, 5000);
     return () => clearInterval(timer);
-  }, [autoPlay]);
+  }, [scrollNext]);
 
   return (
     <div className="w-full mx-auto px-4 relative bg-[#1D1D1D] min-h-[400px] p-4 md:p-8 lg:p-12">
@@ -52,7 +48,7 @@ export function CarouselRow() {
       </p>
       <ImageGallery images={images} />
       <div className="text-center mb-6">
-        <div className="flex justify-center gap-1 ">
+        <div className="flex justify-center gap-1 mt-4 md:mt-6">
           <Button
             variant="outline"
             size="icon"

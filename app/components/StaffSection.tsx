@@ -90,7 +90,7 @@ export default function StaffSection() {
           
           {/* Hiring CTA Card */}
           <div className="bg-black/50 rounded-lg shadow-md overflow-hidden w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1rem)] flex flex-col justify-center items-center p-8">
-            <h3 className="text-3xl font-bold gold-gradient-text text-center mb-4">We're hiring!</h3>
+            <h3 className="text-3xl font-bold gold-gradient-text text-center mb-4">We are hiring!</h3>
             <p className="text-white text-center mb-6">Check out our open positions and apply today!</p>
             <Button className="gold-gradient-bg">Open positions</Button>
           </div>
