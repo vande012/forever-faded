@@ -14,11 +14,11 @@ const italianno = Italianno({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-italianno",
-  display: "swap",  // Add this for better loading behavior
+  display: "swap", // Add this for better loading behavior
 });
 
 export const metadata = {
-  title: "Your Site Name",
+  title: "Forever Faded Barbershop | Waukesha, WI",
   description: "Your site description",
 };
 

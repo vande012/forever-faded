@@ -31,7 +31,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
   });
 
   return (
-    <div {...handlers} className="relative h-[600px] w-full overflow-hidden">
+    <div {...handlers} className="relative h-[500px] w-full overflow-hidden">
       <div className="relative h-full w-full">
         {images.map((image, index) => {
           // Calculate the position relative to current
@@ -65,26 +65,6 @@ export function ImageGallery({ images }: ImageGalleryProps) {
           );
         })}
       </div>
-
-      {/* Navigation Buttons */}
-      <button
-        onClick={previousSlide}
-        className="group absolute left-4 top-1/2 z-40 -translate-y-1/2 transform rounded-full p-2 transition-all hover:bg-black/20"
-        aria-label="Previous image"
-      >
-        <div className="relative overflow-hidden rounded-full gold-gradient-bg p-2">
-          <ChevronLeft className="h-6 w-6 text-black transition-transform group-hover:-translate-x-0.5" />
-        </div>
-      </button>
-      <button
-        onClick={nextSlide}
-        className="group absolute right-4 top-1/2 z-40 -translate-y-1/2 transform rounded-full p-2 transition-all hover:bg-black/20"
-        aria-label="Next image"
-      >
-        <div className="relative overflow-hidden rounded-full gold-gradient-bg p-2">
-          <ChevronRight className="h-6 w-6 text-black transition-transform group-hover:translate-x-0.5" />
-        </div>
-      </button>
     </div>
   );
 }

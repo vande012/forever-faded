@@ -52,7 +52,7 @@ export default function Navbar() {
           <div className="flex items-center space-x-10">
             <a
               href="tel:+1234567890"
-              className="flex items-center hover:text-[#D1DCE5] text-white transition-colors"
+              className="flex items-center hover:text-[#D1DCE5] text-white transition-color whitespace-nowrap"
             >
               <Phone size={14} className="mr-2" />
               (123) 456-7890
@@ -76,10 +76,10 @@ export default function Navbar() {
             </a>
           </div>
         </div>
-      </div>
+      </div> 
       {/* Main Navigation */}
       <nav
-        className={`${navBgClass} transition-all duration-300 py-4 px-4 md:px-6 w-full left-0`}
+        className={`${navBgClass} transition-all duration-300 py-2 px-4 md:px-6 w-full left-0`}
       >
         <div className="flex items-center justify-between z-50">
           <Link
@@ -87,10 +87,10 @@ export default function Navbar() {
             className="hidden md:flex items-center hover:text-[#CA2C2B] transition-colors"
           >
             <Image
-              src="/logo.png"
+              src="/navlogo.png"
               alt="Logo Title"
-              width={50} // adjust based on your logo size
-              height={50} // adjust based on your logo size
+              width={25} // adjust based on your logo size
+              height={25} // adjust based on your logo size
               className="object-contain ml-5 "
             />
           </Link>
@@ -131,7 +131,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden md:hidden bg-black text-white mt-4 py-4 px-4 ">
+          <div className="lg:hidden md:hidden bg-black/90 rounded-md text-white mt-4 py-4 px-4 ">
             <div className="grid grid-cols-2 gap-8">
               <NavLink href="/" mobile>
                 Home
