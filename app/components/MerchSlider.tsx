@@ -8,6 +8,7 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselApi,
 } from "../components/ui/carousel";
 
 const merchItems = [
@@ -38,7 +39,7 @@ const merchItems = [
 ];
 
 export default function MerchSlider() {
-  const [api, setApi] = React.useState<any>();
+  const [api, setApi] = React.useState<CarouselApi | null>(null);
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
 
@@ -84,10 +85,10 @@ export default function MerchSlider() {
               Merch line is crafted with premium materials to ensure durability
               and comfort. Our design process is meticulous, starting with trend
               research and customer feedback to create styles that are both
-              timeless and contemporary. Whether you are looking for a classic black hoodie,
-              a premium t-shirt, or a signature cap, our merch is designed to
-              match your fresh cut and elevate your wardrobe. Shop now to
-              experience the perfect blend of style and quality.
+              timeless and contemporary. Whether you are looking for a classic
+              black hoodie, a premium t-shirt, or a signature cap, our merch is
+              designed to match your fresh cut and elevate your wardrobe. Shop
+              now to experience the perfect blend of style and quality.
             </p>{" "}
             <div className="flex gap-4 justify-center">
               <Button className="gold-gradient-bg text-black">Shop Now</Button>
