@@ -4,9 +4,9 @@ import { SiFacebook, SiInstagram, SiX, SiYoutube } from "react-icons/si";
 
 export default function Footer() {
   return (
-    <footer className="w-full gold-gradient-bg">
+    <footer className="w-full bg-black">
       <div className="container px-4 py-8 mx-auto">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-5">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-5 gold-gradient-bg rounded-xl p-8">
           {/* Logo Column */}
           <div className="flex justify-center md:justify-start">
             <Image
@@ -61,7 +61,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="flex flex-col items-center justify-between pt-8 mt-8 border-t border-black/10 md:flex-row">
+        <div className="flex flex-col items-center justify-between pt-8 mt-8 border-t md:flex-row text-white">
           <p className="text-sm font-roboto text-center md:text-left">© {new Date().getFullYear()} Forever Faded. All rights reserved.</p>
           <div className="flex items-center space-x-4 mt-4 md:mt-0">
             <Link href="/facebook" className="hover:opacity-80">

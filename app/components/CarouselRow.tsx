@@ -50,7 +50,7 @@ export function CarouselRow() {
       <div className="text-center mb-6">
         <div className="flex justify-center gap-1 mt-4 md:mt-6">
           <Button
-            variant="outline"
+            variant="default"
             size="icon"
             className="h-8 w-8 gold-gradient-bg"
             onClick={scrollPrev}
@@ -58,7 +58,7 @@ export function CarouselRow() {
             <ChevronLeft className="h-4 w-4 text-black" />
           </Button>
           <Button
-            variant="outline"
+            variant="default"
             size="icon"
             className="h-8 w-8 gold-gradient-bg"
             onClick={scrollNext}

@@ -133,7 +133,7 @@ export default function MerchSlider() {
                 </span>
               </div>
               <Button
-                variant="outline"
+                variant="default"
                 size="icon"
                 className="h-8 w-8 gold-gradient-bg"
                 onClick={() => api?.scrollPrev()}
@@ -141,7 +141,7 @@ export default function MerchSlider() {
                 <ChevronLeft className="h-4 w-4 text-black" />
               </Button>
               <Button
-                variant="outline"
+                variant="default"
                 size="icon"
                 className="h-8 w-8 gold-gradient-bg"
                 onClick={() => api?.scrollNext()}
