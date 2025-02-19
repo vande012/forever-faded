@@ -4,8 +4,20 @@ import React from "react";
 import CountUp from "react-countup";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useHomepage } from "../contexts/HomepageContext";
+import RichTextRenderer from "./RichTextRenderer";
 
 const BarberServicesSection = () => {
+  const { data, isLoading, error } = useHomepage();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error || !data) {
+    return <div>Error loading content</div>;
+  }
+
   return (
     <div className="bg-[#1D1D1D] min-h-[400px] p-8 md:p-12 lg:p-16">
       <div className="max-w-6xl mx-auto">
@@ -18,38 +30,28 @@ const BarberServicesSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
             >
-              Expert Barber
-              <br />
-              Services in Waukesha
+              {data.Whyusheader}
             </motion.h2>
 
             <div className="space-y-4">
               <h3 className="text-white text-xl font-semibold">
-                Why Choose Us?
+                {data.Whyussubheader}
               </h3>
-              <p className="text-gray-400">
-                Lorem ipsum dolor sit amet consectetur. Diam elementum nunc
-                nequa da et argu sed fringilla cursus. Bibendum et pet
-                pellentesque vitae duis amet. Lorem ipsum dolor sit amet
-                consectetur. Diam elementum nunc nequa da et argu sed fringilla
-                cursus. Bibendum et pet pellentesque vitae duis amet.
-                <br></br>
-                Lorem ipsum dolor sit amet consectetur. Diam elementum nunc
-                nequa da et argu sed fringilla cursus. Bibendum et pet
-                pellentesque vitae duis amet.
-              </p>
+              <div className="text-gray-400">
+                <RichTextRenderer richText={data.Whyustext} />
+              </div>
             </div>
 
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
                 <span className="text-5xl font-bold gold-gradient-text">
-                  <CountUp end={99} duration={2} suffix="%" />
+                  <CountUp end={99} duration={3} suffix="%" />
                 </span>
                 <p className="text-sm text-white">CUSTOMER SATISFACTION</p>
               </div>
               <div className="space-y-2">
                 <span className="text-5xl font-bold text-white gold-gradient-text">
-                  <CountUp end={19} duration={2} suffix="+" />
+                  <CountUp end={17} duration={3} suffix="+" />
                 </span>
                 <p className="text-sm text-white">YEARS OF EXPERIENCE</p>
               </div>
@@ -59,8 +61,8 @@ const BarberServicesSection = () => {
           {/* Right Image */}
           <div className="relative h-[300px] lg:h-[500px]">
             <Image
-              src="/whyus.jpg"
-              alt="Barber Service"
+              src={`${process.env.NEXT_PUBLIC_STRAPI_API_URL}${data.Whyusimage.url}`}
+              alt={data.Whyusimage.alternativeText || "Why Us Image"}
               fill
               style={{ objectFit: "cover" }}
               className="rounded-lg"

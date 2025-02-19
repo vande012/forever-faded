@@ -1,20 +1,32 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useHomepage } from '../contexts/HomepageContext';
+import { getStrapiMedia } from '../hooks/useStrapi';
 
 export default function Hero() {
   const [isClient, setIsClient] = useState(false);
+  const { data, isLoading, error } = useHomepage();
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
+  if (isLoading) {
+    return <div className="h-screen flex items-center justify-center">Loading...</div>;
+  }
+
+  if (error || !data) {
+    return <div className="h-screen flex items-center justify-center">Error loading content</div>;
+  }
+
+  const videoUrl = getStrapiMedia(data.Video.url);
+  const logoUrl = getStrapiMedia(data.Logo.url);
+
   return (
     <div className="relative h-screen w-full overflow-hidden">
-      {/* Video Background */}
-      {isClient && (
+      {isClient && videoUrl && (
         <video
           autoPlay
           loop
@@ -22,25 +34,23 @@ export default function Hero() {
           playsInline
           className="absolute top-0 left-0 h-full w-full object-cover z-0"
         >
-          <source src="/hero-background.mp4" type="video/mp4" />
+          <source src={videoUrl} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       )}
-
-      {/* Overlay */}
       <div className="absolute top-0 left-0 h-full w-full bg-black/50 z-10" />
-
-      {/* Content */}
       <div className="relative z-20 flex h-full items-center justify-center">
         <div className="text-center">
-          <Image
-            src="/hero-logo.png"
-            alt="Hero Logo"
-            width={500} // adjust based on your logo size
-            height={500} // adjust based on your logo size
-            className="mx-auto mb-8 w-80 h-80 sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-96 lg:h-96"
-          />
-
+          {logoUrl && (
+            <Image
+              src={logoUrl}
+              alt={data.Logo.alternativeText || "Hero Logo"}
+              width={500}
+              height={500}
+              className="mx-auto mb-8 w-80 h-80 sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-96 lg:h-96"
+              priority
+            />
+          )}
           <div className="space-x-4">
             <Link
               href="/shop"
