@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_staff_members",
+  "info": {
+    "displayName": "Staff Members",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "staff_members": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::staff-member.staff-member"
+    }
+  }
+}

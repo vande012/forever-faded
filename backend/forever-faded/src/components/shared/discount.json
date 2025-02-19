@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_shared_discounts",
+  "info": {
+    "displayName": "Discount"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "blocks"
+    },
+    "ButtonText": {
+      "type": "string"
+    },
+    "ButtonURL": {
+      "type": "string"
+    },
+    "PricingNote": {
+      "type": "string"
+    }
+  }
+}

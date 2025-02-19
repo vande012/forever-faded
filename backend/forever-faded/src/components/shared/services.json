@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_services",
+  "info": {
+    "displayName": "Services",
+    "icon": "briefcase"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "blocks"
+    }
+  }
+}
