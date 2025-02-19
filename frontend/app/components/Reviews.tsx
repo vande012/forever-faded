@@ -43,9 +43,10 @@ const Reviews = () => {
 
   const { ReviewsTitle, Reviews, ReviewButton } = data;
 
-  if (!ReviewButton || !ReviewButton.URL || !ReviewButton.ButtonText) {
-    return <div>Error: ReviewButton data is missing or incomplete</div>;
-  }
+ // Updated error check to include URL2 and ButtonText2
+ if (!ReviewButton || !ReviewButton.URL || !ReviewButton.ButtonText || !ReviewButton.URL2 || !ReviewButton.ButtonText2) {
+  return <div>Error: ReviewButton data is missing or incomplete</div>;
+}
 
   return (
     <section className="py-16 relative overflow-hidden">

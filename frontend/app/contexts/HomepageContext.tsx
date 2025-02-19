@@ -1,7 +1,7 @@
 "use client";
 // contexts/HomepageContext.tsx
-import React, { createContext, useContext, ReactNode } from 'react';
-import { useStrapi } from '../hooks/useStrapi';
+import React, { createContext, useContext, ReactNode } from "react";
+import { useStrapi } from "../hooks/useStrapi";
 
 interface ServiceItem {
   id: string;
@@ -18,6 +18,32 @@ interface ServiceCategory {
 
 interface ServicesData {
   services: ServiceCategory[];
+}
+
+interface StaffMember {
+  id: number;
+  name: string;
+  position: string;
+  description: string;
+  photo: {
+    data: {
+      attributes: {
+        url: string;
+        alternativeText?: string;
+        formats?: {
+          thumbnail: {
+            url: string;
+          };
+          medium?: {
+            url: string;
+          };
+          large?: {
+            url: string;
+          };
+        };
+      };
+    } | null;
+  };
 }
 
 interface HomepageData {
@@ -40,8 +66,8 @@ interface HomepageData {
   ReviewsTitle: string;
   ReviewButton: ReviewButton;
   Services: ServicesData;
+  staff: StaffMember[]; // Add this line
 }
-
 interface HomepageContextType {
   data: HomepageData | null;
   isLoading: boolean;
@@ -76,15 +102,19 @@ export type ReviewsData = {
   reviewButton: ReviewButton;
 };
 
-const HomepageContext = createContext<HomepageContextType | undefined>(undefined);
+const HomepageContext = createContext<HomepageContextType | undefined>(
+  undefined
+);
 
 export function HomepageProvider({ children }: { children: ReactNode }) {
-  const { data, isLoading, error } = useStrapi<HomepageData>('homepage', {
-    populate: '*'  // Changed from 'deep' to '*'
+  const { data, isLoading, error } = useStrapi<HomepageData>("homepage", {
+    populate: "*", // Changed from 'deep' to '*'
   });
 
   return (
-    <HomepageContext.Provider value={{ data: data?.data || null, isLoading, error }}>
+    <HomepageContext.Provider
+      value={{ data: data?.data || null, isLoading, error }}
+    >
       {children}
     </HomepageContext.Provider>
   );
@@ -93,7 +123,7 @@ export function HomepageProvider({ children }: { children: ReactNode }) {
 export function useHomepage() {
   const context = useContext(HomepageContext);
   if (context === undefined) {
-    throw new Error('useHomepage must be used within a HomepageProvider');
+    throw new Error("useHomepage must be used within a HomepageProvider");
   }
   return context;
 }
