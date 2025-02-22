@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_blocks_services",
+  "info": {
+    "displayName": "Services",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Service": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.service-detail"
+    },
+    "service_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::service-category.service-category"
+    }
+  }
+}

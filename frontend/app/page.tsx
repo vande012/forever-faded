@@ -4,25 +4,29 @@ import Services2 from "./components/Services2";
 import { CarouselRow } from "./components/CarouselRow";
 import MapSection from "./components/MapSection";
 import Reviews from "./components/Reviews";
-import MerchSlider from "./components/MerchSlider";
 import StaffSection from "./components/StaffSection";
 import BackToTop from "./components/BackToTop";
-import { HomepageProvider } from "./contexts/HomepageContext";
+import { getHomepageData } from "./data/loaders";
+import { notFound } from "next/navigation";
 
-export default function Home() {
+
+async function loader() {
+  const data = await getHomepageData();
+  if (!data) notFound();
+  console.log(data);
+  return { ...data.data };
+}
+
+export default async function Home() {
+  const data = await loader();
+  console.log(data);
   return (
     <main>
-      <HomepageProvider>
+      
         <Hero />
         <WhyUs />
-        <Reviews />
-        <Services2 />
-        <StaffSection />
-        <MerchSlider />
-        <CarouselRow />
-        <MapSection />
-        <BackToTop />
-      </HomepageProvider>
+        
+      
     </main>
   );
 }

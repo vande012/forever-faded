@@ -1,16 +1,56 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface SharedButton extends Struct.ComponentSchema {
-  collectionName: 'components_shared_buttons';
+export interface BlocksHeroSection extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_hero_sections';
   info: {
     description: '';
-    displayName: 'Button';
+    displayName: 'Hero Section';
   };
   attributes: {
-    ButtonText: Schema.Attribute.String;
-    ButtonText2: Schema.Attribute.String;
-    URL: Schema.Attribute.String;
-    URL2: Schema.Attribute.String;
+    cta1: Schema.Attribute.Component<'elements.link', false>;
+    cta2: Schema.Attribute.Component<'elements.link', false>;
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    video: Schema.Attribute.Media<'files' | 'videos'>;
+  };
+}
+
+export interface BlocksServices extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_services';
+  info: {
+    description: '';
+    displayName: 'Services';
+  };
+  attributes: {
+    Service: Schema.Attribute.Component<'shared.service-detail', true>;
+    service_category: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::service-category.service-category'
+    >;
+  };
+}
+
+export interface BlocksWhyUs extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_why_uses';
+  info: {
+    displayName: 'Why Us';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    header: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    subheader: Schema.Attribute.String;
+  };
+}
+
+export interface ElementsLink extends Struct.ComponentSchema {
+  collectionName: 'components_elements_links';
+  info: {
+    displayName: 'Link';
+  };
+  attributes: {
+    href: Schema.Attribute.String;
+    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    text: Schema.Attribute.String;
   };
 }
 
@@ -25,17 +65,6 @@ export interface SharedDiscount extends Struct.ComponentSchema {
     Description: Schema.Attribute.Blocks;
     PricingNote: Schema.Attribute.String;
     Title: Schema.Attribute.String;
-  };
-}
-
-export interface SharedHero extends Struct.ComponentSchema {
-  collectionName: 'components_shared_heroes';
-  info: {
-    displayName: 'Hero';
-  };
-  attributes: {
-    herologo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    herovideo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
   };
 }
 
@@ -91,79 +120,30 @@ export interface SharedSeo extends Struct.ComponentSchema {
   };
 }
 
-export interface SharedServiceMenu extends Struct.ComponentSchema {
-  collectionName: 'components_shared_service_menus';
+export interface SharedServiceDetail extends Struct.ComponentSchema {
+  collectionName: 'components_shared_service_details';
   info: {
-    displayName: 'ServiceMenu';
-    icon: 'book';
-  };
-  attributes: {};
-}
-
-export interface SharedServices extends Struct.ComponentSchema {
-  collectionName: 'components_shared_services';
-  info: {
-    displayName: 'Services';
-    icon: 'briefcase';
+    displayName: 'ServiceDetail';
   };
   attributes: {
-    Description: Schema.Attribute.Blocks;
+    Description: Schema.Attribute.String;
     Title: Schema.Attribute.String;
-  };
-}
-
-export interface SharedSlider extends Struct.ComponentSchema {
-  collectionName: 'components_shared_sliders';
-  info: {
-    description: '';
-    displayName: 'Slider';
-    icon: 'address-book';
-  };
-  attributes: {
-    files: Schema.Attribute.Media<'images', true>;
-  };
-}
-
-export interface SharedStaffMembers extends Struct.ComponentSchema {
-  collectionName: 'components_shared_staff_members';
-  info: {
-    description: '';
-    displayName: 'Staff Members';
-  };
-  attributes: {
-    staff_members: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::staff-member.staff-member'
-    >;
-  };
-}
-
-export interface SharedStaffSection extends Struct.ComponentSchema {
-  collectionName: 'components_shared_staff_sections';
-  info: {
-    displayName: 'Staff Section';
-  };
-  attributes: {
-    SectionTitle: Schema.Attribute.String;
-    staff: Schema.Attribute.Component<'shared.staff-members', true>;
   };
 }
 
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'shared.button': SharedButton;
+      'blocks.hero-section': BlocksHeroSection;
+      'blocks.services': BlocksServices;
+      'blocks.why-us': BlocksWhyUs;
+      'elements.link': ElementsLink;
       'shared.discount': SharedDiscount;
-      'shared.hero': SharedHero;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
-      'shared.service-menu': SharedServiceMenu;
-      'shared.services': SharedServices;
-      'shared.slider': SharedSlider;
-      'shared.staff-members': SharedStaffMembers;
-      'shared.staff-section': SharedStaffSection;
+      'shared.service-detail': SharedServiceDetail;
     }
   }
 }

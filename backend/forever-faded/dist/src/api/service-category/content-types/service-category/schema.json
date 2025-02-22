@@ -1,0 +1,36 @@
+{
+    "kind": "collectionType",
+    "collectionName": "service_categories",
+    "info": {
+        "singularName": "service-category",
+        "pluralName": "service-categories",
+        "displayName": "Service Category",
+        "description": "Categories for different types of services"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "name": {
+            "type": "string",
+            "required": true,
+            "unique": true
+        },
+        "displayOrder": {
+            "type": "integer",
+            "required": true,
+            "default": 1
+        },
+        "services": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::service.service",
+            "mappedBy": "category"
+        },
+        "isDiscountCategory": {
+            "type": "boolean",
+            "default": false,
+            "description": "Indicates if this category is for special discounts"
+        }
+    }
+}
