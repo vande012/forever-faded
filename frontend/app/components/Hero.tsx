@@ -77,7 +77,7 @@ export default function Hero() {
   }
 
   const isHeroSectionBlock = (block: any): block is HeroSectionBlock => {
-    return block.__component === "blocks.hero-section";
+    return block.__component === "blocks.hero";
   };
 
   const heroSection = data.blocks.find(isHeroSectionBlock);

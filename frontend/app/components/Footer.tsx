@@ -1,8 +1,43 @@
 import Link from "next/link";
 import Image from "next/image";
 import { SiFacebook, SiInstagram, SiX, SiYoutube } from "react-icons/si";
+import { getStrapiURL } from "../utils/get-strapi-url";
 
-export default function Footer() {
+interface FooterProps {
+  data: {
+    data: {
+      logo: {
+        url: string;
+        alternativeText: string | null;
+      };
+      links: Array<{
+        id: number;
+        displayName: string;
+        url: string;
+      }>;
+      socials: Array<{
+        id: number;
+        platform: string;
+        url: string;
+      }>;
+      Copyright: string;
+    };
+  };
+}
+export default function Footer({ data }: FooterProps) {
+  const footerData = data.data;
+  const logoUrl = footerData.logo ? `${getStrapiURL()}${footerData.logo.url}` : "/LogoFooter.png";
+
+  const getSocialIcon = (platform: string) => {
+    switch (platform) {
+      case 'Facebook': return <SiFacebook className="w-5 h-5" />;
+      case 'Instagram': return <SiInstagram className="w-5 h-5" />;
+      case 'X': return <SiX className="w-5 h-5" />;
+      case 'Youtube': return <SiYoutube className="w-5 h-5" />;
+      default: return null;
+    }
+  };
+
   return (
     <footer className="w-full bg-black">
       <div className="container px-4 py-8 mx-auto">
@@ -10,10 +45,11 @@ export default function Footer() {
           {/* Logo Column */}
           <div className="flex justify-center md:justify-start">
             <Image
-              src="/LogoFooter.png"
-              alt="Forever Faded Logo"
-              width={150} // Adjust the width as needed
-              height={150} // Adjust the height as needed
+              priority
+              src={logoUrl || "/LogoFooter.png"}
+              alt={footerData.logo.alternativeText || "Forever Faded Logo"}
+              width={150}
+              height={150}
               className="w-auto h-auto"
             />
           </div>
@@ -22,21 +58,11 @@ export default function Footer() {
           <div className="space-y-3 text-center md:text-left">
             <h3 className="font-urbanist font-semibold">Quick Links</h3>
             <ul className="space-y-2 font-roboto text-sm">
-              <li>
-                <Link href="/book-now">Book Now</Link>
-              </li>
-              <li>
-                <Link href="/our-services">Our Services</Link>
-              </li>
-              <li>
-                <Link href="/contact-us">Contact Us</Link>
-              </li>
-              <li>
-                <Link href="/careers">Careers</Link>
-              </li>
-              <li>
-                <Link href="/gallery">Gallery</Link>
-              </li>
+              {footerData.links.map((link) => (
+                <li key={link.id}>
+                  <Link href={link.url}>{link.displayName}</Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -44,38 +70,24 @@ export default function Footer() {
           <div className="space-y-3 text-center md:text-left">
             <h3 className="font-urbanist font-semibold">Stay Connected</h3>
             <ul className="space-y-2 font-roboto text-sm">
-              <li>
-                <Link href="/instagram">Instagram</Link>
-              </li>
-              <li>
-                <Link href="/facebook">Facebook</Link>
-              </li>
-              <li>
-                <Link href="/X">X</Link>
-              </li>
-              <li>
-                <Link href="/yelp">Yelp</Link>
-              </li>
+              {footerData.socials.map((social) => (
+                <li key={social.id}>
+                  <Link href={social.url}>{social.platform}</Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
         {/* Bottom Section */}
         <div className="flex flex-col items-center justify-between pt-8 mt-8 border-t md:flex-row text-white">
-          <p className="text-sm font-roboto text-center md:text-left">© {new Date().getFullYear()} Forever Faded. All rights reserved.</p>
+          <p className="text-sm font-roboto text-center md:text-left">{footerData.Copyright}</p>
           <div className="flex items-center space-x-4 mt-4 md:mt-0">
-            <Link href="/facebook" className="hover:opacity-80">
-              <SiFacebook className="w-5 h-5" />
-            </Link>
-            <Link href="/instagram" className="hover:opacity-80">
-              <SiInstagram className="w-5 h-5" />
-            </Link>
-            <Link href="/X" className="hover:opacity-80">
-              <SiX className="w-5 h-5" />
-            </Link>
-            <Link href="/youtube" className="hover:opacity-80">
-              <SiYoutube className="w-5 h-5" />
-            </Link>
+            {footerData.socials.map((social) => (
+              <Link key={social.id} href={social.url} className="hover:opacity-80">
+                {getSocialIcon(social.platform)}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

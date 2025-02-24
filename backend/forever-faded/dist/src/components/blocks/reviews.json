@@ -1,0 +1,19 @@
+{
+    "collectionName": "components_blocks_reviews",
+    "info": {
+        "displayName": "reviews",
+        "description": ""
+    },
+    "options": {},
+    "attributes": {
+        "header": {
+            "type": "string"
+        },
+        "review": {
+            "displayName": "review",
+            "type": "component",
+            "repeatable": true,
+            "component": "shared.review"
+        }
+    }
+}

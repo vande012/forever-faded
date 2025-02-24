@@ -1,13 +1,15 @@
 import Hero from "./components/Hero";
 import WhyUs from "./components/WhyUs";
 import Services2 from "./components/Services2";
-import { CarouselRow } from "./components/CarouselRow";
+import FullScreenSlider from "./components/FullScreenSlider";
 import MapSection from "./components/MapSection";
 import Reviews from "./components/Reviews";
 import StaffSection from "./components/StaffSection";
 import BackToTop from "./components/BackToTop";
 import { getHomepageData } from "./data/loaders";
 import { notFound } from "next/navigation";
+import MerchSlider  from "./components/MerchSlider"
+import MapAndContact from "./components/MapSection";
 
 
 async function loader() {
@@ -19,12 +21,24 @@ async function loader() {
 
 export default async function Home() {
   const data = await loader();
-  console.log(data);
+  const galleryBlock = data.blocks.find(
+    (block: any) => block.__component === "blocks.gallery"
+  );
+  const hoursBlock = data.blocks.find(
+    (block: any) => block.__component === "blocks.hours"
+  );
   return (
     <main>
       
         <Hero />
         <WhyUs />
+        <Services2 />
+        <Reviews />
+        <MerchSlider />
+        {galleryBlock && <FullScreenSlider galleryBlock={galleryBlock} />}
+        <StaffSection />
+        <BackToTop />
+        <MapAndContact hours={hoursBlock} />
         
       
     </main>

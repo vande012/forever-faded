@@ -2,84 +2,72 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "../components/ui/button";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselApi,
 } from "../components/ui/carousel";
-import { useStrapi, getStrapiMedia } from "../hooks/useStrapi";
-import qs from "qs";
+import { useState, useEffect } from "react";
+import { getHomepageData } from "../data/loaders";
+import { getStrapiURL } from "../utils/get-strapi-url";
 
-interface MerchItem {
+
+
+interface MerchBlock {
+  __component: "blocks.merch-section";
   id: number;
-  attributes: {
-    title: string;
-    price: number;
-    order: number;
-    link: string;
-    image: {
-      data: {
-        attributes: {
-          url: string;
-          alternativeText?: string;
-          formats?: {
-            thumbnail: {
-              url: string;
-            };
-            medium?: {
-              url: string;
-            };
-            large?: {
-              url: string;
-            };
-          };
-        };
-      } | null;
-    };
+  header: string;
+  subheader: string;
+  description: string;
+  merchslider: {
+    id: number;
+    merchimage: {
+      id: number;
+      documentId: string;
+      url: string;
+      alternativeText: string | null;
+    }[];
+  };
+  cta: {
+    id: number;
+    text: string;
+    href: string;
+    isExternal: boolean;
   };
 }
 
-interface MerchSection {
-  id: number;
-  MerchItem: MerchItem[];
-}
-
-interface MerchSliderData {
-  MerchSection: MerchSection;
-}
-
 interface HomepageData {
-  MerchSection: MerchSection[];
+  id: number;
+  blocks: any[];
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 }
-
-export const fetchMerchData = async () => {
-  const query = qs.stringify(
-    {
-      populate: {
-        MerchSection: {
-          populate: {
-            MerchItem: {
-              populate: {
-                image: "*", // Ensure we fetch images properly
-              },
-            },
-          },
-        },
-      },
-    },
-    { encodeValuesOnly: true }
-  );
-
-
 
 export default function MerchSlider() {
-   const { data, isLoading, error } = useStrapi<HomepageData>(`homepage?${query}`);
+  const [data, setData] = useState<HomepageData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
   const [api, setApi] = React.useState<CarouselApi | null>(null);
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const homepageData = await getHomepageData();
+        setData(homepageData.data);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('An error occurred'));
+        console.error("Error fetching merch data:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   React.useEffect(() => {
     if (!api) return;
@@ -107,99 +95,72 @@ export default function MerchSlider() {
   }, [autoPlay]);
 
   if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading merch items.</p>;
+  if (error || !data) return <p>Error loading merch items.</p>;
 
-  const merchItems = data?.MerchSection.MerchItem || [];
+  const isMerchSectionBlock = (block: any): block is MerchBlock => {
+    return block.__component === "blocks.merch-section";
+  };
+
+  const merchSection = data.blocks.find(isMerchSectionBlock);
+
+  if (!merchSection) {
+    return <div>Merch section not found</div>;
+  }
+
+  const merchImages = merchSection.merchslider.merchimage.map(image => ({
+    url: `${getStrapiURL()}${image.url}`,
+    alt: image.alternativeText || 'Forever Faded Merch'
+  }));
 
   return (
-    <section className="relative bg-[#1d1d1d] py-6 md:py-12">
-      <div className="container px-4 md:px-6">
-        <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-          <div className="space-y-4 text-center">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl gold-gradient-text">
-              Forever Faded Merch
-            </h2>
-            <p className="text-gray-300 md:text-xl">
-              Match your fresh cut with our premium styles.
-            </p>
-            <p className="hidden md:block text-gray-400">
-              Discover our exclusive collection of high-quality merchandise
-              designed to complement your style. Each piece in our Forever Faded
-              Merch line is crafted with premium materials to ensure durability
-              and comfort. Whether you are looking for a classic black hoodie, a
-              premium t-shirt, or a signature cap, our merch is designed to
-              match your fresh cut and elevate your wardrobe.
-            </p>
-            <div className="flex gap-4 justify-center">
-              <Button className="gold-gradient-bg text-black">Shop Now</Button>
-            </div>
-          </div>
-
-          <div className="relative w-full md:w-8/12 mx-auto">
-            <Carousel
-              setApi={setApi}
-              className="w-full"
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-            >
-              <CarouselContent>
-                {merchItems
-                  .sort((a, b) => a.attributes.order - b.attributes.order)
-                  .map((item) => (
-                    <CarouselItem key={item.id} className="md:basis-1/1">
-                      <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#1d1d1d]">
-                        <Image
-                          src={getStrapiMedia(
-                            item.attributes.image.data.attributes.url
-                          )}
-                          alt={
-                            item.attributes.image.data.attributes
-                              .alternativeText || item.attributes.title
-                          }
-                          fill
-                          className="object-cover transition-transform hover:scale-105"
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                          priority={item.id === 1}
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                          <h3 className="text-lg font-semibold text-white">
-                            {item.attributes.title}
-                          </h3>
-                          <p className="text-white">${item.attributes.price}</p>
-                        </div>
-                      </div>
-                    </CarouselItem>
-                  ))}
-              </CarouselContent>
-            </Carousel>
-
-            <div className="flex justify-center gap-1 mt-4 md:mt-6">
-              <div className="flex items-center gap-2 pr-4">
-                <span className="text-sm text-gray-400">
-                  {current + 1} / {count}
-                </span>
-              </div>
-              <Button
-                variant="default"
-                size="icon"
-                className="h-8 w-8 gold-gradient-bg"
-                onClick={() => api?.scrollPrev()}
-              >
-                <ChevronLeft className="h-4 w-4 text-black" />
-              </Button>
-              <Button
-                variant="default"
-                size="icon"
-                className="h-8 w-8 gold-gradient-bg"
-                onClick={() => api?.scrollNext()}
-              >
-                <ChevronRight className="h-4 w-4 text-black" />
-              </Button>
-            </div>
-          </div>
+    <section className="w-full bg-black py-16">
+      <div className="container mx-auto px-4">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 gold-gradient-text">
+          {merchSection.header}
+        </h2>
+        <div className="mb-12">
+          <p className="text-xl text-white text-center mb-4">
+            {merchSection.subheader}
+          </p>
+          <p className="text-gray-400 text-center max-w-3xl mx-auto">
+            {merchSection.description}
+          </p>
         </div>
+        <div className="text-center mt-8 pb-4">
+          <a
+            href={merchSection.cta.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-gradient-to-r from-[#A47A1E] via-[#D3A84C] to-[#B58F3E] text-black font-bold px-8 py-3 rounded-full"
+          >
+            {merchSection.cta.text}
+          </a>
+        </div>
+        <Carousel
+          setApi={setApi}
+          className="w-full max-w-5xl mx-auto"
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+        >
+          <CarouselContent>
+            {merchImages.map((image, index) => (
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                <div className="p-1">
+                  <Image
+                    src={image.url}
+                    alt={image.alt}
+                    width={400}
+                    height={400}
+                    className="rounded-lg object-cover aspect-square"
+                  />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          
+        </Carousel>
       </div>
     </section>
   );

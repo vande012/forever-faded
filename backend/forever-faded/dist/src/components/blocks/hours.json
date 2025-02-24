@@ -1,0 +1,14 @@
+{
+    "collectionName": "components_blocks_hours",
+    "info": {
+        "displayName": "Hours"
+    },
+    "options": {},
+    "attributes": {
+        "hours": {
+            "type": "component",
+            "repeatable": true,
+            "component": "shared.hours"
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_values",
+  "info": {
+    "displayName": "values",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

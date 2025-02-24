@@ -1,48 +1,15 @@
 {
-    "kind": "collectionType",
-    "collectionName": "services",
-    "info": {
-      "singularName": "service",
-      "pluralName": "services",
-      "displayName": "Service",
-      "description": "Individual services offered"
+  "collectionName": "components_shared_services",
+  "info": {
+    "displayName": "Service"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
     },
-    "options": {
-      "draftAndPublish": true
-    },
-    "attributes": {
-      "name": {
-        "type": "string",
-        "required": true
-      },
-      "description": {
-        "type": "text",
-        "required": true
-      },
-      "price": {
-        "type": "decimal",
-        "required": false
-      },
-      "duration": {
-        "type": "integer",
-        "required": false,
-        "description": "Duration in minutes"
-      },
-      "displayOrder": {
-        "type": "integer",
-        "required": true,
-        "default": 1
-      },
-      "category": {
-        "type": "relation",
-        "relation": "manyToOne",
-        "target": "api::service-category.service-category",
-        "inversedBy": "services"
-      },
-      "isBookable": {
-        "type": "boolean",
-        "default": true,
-        "description": "Indicates if this service can be booked online"
-      }
+    "description": {
+      "type": "text"
     }
   }
+}

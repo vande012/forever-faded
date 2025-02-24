@@ -14,9 +14,14 @@
         "blocks": {
             "type": "dynamiczone",
             "components": [
-                "blocks.hero-section",
+                "blocks.hero",
                 "blocks.why-us",
-                "blocks.services"
+                "blocks.reviews",
+                "blocks.service-section",
+                "blocks.merch-section",
+                "blocks.gallery",
+                "blocks.staff-section",
+                "blocks.hours"
             ]
         }
     }

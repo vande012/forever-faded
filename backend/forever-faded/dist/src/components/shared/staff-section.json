@@ -1,0 +1,12 @@
+{
+    "collectionName": "components_shared_staff_sections",
+    "info": {
+        "displayName": "Staff Section"
+    },
+    "options": {},
+    "attributes": {
+        "SectionTitle": {
+            "type": "string"
+        }
+    }
+}

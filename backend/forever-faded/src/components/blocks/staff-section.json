@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_blocks_staff_sections",
+  "info": {
+    "displayName": "Staff Section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "staffcard": {
+      "displayName": "staff card",
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.staff-card"
+    }
+  }
+}
