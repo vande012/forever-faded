@@ -1,0 +1,29 @@
+{
+    "collectionName": "components_blocks_merch_sections",
+    "info": {
+        "displayName": "Merch Section"
+    },
+    "options": {},
+    "attributes": {
+        "header": {
+            "type": "string"
+        },
+        "subheader": {
+            "type": "string"
+        },
+        "description": {
+            "type": "text"
+        },
+        "cta": {
+            "type": "component",
+            "repeatable": false,
+            "component": "element.link"
+        },
+        "merchslider": {
+            "displayName": "Merch Slider",
+            "type": "component",
+            "repeatable": false,
+            "component": "shared.merch-slider"
+        }
+    }
+}

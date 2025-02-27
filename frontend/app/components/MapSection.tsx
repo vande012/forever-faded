@@ -3,9 +3,23 @@
 import { useEffect, useRef } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 
-const MapAndContact = () => {
-  const mapRef = useRef<HTMLDivElement>(null);
+interface HourData {
+  id: number;
+  Day: string;  
+  Open: string; 
+  Close: string; 
+}
 
+const convertTo12Hour = (time: string) => {
+  const [hours, minutes] = time.split(':');
+  const hour = parseInt(hours);
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+  const hour12 = hour % 12 || 12;
+  return `${hour12}:${minutes.slice(0,2)} ${ampm}`;
+};
+
+const MapAndContact = ({ hours }: { hours?: { hours: HourData[] } }) => {
+  const mapRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const initMap = async () => {
       try {
@@ -42,15 +56,16 @@ const MapAndContact = () => {
     initMap();
   }, []);
 
-  const hours = [
-    { day: "Mon", hours: "Closed" },
-    { day: "Tue", hours: "10:00 am - 6:00 pm" },
-    { day: "Wed", hours: "10:00 am - 6:00 pm" },
-    { day: "Thu", hours: "10:00 am - 8:00 pm" },
-    { day: "Fri", hours: "10:00 am - 8:00 pm" },
-    { day: "Sat", hours: "10:00 am - 6:00 pm" },
-    { day: "Sun", hours: "Closed" },
-  ];
+  const formattedHours = [
+    "Monday", "Tuesday", "Wednesday", "Thursday", 
+    "Friday", "Saturday", "Sunday"
+  ].map(day => {
+    const dayData = hours?.hours?.find(h => h.Day === day);
+    return {
+      day: day.substring(0, 3),
+      hours: dayData ? `${convertTo12Hour(dayData.Open)} - ${convertTo12Hour(dayData.Close)}` : "Closed"
+    };
+  });
 
   return (
     <div className="flex flex-col md:flex-row bg-black text-white">
@@ -59,7 +74,7 @@ const MapAndContact = () => {
         <h2 className="text-4xl font-bold mb-6 font-urbanist">Business Hours</h2>
         <table className="w-full">
           <tbody>
-            {hours.map((item, index) => (
+            {formattedHours.map((item, index) => (
               <tr key={index} className="border-b border-white/20 last:border-b-0">
                 <td className="py-3 font-urbanist font-semibold">{item.day}</td>
                 <td className="py-3 text-right font-roboto">{item.hours}</td>

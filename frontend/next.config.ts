@@ -1,4 +1,3 @@
-// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -9,8 +8,18 @@ const nextConfig = {
         port: '1337',
         pathname: '/uploads/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'backend',
+        port: '1337',
+        pathname: '/uploads/**',
+      },
     ],
+    // Add this to help with image loading in development
+    unoptimized: process.env.NODE_ENV === 'development',
   },
+  // Keep standalone for production builds
+  output: 'standalone',
 }
 
 module.exports = nextConfig

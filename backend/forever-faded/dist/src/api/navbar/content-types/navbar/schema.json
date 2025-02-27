@@ -1,0 +1,50 @@
+{
+    "kind": "singleType",
+    "collectionName": "navbars",
+    "info": {
+        "singularName": "navbar",
+        "pluralName": "navbars",
+        "displayName": "Navbar",
+        "description": ""
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "Address": {
+            "displayName": "Address",
+            "type": "component",
+            "repeatable": false,
+            "component": "shared.address"
+        },
+        "phone": {
+            "type": "string"
+        },
+        "navlogo": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": [
+                "images",
+                "files",
+                "videos",
+                "audios"
+            ]
+        },
+        "links": {
+            "type": "component",
+            "repeatable": true,
+            "component": "element.link"
+        },
+        "cta": {
+            "type": "component",
+            "repeatable": false,
+            "component": "element.link"
+        },
+        "NavHours": {
+            "type": "component",
+            "repeatable": false,
+            "component": "blocks.hours"
+        }
+    }
+}

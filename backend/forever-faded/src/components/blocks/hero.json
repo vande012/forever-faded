@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_blocks_heroes",
+  "info": {
+    "displayName": "hero section",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "video": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "cta1": {
+      "type": "component",
+      "repeatable": false,
+      "component": "element.link"
+    },
+    "cta2": {
+      "type": "component",
+      "repeatable": false,
+      "component": "element.link"
+    }
+  }
+}

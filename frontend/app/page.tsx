@@ -1,28 +1,46 @@
 import Hero from "./components/Hero";
 import WhyUs from "./components/WhyUs";
 import Services2 from "./components/Services2";
-import { CarouselRow } from "./components/CarouselRow";
+import FullScreenSlider from "./components/FullScreenSlider";
 import MapSection from "./components/MapSection";
 import Reviews from "./components/Reviews";
-import MerchSlider from "./components/MerchSlider";
 import StaffSection from "./components/StaffSection";
 import BackToTop from "./components/BackToTop";
-import { HomepageProvider } from "./contexts/HomepageContext";
+import { getHomepageData } from "./data/loaders";
+import { notFound } from "next/navigation";
+import MerchSlider  from "./components/MerchSlider"
+import MapAndContact from "./components/MapSection";
 
-export default function Home() {
+
+async function loader() {
+  const data = await getHomepageData();
+  if (!data) notFound();
+  console.log(data);
+  return { ...data.data };
+}
+
+export default async function Home() {
+  const data = await loader();
+  const galleryBlock = data.blocks.find(
+    (block: any) => block.__component === "blocks.gallery"
+  );
+  const hoursBlock = data.blocks.find(
+    (block: any) => block.__component === "blocks.hours"
+  );
   return (
     <main>
-      <HomepageProvider>
+      
         <Hero />
         <WhyUs />
-        <Reviews />
         <Services2 />
-        <StaffSection />
+        <Reviews />
         <MerchSlider />
-        <CarouselRow />
-        <MapSection />
+        {galleryBlock && <FullScreenSlider galleryBlock={galleryBlock} />}
+        <StaffSection />
         <BackToTop />
-      </HomepageProvider>
+        <MapAndContact hours={hoursBlock} />
+        
+      
     </main>
   );
 }

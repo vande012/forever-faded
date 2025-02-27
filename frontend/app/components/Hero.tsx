@@ -2,31 +2,102 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useHomepage } from '../contexts/HomepageContext';
-import { getStrapiMedia } from '../hooks/useStrapi';
+import { getHomepageData } from "../data/loaders";
+import { getStrapiURL } from "../utils/get-strapi-url";
+
+interface HeroSectionBlock {
+  __component: "blocks.hero-section";
+  id: number;
+  logo: {
+    id: number;
+    url: string;
+    alternativeText: string | null;
+  };
+  video: {
+    id: number;
+    url: string;
+  };
+  cta1: {
+    id: number;
+    text: string;
+    href: string;
+    isExternal: boolean;
+  };
+  cta2: {
+    id: number;
+    text: string;
+    href: string;
+    isExternal: boolean;
+  };
+}
+
+interface HomepageData {
+  id: number;
+  blocks: any[];
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
 
 export default function Hero() {
-  const [isClient, setIsClient] = useState(false);
-  const { data, isLoading, error } = useHomepage();
+  const [data, setData] = useState<HomepageData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<any | null>(null);
 
   useEffect(() => {
-    setIsClient(true);
+    const fetchData = async () => {
+      try {
+        const homepageData = await getHomepageData();
+        setData(homepageData.data);
+      } catch (err) {
+        setError(err);
+        console.error("Error fetching homepage data:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   if (isLoading) {
-    return <div className="h-screen flex items-center justify-center">Loading...</div>;
+    return (
+      <div className="h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
   }
 
   if (error || !data) {
-    return <div className="h-screen flex items-center justify-center">Error loading content</div>;
+    return (
+      <div className="h-screen flex items-center justify-center">
+        Error loading content
+      </div>
+    );
   }
 
-  const videoUrl = getStrapiMedia(data.Video.url);
-  const logoUrl = getStrapiMedia(data.Logo.url);
+  const isHeroSectionBlock = (block: any): block is HeroSectionBlock => {
+    return block.__component === "blocks.hero";
+  };
+
+  const heroSection = data.blocks.find(isHeroSectionBlock);
+
+  if (!heroSection) {
+    return <div>Hero section not found</div>;
+  }
+
+  // Get the full URLs for media
+  const logoUrl = heroSection.logo
+    ? `${getStrapiURL()}${heroSection.logo.url}`
+    : null;
+  const logoAltText = heroSection.logo?.alternativeText;
+  const videoUrl = heroSection.video
+    ? `${getStrapiURL()}${heroSection.video.url}`
+    : null;
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
-      {isClient && videoUrl && (
+      {videoUrl && (
         <video
           autoPlay
           loop
@@ -44,7 +115,7 @@ export default function Hero() {
           {logoUrl && (
             <Image
               src={logoUrl}
-              alt={data.Logo.alternativeText || "Hero Logo"}
+              alt={logoAltText || "Hero Logo"}
               width={500}
               height={500}
               className="mx-auto mb-8 w-80 h-80 sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-96 lg:h-96"
@@ -52,18 +123,22 @@ export default function Hero() {
             />
           )}
           <div className="space-x-4">
-            <Link
-              href="/shop"
-              className="rounded gold-gradient-bg px-5 py-2.5 sm:px-7 sm:py-3.5 font-roboto text-base sm:text-lg font-semibold text-white transition-colors hover:bg-[#262974]"
-            >
-              Shop Now
-            </Link>
-            <Link
-              href="/about"
-              className="rounded border-2 border-white bg-transparent px-4 py-2 sm:px-6 sm:py-3 font-roboto text-base sm:text-lg font-semibold text-white transition-colors hover:bg-white hover:text-[#1E1E1E]"
-            >
-              Book Appointment
-            </Link>
+            {heroSection.cta1 && (
+              <Link
+                href={heroSection.cta1.href}
+                className="rounded gold-gradient-bg px-5 py-2.5 sm:px-7 sm:py-3.5 font-roboto text-base sm:text-lg font-semibold text-white transition-colors hover:bg-[#262974]"
+              >
+                {heroSection.cta1.text}
+              </Link>
+            )}
+            {heroSection.cta2 && (
+              <Link
+                href={heroSection.cta2.href}
+                className="rounded border-2 border-white bg-transparent px-4 py-2 sm:px-6 sm:py-3 font-roboto text-base sm:text-lg font-semibold text-white transition-colors hover:bg-white hover:text-[#1E1E1E]"
+              >
+                {heroSection.cta2.text}
+              </Link>
+            )}
           </div>
         </div>
       </div>

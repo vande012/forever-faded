@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_blocks_service_sections",
+  "info": {
+    "displayName": "service-section",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "category": {
+      "type": "string"
+    },
+    "category1": {
+      "type": "string"
+    },
+    "category2": {
+      "type": "string"
+    },
+    "service": {
+      "displayName": "values",
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.values"
+    },
+    "service1": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.service"
+    },
+    "service2": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.service"
+    }
+  }
+}

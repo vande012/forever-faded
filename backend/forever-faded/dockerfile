@@ -1,0 +1,13 @@
+FROM node:18-alpine
+# Installing required dependencies for Strapi
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+ENV NODE_ENV=development
+
+EXPOSE 1337
+CMD ["npm", "run", "develop"]

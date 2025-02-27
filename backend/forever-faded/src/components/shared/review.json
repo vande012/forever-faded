@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_reviews",
+  "info": {
+    "displayName": "review",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "body": {
+      "type": "text"
+    },
+    "stars": {
+      "type": "integer"
+    }
+  }
+}

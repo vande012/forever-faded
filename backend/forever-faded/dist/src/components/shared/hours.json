@@ -1,0 +1,19 @@
+{
+    "collectionName": "components_shared_hours",
+    "info": {
+        "displayName": "Hours",
+        "icon": "clock"
+    },
+    "options": {},
+    "attributes": {
+        "Day": {
+            "type": "string"
+        },
+        "Open": {
+            "type": "time"
+        },
+        "Close": {
+            "type": "time"
+        }
+    }
+}

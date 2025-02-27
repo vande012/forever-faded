@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_addresses",
+  "info": {
+    "displayName": "Address"
+  },
+  "options": {},
+  "attributes": {
+    "Label": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  }
+}

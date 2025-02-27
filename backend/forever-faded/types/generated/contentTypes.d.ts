@@ -473,6 +473,38 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiFooterFooter extends Struct.SingleTypeSchema {
+  collectionName: 'footers';
+  info: {
+    description: '';
+    displayName: 'Footer';
+    pluralName: 'footers';
+    singularName: 'footer';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Copyright: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    links: Schema.Attribute.Component<'shared.navigation-link', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::footer.footer'
+    > &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    publishedAt: Schema.Attribute.DateTime;
+    socials: Schema.Attribute.Component<'shared.social-link', true>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -517,6 +549,18 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    blocks: Schema.Attribute.DynamicZone<
+      [
+        'blocks.hero',
+        'blocks.why-us',
+        'blocks.reviews',
+        'blocks.service-section',
+        'blocks.merch-section',
+        'blocks.gallery',
+        'blocks.staff-section',
+        'blocks.hours',
+      ]
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -526,54 +570,41 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
       'api::homepage.homepage'
     > &
       Schema.Attribute.Private;
-    Logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     publishedAt: Schema.Attribute.DateTime;
-    ReviewButton: Schema.Attribute.Component<'shared.button', false>;
-    Reviews: Schema.Attribute.JSON;
-    ReviewsTitle: Schema.Attribute.String;
-    Services: Schema.Attribute.JSON;
-    StaffSection: Schema.Attribute.Component<'shared.staff-section', true>;
-    Title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Video: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    Whyusheader: Schema.Attribute.String;
-    Whyusimage: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    >;
-    Whyussubheader: Schema.Attribute.String;
-    Whyustext: Schema.Attribute.Blocks;
   };
 }
 
-export interface ApiStaffMemberStaffMember extends Struct.CollectionTypeSchema {
-  collectionName: 'staff_members';
+export interface ApiNavbarNavbar extends Struct.SingleTypeSchema {
+  collectionName: 'navbars';
   info: {
-    displayName: 'Staff Member';
-    pluralName: 'staff-members';
-    singularName: 'staff-member';
+    description: '';
+    displayName: 'Navbar';
+    pluralName: 'navbars';
+    singularName: 'navbar';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    buttontext: Schema.Attribute.String;
-    buttonurl: Schema.Attribute.String;
+    Address: Schema.Attribute.Component<'shared.address', false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
+    cta: Schema.Attribute.Component<'element.link', false>;
+    links: Schema.Attribute.Component<'element.link', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::staff-member.staff-member'
+      'api::navbar.navbar'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.String;
-    photo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    NavHours: Schema.Attribute.Component<'blocks.hours', false>;
+    navlogo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    phone: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1092,9 +1123,10 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
+      'api::footer.footer': ApiFooterFooter;
       'api::global.global': ApiGlobalGlobal;
       'api::homepage.homepage': ApiHomepageHomepage;
-      'api::staff-member.staff-member': ApiStaffMemberStaffMember;
+      'api::navbar.navbar': ApiNavbarNavbar;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
