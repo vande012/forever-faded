@@ -90,19 +90,13 @@ console.log(`/api/homepage?${homePageQuery}`);
 
 
 export async function getHomepageData() {
-    const path = "/api/homepage";
-    const BASE_URL = getStrapiURL();
-
-    const url = new URL(path, BASE_URL);
-
-    url.search = homePageQuery;
-
-    return await fetchAPI(url.toString(), { 
-        method: "GET",
-        next: {
-            revalidate: 60 // Cache for 60 seconds
-        }
-    });
+  // Just use the path, not a full URL
+  return await fetchAPI(`/homepage?${homePageQuery}`, {
+    method: "GET",
+    next: {
+      revalidate: 60
+    }
+  });
 }
 const footerQuery = qs.stringify(
   {
@@ -126,12 +120,8 @@ const footerQuery = qs.stringify(
 console.log(`/api/footer?${footerQuery}`);
 
 export async function getFooterData() {
-  const path = "/api/footer";
-  const BASE_URL = getStrapiURL();
-  const url = new URL(path, BASE_URL);
-  url.search = footerQuery;
-
-  return await fetchAPI(url.toString(), {
+  // Just use the path, not a full URL
+  return await fetchAPI(`/footer?${footerQuery}`, {
     method: "GET",
     next: {
       revalidate: 60
@@ -170,17 +160,11 @@ const navbarQuery = qs.stringify(
 console.log(`/api/navbar?${navbarQuery}`);
 
 export async function getNavbarData() {
-  const path = "/api/navbar";
-  const BASE_URL = getStrapiURL();
-  const url = new URL(path, BASE_URL);
-  url.search = navbarQuery;
-
-  const response = await fetchAPI(url.toString(), {
+  // Just use the path, not a full URL
+  return await fetchAPI(`/navbar?${navbarQuery}`, {
     method: "GET",
     next: {
       revalidate: 60
     }
   });
-  console.log('Navbar Response:', response);
-  return response;
 }

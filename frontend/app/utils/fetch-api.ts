@@ -1,38 +1,43 @@
-type NextFetchRequestConfig = {
-    revalidate?: number | false;
-    tags?: string[];
-  };
+interface FetchAPIOptions {
+  method?: string;
+  headers?: Record<string, string>;
+  body?: any;
+  next?: Record<string, unknown>;
+}
+
+export async function fetchAPI(path: string, options: FetchAPIOptions = {}) {
+  const apiUrl = typeof window === 'undefined'
+  ? 'http://backend:1337'     // Server-side
+  : 'http://localhost:1337';  // Client-side
   
-  interface FetchAPIOptions {
-    method: "GET" | "POST" | "PUT" | "DELETE";
-    authToken?: string;
-    body?: Record<string, unknown>;
-    next?: NextFetchRequestConfig;
-  }
+  const url = `${apiUrl}/api${path.startsWith('/') ? path : `/${path}`}`;
   
-  export async function fetchAPI(url: string, options: FetchAPIOptions) {
-    const { method, authToken, body, next } = options;
+  console.log(`Fetching from: ${url}`);
   
-    const headers: RequestInit & { next?: NextFetchRequestConfig } = {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        ...(authToken && { Authorization: `Bearer ${authToken}` }),
-      },
-      ...(body && { body: JSON.stringify(body) }),
-      ...(next && { next }),
+  try {
+    const headers = {
+      'Content-Type': 'application/json',
+      ...(options.headers || {}),
     };
+    
+    const response = await fetch(url, {
+      headers,
+      ...options,
+    });
   
-    try {
-      const response = await fetch(url, headers);
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.includes("application/json") && response.ok) {
-        return await response.json();
-      } else {
-        return { status: response.status, statusText: response.statusText };
-      }
-    } catch (error) {
-      console.error(`Error ${method} data:`, error);
-      throw error;
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`);
     }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Fetch error:', error);
+    return { 
+      data: { attributes: {} }, // Provide a minimal data structure
+      error: true, 
+      message: error instanceof Error ? error.message : 'Unknown error',
+      status: 500 
+    };
   }
+}

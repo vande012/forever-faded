@@ -5,6 +5,9 @@ import Footer from "./components/Footer";
 import type React from "react"; // Import React
 import { getFooterData } from "./data/loaders";
 import { getNavbarData } from "./data/loaders";
+import ClientImageFixer from "./components/ClientImageFixer";
+
+
 
 const urbanist = Urbanist({ subsets: ["latin"], variable: "--font-urbanist" });
 const roboto = Roboto({
@@ -18,6 +21,7 @@ const italianno = Italianno({
   variable: "--font-italianno",
   display: "swap", // Add this for better loading behavior
 });
+
 
 export const metadata = {
   title: "Forever Faded Barbershop | Waukesha, WI",
@@ -37,6 +41,7 @@ export default async function RootLayout({
       <body
         className={`${urbanist.variable} ${roboto.variable} ${italianno.variable} font-roboto`}
       >
+        <ClientImageFixer />
          <Navbar data={navbarData} />
         <main>{children}</main>
         <Footer data={footerData} />
