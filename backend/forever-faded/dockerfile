@@ -1,12 +1,21 @@
-FROM node:18-alpine
+# Use a more specific base image that matches your architecture
+FROM --platform=linux/amd64 node:18-alpine
+
+RUN apk add --no-cache python3 make g++ gcc sqlite-dev
 
 WORKDIR /app
 
 COPY package*.json ./
+
 RUN npm install
+RUN npm rebuild better-sqlite3
 
 COPY . .
 
-EXPOSE 5000
+ENV NODE_ENV=production
+
+RUN npm run build
+
+EXPOSE 1337
 
 CMD ["npm", "start"]

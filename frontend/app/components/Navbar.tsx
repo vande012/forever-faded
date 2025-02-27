@@ -78,6 +78,15 @@ export default function Navbar({ data }: NavbarProps) {
     ? `${getStrapiURL()}${navData.navlogo.url}`
     : "/navlogo.png";
 
+    const convertTo12Hour = (time: string) => {
+      const [hours, minutes] = time.split(':');
+      const hour = parseInt(hours);
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      const hour12 = hour % 12 || 12;
+      return `${hour12}:${minutes.slice(0,2)} ${ampm}`;
+    };
+    
+
   useEffect(() => {
     const days = [
       "Sunday",
@@ -95,7 +104,7 @@ export default function Navbar({ data }: NavbarProps) {
     const todayHours = navData.NavHours.hours.find((h) => h.Day === today);
     if (todayHours) {
       setCurrentHours(
-        `${todayHours.Open.slice(0, 5)} - ${todayHours.Close.slice(0, 5)}`
+        `${convertTo12Hour(todayHours.Open)} - ${convertTo12Hour(todayHours.Close)}`
       );
     } else {
       setCurrentHours("Closed Today");

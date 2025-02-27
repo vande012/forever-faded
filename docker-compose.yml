@@ -6,7 +6,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       - NEXT_PUBLIC_API_URL=http://backend:5000
     depends_on:
@@ -17,11 +17,12 @@ services:
       - /app/.next
 
   backend:
+    platform: linux/amd64
     build:
       context: ./backend/forever-faded
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "1337:5000"
     volumes:
       - ./backend/forever-faded:/app
       - /app/node_modules

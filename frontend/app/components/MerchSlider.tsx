@@ -90,7 +90,7 @@ export default function MerchSlider() {
   }, [api, current, count]);
 
   React.useEffect(() => {
-    const timer = setInterval(autoPlay, 5000);
+    const timer = setInterval(autoPlay, 4000);
     return () => clearInterval(timer);
   }, [autoPlay]);
 
