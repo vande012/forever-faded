@@ -24,7 +24,9 @@ The project includes two utility scripts for database management:
 Located at `scripts/backup-db.sh`, this script creates timestamped backups of your database.
 
 Make script executable (first time only)
-```chmod +x scripts/backup-db.sh```
+```bash 
+chmod +x scripts/backup-db.sh
+```
 
 Create a backup
 ./scripts/backup-db.sh
@@ -36,11 +38,15 @@ Backups are stored in `database_backups/` with format: `data_YYYYMMDD_HHMMSS.db`
 Located at `scripts/restore-db.sh`, this script restores a database from a backup.
 
 Make script executable (first time only)
-```chmod +x scripts/restore-db.sh```
+```bash
+chmod +x scripts/restore-db.sh
+```
 
 Restore from a backup
 
-```./scripts/restore-db.sh data_20240320_143000.db```
+```bash 
+./scripts/restore-db.sh data_20240320_143000.db
+```
 
 ## Development Workflow
 
@@ -55,7 +61,9 @@ Restore from a backup
 ### After Pulling Updates
 1. Pull latest changes:
 
-```git pull origin main```
+```bash
+git pull origin main
+```
 
 2. If database schema has changed, you may need to:
    - Start fresh with a new database
@@ -68,12 +76,16 @@ Restore from a backup
 To share your database state with team members:
 
 1. Export schema and data:
-   ```sqlite3 .tmp/data.db .dump > schema_and_data.sql```
+   ```bash
+   sqlite3 .tmp/data.db .dump > schema_and_data.sql
+   ```
 
    2. Share the SQL file with team members
 
 3. Team members can import it:
-   ```sqlite3 .tmp/data.db < schema_and_data.sql```
+   ```bash
+   sqlite3 .tmp/data.db < schema_and_data.sql
+   ```
    ## Important Notes
 
 - The database file (`.tmp/data.db`) is git-ignored
@@ -88,10 +100,14 @@ If something goes wrong:
 
 1. List available backups:
 
-```ls database_backups```
+```bash
+ls database_backups
+```
 
 2. Restore from a backup:
-```./scripts/restore-db.sh data_TIMESTAMP.db```
+```bash
+./scripts/restore-db.sh data_TIMESTAMP.db
+```
 
 ## Project Structure
 ```
