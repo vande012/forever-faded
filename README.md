@@ -6,7 +6,7 @@ This guide outlines the database management workflow for the Forever Faded Strap
 
 1. **Clone the Repository**
 ```bash
-git clone <https://github.com/vande012/forever-faded.git>
+git clone https://github.com/vande012/forever-faded.git
 cd dev/forever-faded/backend/forever-faded
 npm install
 ```
