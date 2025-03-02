@@ -6,10 +6,10 @@ interface FetchAPIOptions {
 }
 
 export async function fetchAPI(path: string, options: FetchAPIOptions = {}) {
-  const apiUrl = typeof window === 'undefined'
-  ? 'http://backend:1337'     // Server-side
-  : 'http://localhost:1337';  // Client-side
-  
+  const apiUrl = process.env.NODE_ENV === 'production'
+    ? process.env.NEXT_PUBLIC_API_URL || 'http:backend:1337'
+    : 'http://localhost:1337';
+    
   const url = `${apiUrl}/api${path.startsWith('/') ? path : `/${path}`}`;
   
   console.log(`Fetching from: ${url}`);
