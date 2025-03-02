@@ -1,5 +1,0 @@
-{
-  "dependencies": {
-    "@strapi/plugin-documentation": "^5.10.3"
-  }
-}
