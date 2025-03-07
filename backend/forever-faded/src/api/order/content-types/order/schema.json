@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "singularName": "order",
+    "pluralName": "orders",
+    "displayName": "Order"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "stripeSessionId": {
+      "type": "string"
+    },
+    "total": {
+      "type": "decimal"
+    },
+    "customerEmail": {
+      "type": "email"
+    },
+    "customerName": {
+      "type": "string"
+    },
+    "paymentStatus": {
+      "type": "enumeration",
+      "enum": [
+        "paid",
+        "unpaid",
+        "refunded"
+      ]
+    },
+    "productStatus": {
+      "type": "enumeration",
+      "enum": [
+        "processing",
+        "shipped",
+        "delivered",
+        "cancelled"
+      ]
+    },
+    "items": {
+      "type": "json"
+    },
+    "shippingAddress": {
+      "type": "json"
+    }
+  }
+}

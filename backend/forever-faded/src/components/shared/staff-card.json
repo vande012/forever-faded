@@ -1,19 +1,21 @@
 {
   "collectionName": "components_shared_staff_cards",
   "info": {
-    "displayName": "staff card"
+    "displayName": "staff card",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "name": {
       "type": "string"
@@ -28,6 +30,12 @@
       "type": "component",
       "repeatable": false,
       "component": "element.link"
+    },
+    "socials": {
+      "displayName": "social",
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.social"
     }
   }
 }

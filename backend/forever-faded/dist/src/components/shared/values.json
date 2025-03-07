@@ -11,6 +11,12 @@
         },
         "description": {
             "type": "text"
+        },
+        "cost": {
+            "type": "string"
+        },
+        "time": {
+            "type": "string"
         }
     }
 }

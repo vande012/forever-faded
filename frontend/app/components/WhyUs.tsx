@@ -121,9 +121,9 @@ export default function WhyUs() {
               </div>
               <div className="space-y-2">
                 <span className="text-5xl font-bold text-white gold-gradient-text">
-                  <CountUp end={17} duration={3} suffix="+" />
+                  <CountUp end={50} duration={4} suffix="+" />
                 </span>
-                <p className="text-sm text-white">YEARS OF EXPERIENCE</p>
+                <p className="text-sm text-white">COMBINED YEARS OF EXPERIENCE</p>
               </div>
             </div>
           </div>

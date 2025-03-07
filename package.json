@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "next-mdx-remote": "^5.0.0",
+    "react-markdown": "^10.0.0"
+  }
+}

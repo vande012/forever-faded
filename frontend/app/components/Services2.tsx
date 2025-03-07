@@ -4,11 +4,15 @@ import { Button } from "../components/ui/button";
 import { useEffect, useState } from "react";
 import { getHomepageData } from "../data/loaders";
 
+const BOOKING_URL = "https://getsquire.com/booking/book/forever-faded-llc-waukesha"
+
 // Define the ServiceItem type
 interface ServiceItem {
   id: number;
   name: string;
   description: string;
+  cost?: string;  
+  time?: string;  
 }
 
 interface ServiceBlock {
@@ -106,18 +110,41 @@ export default function ServicesSection() {
             <div className="space-y-4">
               {servicesData.service &&
                 servicesData.service.map((item) => (
-                  <div key={item.id} className="space-y-2">
-                    <h3 className="font-urbanist text-lg text-white">
-                      {item.name}
-                    </h3>
-                    <p className="font-roboto text-sm text-gray-400">
-                      {item.description}
-                    </p>
-                  </div>
+                  <a 
+                    key={item.id} 
+                    href={BOOKING_URL} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="block space-y-2 border-b border-gray-800 pb-3 hover:bg-gray-900/30 transition-colors duration-200 rounded-md p-2 cursor-pointer"
+                  >
+                    <div className="flex justify-between items-center">
+                      <h3 className="font-urbanist text-lg text-white">
+                        {item.name}
+                      </h3>
+                      {item.cost && (
+                        <span className="font-urbanist text-lg text-[#D3A84C]">
+                          ${item.cost}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex justify-between">
+                      <p className="font-roboto text-sm text-gray-400">
+                        {item.description}
+                      </p>
+                      {item.time && (
+                        <span className="font-roboto text-sm text-gray-400">
+                          {item.time}
+                        </span>
+                      )}
+                    </div>
+      
+                
+                  </a>
                 ))}
             </div>
           </div>
-          {/* Face Category */}
+          
+          {/* Face & Beard Category */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-lg flex items-center justify-center">
@@ -158,30 +185,59 @@ export default function ServicesSection() {
             <div className="space-y-4">
               {servicesData.service1 &&
                 servicesData.service1.map((item) => (
-                  <div key={item.id} className="space-y-2">
-                    <h3 className="font-urbanist text-lg text-white">
-                      {item.name}
-                    </h3>
-                    <p className="font-roboto text-sm text-gray-400">
-                      {item.description}
-                    </p>
-                  </div>
+                  <a 
+                  key={item.id} 
+                  href={BOOKING_URL} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block space-y-2 border-b border-gray-800 pb-3 hover:bg-gray-900/30 transition-colors duration-200 rounded-md p-2 cursor-pointer"
+                >
+                    <div className="flex justify-between items-center">
+                      <h3 className="font-urbanist text-lg text-white">
+                        {item.name}
+                      </h3>
+                      {item.cost && (
+                        <span className="font-urbanist text-lg text-[#D3A84C]">
+                          ${item.cost}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex justify-between">
+                      <p className="font-roboto text-sm text-gray-400">
+                        {item.description}
+                      </p>
+                      {item.time && (
+                        <span className="font-roboto text-sm text-gray-400">
+                          {item.time}
+                        </span>
+                      )}
+                    </div>
+                  </a>
                 ))}
             </div>
           </div>
-          {/* Teen Category */}
+          
+          {/* Specialty Category */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-lg flex items-center justify-center">
-                <svg
+              <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="80"
                   height="80"
-                  viewBox="0 0 76 80"
+                  viewBox="0 0 512 512"
                   fill="none"
                 >
                   <path
-                    d="M57.1552 5.51791C62.8331 8.98131 67.5564 13.9513 70.8574 19.9358C74.1584 25.9203 75.9227 32.7118 75.9757 39.638C76.0286 46.5642 74.3684 53.385 71.1593 59.425C67.9502 65.4651 63.3036 70.515 57.6794 74.0748C52.0552 77.6347 45.6485 79.581 39.0935 79.7212C32.5384 79.8613 26.0624 78.1904 20.3065 74.8739C14.5506 71.5574 9.71432 66.7102 6.27655 60.8123C2.83878 54.9144 0.918676 48.1702 0.706323 41.2473L0.6875 39.9588L0.706323 38.6702C0.959744 30.3949 3.65164 22.4094 8.40655 15.8276C13.1615 9.24587 19.7423 4.396 27.2311 1.95451C26.9233 3.67861 26.9792 5.4532 27.3949 7.15185C27.8105 8.8505 28.5757 10.4314 29.6358 11.7819C30.696 13.1324 32.025 14.2193 33.5282 14.9651C35.0315 15.7109 36.6719 16.0973 38.3327 16.0968C39.3311 16.0968 40.2886 15.6777 40.9946 14.9319C41.7006 14.1861 42.0972 13.1745 42.0972 12.1197C42.0972 11.065 41.7006 10.0534 40.9946 9.30757C40.2886 8.56174 39.3311 8.14274 38.3327 8.14274L37.8922 8.1149C36.9394 7.99517 36.0659 7.49562 35.45 6.7183C34.8342 5.94098 34.5226 4.94457 34.5788 3.93265C34.635 2.92074 35.0549 1.96969 35.7526 1.27384C36.4503 0.577987 37.3732 0.189845 38.3327 0.188721C44.8302 0.188721 51.3315 1.96644 57.1552 5.51791ZM50.3791 49.0502C49.6662 48.312 48.7049 47.9031 47.7067 47.9136C46.7084 47.924 45.755 48.3529 45.0561 49.1059C44.1798 50.0511 43.1337 50.802 41.9792 51.3146C40.8247 51.8272 39.585 52.0913 38.3327 52.0913C37.0803 52.0913 35.8406 51.8272 34.6861 51.3146C33.5316 50.802 32.4855 50.0511 31.6092 49.1059C30.9068 48.3703 29.9585 47.9563 28.9694 47.9534C27.9803 47.9505 27.0299 48.359 26.3236 49.0905C25.6173 49.822 25.2119 50.8178 25.195 51.8626C25.1782 52.9074 25.5512 53.9172 26.2335 54.6737C27.8107 56.374 29.6933 57.7248 31.7708 58.647C33.8484 59.5691 36.0792 60.0441 38.3327 60.0441C40.5861 60.0441 42.8169 59.5691 44.8945 58.647C46.972 57.7248 48.8546 56.374 50.4318 54.6737C51.1306 53.9206 51.5176 52.905 51.5077 51.8504C51.4978 50.7959 51.0919 49.7886 50.3791 49.0502ZM27.0768 28.0278L26.5987 28.0556C25.6459 28.1753 24.7723 28.6749 24.1565 29.4522C23.5406 30.2295 23.229 31.2259 23.2852 32.2379C23.3415 33.2498 23.7613 34.2008 24.459 34.8967C25.1567 35.5925 26.0796 35.9807 27.0391 35.9818L27.5172 35.9539C28.47 35.8342 29.3435 35.3347 29.9594 34.5574C30.5752 33.78 30.8869 32.7836 30.8306 31.7717C30.7744 30.7598 30.3545 29.8087 29.6568 29.1129C28.9591 28.417 28.0363 28.0289 27.0768 28.0278ZM49.6638 28.0278L49.1858 28.0556C48.233 28.1753 47.3594 28.6749 46.7436 29.4522C46.1277 30.2295 45.8161 31.2259 45.8723 32.2379C45.9286 33.2498 46.3484 34.2008 47.0461 34.8967C47.7438 35.5925 48.6667 35.9807 49.6262 35.9818L50.1043 35.9539C51.0571 35.8342 51.9306 35.3347 52.5465 34.5574C53.1623 33.78 53.4739 32.7836 53.4177 31.7717C53.3615 30.7598 52.9416 29.8087 52.2439 29.1129C51.5462 28.417 50.6233 28.0289 49.6638 28.0278Z"
+                    d="M208,512a24.84,24.84,0,0,1-23.34-16l-39.84-103.6a16.06,16.06,0,0,0-9.19-9.19L32,343.34a25,25,0,0,1,0-46.68l103.6-39.84a16.06,16.06,0,0,0,9.19-9.19L184.66,144a25,25,0,0,1,46.68,0l39.84,103.6a16.06,16.06,0,0,0,9.19,9.19l103,39.63A25.49,25.49,0,0,1,400,320.52a24.82,24.82,0,0,1-16,22.82l-103.6,39.84a16.06,16.06,0,0,0-9.19,9.19L231.34,496A24.84,24.84,0,0,1,208,512Zm66.85-254.84h0Z"
+                    fill="url(#paint0_linear_84_38626)"
+                  />
+                  <path
+                    d="M88,176a14.67,14.67,0,0,1-13.69-9.4L57.45,122.76a7.28,7.28,0,0,0-4.21-4.21L9.4,101.69a14.67,14.67,0,0,1,0-27.38L53.24,57.45a7.31,7.31,0,0,0,4.21-4.21L74.16,9.79A15,15,0,0,1,86.23.11,14.67,14.67,0,0,1,101.69,9.4l16.86,43.84a7.31,7.31,0,0,0,4.21,4.21L166.6,74.31a14.67,14.67,0,0,1,0,27.38l-43.84,16.86a7.28,7.28,0,0,0-4.21,4.21L101.69,166.6A14.67,14.67,0,0,1,88,176Z"
+                    fill="url(#paint0_linear_84_38626)"
+                  />
+                  <path
+                    d="M400,256a16,16,0,0,1-14.93-10.26l-22.84-59.37a8,8,0,0,0-4.6-4.6l-59.37-22.84a16,16,0,0,1,0-29.86l59.37-22.84a8,8,0,0,0,4.6-4.6L384.9,42.68a16.45,16.45,0,0,1,13.17-10.57,16,16,0,0,1,16.86,10.15l22.84,59.37a8,8,0,0,0,4.6,4.6l59.37,22.84a16,16,0,0,1,0,29.86l-59.37,22.84a8,8,0,0,0-4.6,4.6l-22.84,59.37A16,16,0,0,1,400,256Z"
                     fill="url(#paint0_linear_84_38626)"
                   />
                   <defs>
@@ -210,14 +266,34 @@ export default function ServicesSection() {
             <div className="space-y-4">
               {servicesData.service2 &&
                 servicesData.service2.map((item) => (
-                  <div key={item.id} className="space-y-2">
-                    <h3 className="font-urbanist text-lg text-white">
-                      {item.name}
-                    </h3>
-                    <p className="font-roboto text-sm text-gray-400">
-                      {item.description}
-                    </p>
-                  </div>
+                  <a 
+                    key={item.id} 
+                    href={BOOKING_URL} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="block space-y-2 border-b border-gray-800 pb-3 hover:bg-gray-900/30 transition-colors duration-200 rounded-md p-2 cursor-pointer"
+                  >
+                    <div className="flex justify-between items-center">
+                      <h3 className="font-urbanist text-lg text-white">
+                        {item.name}
+                      </h3>
+                      {item.cost && (
+                        <span className="font-urbanist text-lg text-[#D3A84C]">
+                          ${item.cost}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex justify-between">
+                      <p className="font-roboto text-sm text-gray-400">
+                        {item.description}
+                      </p>
+                      {item.time && (
+                        <span className="font-roboto text-sm text-gray-400">
+                          {item.time}
+                        </span>
+                      )}
+                    </div>
+                  </a>
                 ))}
             </div>
           </div>
@@ -261,10 +337,10 @@ export default function ServicesSection() {
               </div>
               <div>
                 <h2 className="font-urbanist text-2xl font-bold text-white bg-clip-text">
-                  Military & First Responder Discount
+                  Military | First Responder | Senior Discount
                 </h2>
                 <p className="font-roboto text-sm text-gray-400">
-                  Special pricing for our service members
+                  Special pricing for our service members, first responders, and Seniors.
                 </p>
               </div>
             </div>

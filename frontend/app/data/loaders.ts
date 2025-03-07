@@ -1,7 +1,6 @@
 import { fetchAPI } from "../utils/fetch-api";
-import { getStrapiURL } from "../utils/get-strapi-url";
 import qs from "qs";
-///api/homepage?populate[blocks][on][blocks.hero-section][populate][logo][fields][0]=url&populate[blocks][on][blocks.hero-section][populate][logo][fields][1]=alternativeText&populate[blocks][on][blocks.hero-section][populate][video][fields][0]=url&populate[blocks][on][blocks.hero-section][populate][cta1][populate]=*&populate[blocks][on][blocks.hero-section][populate][cta2][populate]=*
+import { ArticlesResponse } from "../../types/article";
 
 
 const homePageQuery = qs.stringify(
@@ -15,6 +14,9 @@ const homePageQuery = qs.stringify(
                 fields: ['url', 'alternativeText'],
               },
               video: {
+                fields: ['url'],
+              },
+              mobilevideo: {
                 fields: ['url'],
               },
               cta1: '*',
@@ -37,9 +39,9 @@ const homePageQuery = qs.stringify(
           },
           'blocks.service-section': {
             populate: {
-              service: { fields: ['name', 'description'] },  // Adjust based on the actual field names
-              service1: { fields: ['name', 'description'] },
-              service2: { fields: ['name', 'description'] },
+              service: { fields: ['name', 'description', 'cost', 'time'] },  // Adjust based on the actual field names
+              service1: { fields: ['name', 'description', 'cost', 'time'] },
+              service2: { fields: ['name', 'description', 'cost', 'time'] },
             },
           },
           'blocks.merch-section': {
@@ -66,6 +68,9 @@ const homePageQuery = qs.stringify(
                 populate: {
                   image: {
                     fields: ['url', 'alternativeText']
+                  },
+                  socials: {
+                    fields: ['platform', 'url']
                   },
                   cta: '*'
                 },
@@ -167,4 +172,127 @@ export async function getNavbarData() {
       revalidate: 60
     }
   });
+}
+
+
+const articleQuery = qs.stringify(
+  {
+    populate: {
+      cover: {
+        fields: ['url', 'alternativeText'],
+      },
+      author: {
+        populate: '*'
+      },
+      category: {
+        populate: '*'
+      },
+      blocks: {
+        populate: '*'
+      }
+    }
+  },
+  {
+    encodeValuesOnly: true
+  }
+);
+
+export async function getArticles() {
+  return await fetchAPI(`/articles?${articleQuery}`, {
+    method: "GET",
+    next: {
+      revalidate: 60
+    }
+  });
+}
+
+export async function getArticleBySlug(slug: string) {
+  const query = qs.stringify({
+    filters: {
+      slug: {
+        $eq: slug
+      }
+    },
+    populate: '*'
+  }, {
+    encodeValuesOnly: true
+  });
+
+  return await fetchAPI(`/articles?${query}`, {
+    method: "GET",
+    next: {
+      revalidate: 60
+    }
+  });
+}
+
+const aboutPageHoursQuery = qs.stringify(
+  {
+    populate: {
+      blocks: {
+        on: {
+          'blocks.hours': {
+            populate: {
+              hours: {
+                populate: '*'
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    encodeValuesOnly: true
+  }
+);
+
+export async function getAboutPageHours() {
+  try {
+    return await fetchAPI(`/homepage?${aboutPageHoursQuery}`, {
+      method: "GET",
+      next: {
+        revalidate: 60
+      }
+    });
+  } catch (error) {
+    console.error("Failed to fetch hours data:", error);
+    return { data: { attributes: { blocks: [] } } };
+  }
+}
+
+const galleryQuery = qs.stringify(
+  {
+    populate: {
+      gallery_items: {
+        populate: ['Image'],
+      },
+    },
+  },
+  {
+    encodeValuesOnly: true
+  }
+);
+
+export async function getGalleryData() {
+  console.log(`Fetching gallery with query: /gallery?${galleryQuery}`);
+  try {
+    const data = await fetchAPI(`/gallery?${galleryQuery}`, {
+      method: "GET",
+      next: {
+        revalidate: 60
+      }
+    });
+    return data;
+  } catch (error) {
+    console.error("Error fetching gallery data:", error);
+    // Return a default structure to prevent errors
+    return { 
+      data: { 
+        Title: "Gallery", 
+        Description: "Error loading gallery items", 
+        gallery_items: [] 
+      } 
+    };
+  }
 }

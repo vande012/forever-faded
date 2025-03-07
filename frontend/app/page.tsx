@@ -10,6 +10,7 @@ import { getHomepageData } from "./data/loaders";
 import { notFound } from "next/navigation";
 import MerchSlider  from "./components/MerchSlider"
 import MapAndContact from "./components/MapSection";
+import RecentBlogPosts from "./components/RecentBlogPosts";
 
 
 async function loader() {
@@ -38,6 +39,7 @@ export default async function Home() {
         {galleryBlock && <FullScreenSlider galleryBlock={galleryBlock} />}
         <StaffSection />
         <BackToTop />
+        <RecentBlogPosts />
         <MapAndContact hours={hoursBlock} />
         
       

@@ -14,18 +14,36 @@ body {
  
 }
 
+@keyframes goldShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .gold-gradient-bg {
-  background: linear-gradient(90deg, #A47A1E, #D3A84C, #D3A84C, #E6BE69, #A98A48, #B58F3E);
+  background: linear-gradient(90deg, #A47A1E, #D3A84C, #D3A84C, #e6b857, #c09d51, #A47A1E);
+  background-size: 200% auto;
   color: black;
+  transition: all 0.3s ease;
+}
+
+.gold-gradient-bg:hover {
+  animation: goldShimmer 3s ease infinite;
+  background-size: 200% auto;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
 .custom-icon svg {
   width: 3rem !important;
   height: 3rem !important;
 }
-
-
-
 
 @layer base {
   :root {
@@ -91,3 +109,4 @@ body {
     @apply bg-background text-foreground;
   }
 }
+

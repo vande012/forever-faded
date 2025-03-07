@@ -1,0 +1,26 @@
+{
+  "kind": "singleType",
+  "collectionName": "galleries",
+  "info": {
+    "singularName": "gallery",
+    "pluralName": "galleries",
+    "displayName": "Gallery",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "text"
+    },
+    "gallery_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::gallery-item.gallery-item"
+    }
+  }
+}

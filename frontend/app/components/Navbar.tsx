@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useScrollPosition } from "../hooks/useScrollPosition";
 import { Phone, MapPin, Clock, Menu, X, ShoppingCart } from "lucide-react";
 import { getStrapiURL } from "../utils/get-strapi-url";
+import { usePathname } from "next/navigation";
 
 interface NavbarProps {
   data: {
@@ -48,14 +49,17 @@ interface NavbarProps {
     };
     meta: Record<string, unknown>;
   };
+  transparentHeader?: boolean;
 }
 
-export default function Navbar({ data }: NavbarProps) {
+export default function Navbar({ data, transparentHeader = false }: NavbarProps) {
   const scrollPosition = useScrollPosition();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentDay, setCurrentDay] = useState<string>("");
   const [navBgClass, setNavBgClass] = useState<string>("bg-transparent");
   const [currentHours, setCurrentHours] = useState<string>("Closed");
+  const pathname = usePathname(); 
+
   const NavLink = ({
     href,
     children,
@@ -86,6 +90,9 @@ export default function Navbar({ data }: NavbarProps) {
       return `${hour12}:${minutes.slice(0,2)} ${ampm}`;
     };
     
+    useEffect(() => {
+      setIsMenuOpen(false);
+    }, [pathname]);
 
   useEffect(() => {
     const days = [
@@ -97,6 +104,7 @@ export default function Navbar({ data }: NavbarProps) {
       "Friday",
       "Saturday",
     ];
+    
     const today = days[new Date().getDay()];
     setCurrentDay(today);
 
@@ -113,10 +121,11 @@ export default function Navbar({ data }: NavbarProps) {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
         setNavBgClass(
-          scrollPosition > 0 ? "bg-black/50 backdrop-blur-sm" : "bg-transparent"
+          // Only make transparent if transparentHeader prop is true
+          transparentHeader && scrollPosition === 0 ? "bg-transparent" : "bg-black/50 backdrop-blur-sm"
         );
       } else {
-        setNavBgClass("bg-transparent");
+        setNavBgClass(transparentHeader ? "bg-transparent" : "bg-black/50 backdrop-blur-sm");
       }
     };
 
@@ -126,7 +135,7 @@ export default function Navbar({ data }: NavbarProps) {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [scrollPosition, navData.NavHours.hours]);
+  }, [scrollPosition, navData.NavHours.hours, transparentHeader]);
 
   return (
     <header className="fixed w-full z-50 font-urbanist">
@@ -183,6 +192,18 @@ export default function Navbar({ data }: NavbarProps) {
               height={50}
               className="object-contain ml-5"
             />
+            {/* Right side - New text logo (visible on desktop) */}
+            <div className="hidden md:block">
+              <div className="h-10 flex items-center"> {/* Container with fixed height */}
+                <Image 
+                  src="/FFText.png" 
+                  alt="Forever Faded Text Logo" 
+                  width={180} 
+                  height={45} 
+                  className="h-auto w-auto max-w-[300px] pt-7 object-contain" 
+                />
+              </div>
+                </div>
           </Link>
 
           {/* Desktop Menu */}
@@ -208,6 +229,7 @@ export default function Navbar({ data }: NavbarProps) {
               <ShoppingCart size={24} />
             </Link>
           </div>
+          
 
           {/* Mobile Menu Button */}
           <button

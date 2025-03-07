@@ -37,6 +37,16 @@
             "type": "component",
             "repeatable": false,
             "component": "element.link"
+        },
+        "mobilevideo": {
+            "allowedTypes": [
+                "images",
+                "files",
+                "videos",
+                "audios"
+            ],
+            "type": "media",
+            "multiple": false
         }
     }
 }

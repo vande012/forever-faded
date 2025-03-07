@@ -1,7 +1,8 @@
 {
   "collectionName": "components_blocks_staff_sections",
   "info": {
-    "displayName": "Staff Section"
+    "displayName": "Staff Section",
+    "description": ""
   },
   "options": {},
   "attributes": {

@@ -1,5 +1,15 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface BlocksBlogMedia extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_blog_medias';
+  info: {
+    displayName: 'Blog Media';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+  };
+}
+
 export interface BlocksGallery extends Struct.ComponentSchema {
   collectionName: 'components_blocks_galleries';
   info: {
@@ -26,6 +36,9 @@ export interface BlocksHero extends Struct.ComponentSchema {
     cta1: Schema.Attribute.Component<'element.link', false>;
     cta2: Schema.Attribute.Component<'element.link', false>;
     logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    mobilevideo: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     video: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
   };
 }
@@ -85,6 +98,7 @@ export interface BlocksServiceSection extends Struct.ComponentSchema {
 export interface BlocksStaffSection extends Struct.ComponentSchema {
   collectionName: 'components_blocks_staff_sections';
   info: {
+    description: '';
     displayName: 'Staff Section';
   };
   attributes: {
@@ -249,11 +263,14 @@ export interface SharedSeo extends Struct.ComponentSchema {
 export interface SharedService extends Struct.ComponentSchema {
   collectionName: 'components_shared_services';
   info: {
+    description: '';
     displayName: 'Service';
   };
   attributes: {
+    cost: Schema.Attribute.String;
     description: Schema.Attribute.Text;
     name: Schema.Attribute.String;
+    time: Schema.Attribute.String;
   };
 }
 
@@ -266,6 +283,17 @@ export interface SharedSlider extends Struct.ComponentSchema {
   };
   attributes: {
     files: Schema.Attribute.Media<'images', true>;
+  };
+}
+
+export interface SharedSocial extends Struct.ComponentSchema {
+  collectionName: 'components_shared_socials';
+  info: {
+    displayName: 'social';
+  };
+  attributes: {
+    platform: Schema.Attribute.String;
+    url: Schema.Attribute.String;
   };
 }
 
@@ -286,6 +314,7 @@ export interface SharedSocialLink extends Struct.ComponentSchema {
 export interface SharedStaffCard extends Struct.ComponentSchema {
   collectionName: 'components_shared_staff_cards';
   info: {
+    description: '';
     displayName: 'staff card';
   };
   attributes: {
@@ -293,6 +322,7 @@ export interface SharedStaffCard extends Struct.ComponentSchema {
     description: Schema.Attribute.Text;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     name: Schema.Attribute.String;
+    socials: Schema.Attribute.Component<'shared.social', true>;
     title: Schema.Attribute.String;
   };
 }
@@ -314,14 +344,17 @@ export interface SharedValues extends Struct.ComponentSchema {
     displayName: 'values';
   };
   attributes: {
+    cost: Schema.Attribute.String;
     description: Schema.Attribute.Text;
     name: Schema.Attribute.String;
+    time: Schema.Attribute.String;
   };
 }
 
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'blocks.blog-media': BlocksBlogMedia;
       'blocks.gallery': BlocksGallery;
       'blocks.hero': BlocksHero;
       'blocks.hours': BlocksHours;
@@ -343,6 +376,7 @@ declare module '@strapi/strapi' {
       'shared.seo': SharedSeo;
       'shared.service': SharedService;
       'shared.slider': SharedSlider;
+      'shared.social': SharedSocial;
       'shared.social-link': SharedSocialLink;
       'shared.staff-card': SharedStaffCard;
       'shared.staff-section': SharedStaffSection;

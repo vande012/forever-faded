@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getHomepageData } from "../data/loaders";
@@ -14,6 +14,10 @@ interface HeroSectionBlock {
     alternativeText: string | null;
   };
   video: {
+    id: number;
+    url: string;
+  };
+  mobilevideo: {
     id: number;
     url: string;
   };
@@ -43,8 +47,27 @@ export default function Hero() {
   const [data, setData] = useState<HomepageData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<any | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
+  // Check if device is mobile
   useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    // Initial check
+    checkIfMobile();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIfMobile);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
+
+
+   useEffect(() => {
     const fetchData = async () => {
       try {
         const homepageData = await getHomepageData();
@@ -59,6 +82,17 @@ export default function Hero() {
 
     fetchData();
   }, []);
+
+    // Update video source when isMobile changes
+    useEffect(() => {
+      if (videoRef.current && data) {
+        const heroSection = data.blocks.find(isHeroSectionBlock);
+        if (heroSection) {
+          // Reload the video when source changes
+          videoRef.current.load();
+        }
+      }
+    }, [isMobile, data]);
 
   if (isLoading) {
     return (
@@ -91,14 +125,22 @@ export default function Hero() {
     ? `${getStrapiURL()}${heroSection.logo.url}`
     : null;
   const logoAltText = heroSection.logo?.alternativeText;
-  const videoUrl = heroSection.video
+  // Choose video based on device
+  const desktopVideoUrl = heroSection.video
     ? `${getStrapiURL()}${heroSection.video.url}`
     : null;
+  
+  const mobileVideoUrl = heroSection.mobilevideo
+    ? `${getStrapiURL()}${heroSection.mobilevideo.url}`
+    : '/mobile-hero.mp4'; // Fallback to static file if not in CMS
+  
+  const videoUrl = isMobile ? mobileVideoUrl : desktopVideoUrl;
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
       {videoUrl && (
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted
@@ -110,23 +152,27 @@ export default function Hero() {
         </video>
       )}
       <div className="absolute top-0 left-0 h-full w-full bg-black/50 z-10" />
-      <div className="relative z-20 flex h-full items-center justify-center">
+      
+      {/* Content container - centered on desktop, bottom-aligned on mobile */}
+      <div className={`relative z-20 flex h-full ${isMobile ? 'items-end pb-16' : 'items-center'} justify-center`}>
         <div className="text-center">
           {logoUrl && (
             <Image
               src={logoUrl}
               alt={logoAltText || "Hero Logo"}
-              width={500}
-              height={500}
-              className="mx-auto mb-8 w-80 h-80 sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-96 lg:h-96"
+              width={600}
+              height={600}
+              className={`mx-auto ${isMobile ? 'mb-6 w-64 h-64' : 'mb-8 w-80 h-80 sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-96 lg:h-96'}`}
               priority
             />
           )}
-          <div className="space-x-4">
+          <div className={`${isMobile ? 'flex flex-col space-y-4 space-x-0' : 'space-x-4'}`}>
             {heroSection.cta1 && (
               <Link
                 href={heroSection.cta1.href}
-                className="rounded gold-gradient-bg px-5 py-2.5 sm:px-7 sm:py-3.5 font-roboto text-base sm:text-lg font-semibold text-white transition-colors hover:bg-[#262974]"
+                className={`rounded gold-gradient-bg font-roboto font-semibold text-white transition-colors hover:bg-[#262974] ${
+                  isMobile ? 'block w-64 mx-auto px-5 py-2.5 text-base' : 'inline-block px-5 py-2.5 sm:px-7 sm:py-3.5 text-base sm:text-lg'
+                }`}
               >
                 {heroSection.cta1.text}
               </Link>
@@ -134,7 +180,9 @@ export default function Hero() {
             {heroSection.cta2 && (
               <Link
                 href={heroSection.cta2.href}
-                className="rounded border-2 border-white bg-transparent px-4 py-2 sm:px-6 sm:py-3 font-roboto text-base sm:text-lg font-semibold text-white transition-colors hover:bg-white hover:text-[#1E1E1E]"
+                className={`rounded border-2 border-white bg-transparent font-roboto font-semibold text-white transition-colors hover:bg-white hover:text-[#1E1E1E] ${
+                  isMobile ? 'block w-64 mx-auto px-4 py-2 text-base' : 'inline-block px-4 py-2 sm:px-6 sm:py-3 text-base sm:text-lg'
+                }`}
               >
                 {heroSection.cta2.text}
               </Link>
