@@ -1,6 +1,7 @@
-import { NextResponse, NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 
+// Next.js 15 route handler pattern
 export async function GET(
   request: NextRequest,
   context: { params: { id: string } }
@@ -15,33 +16,34 @@ export async function GET(
       );
     }
     
-     // Fetch order from Strapi
-     const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337';
+    console.log(`Fetching order details for order ID: ${orderId}`);
     
-     try {
-       const response = await axios.get(`${API_URL}/api/orders/${orderId}`);
-       console.log('Strapi response:', response.data);
-       
-       return NextResponse.json(response.data);
-     } catch (axiosError: any) {
-       if (axiosError.response) {
-         console.error('Error response status:', axiosError.response.status);
-         console.error('Error response data:', axiosError.response.data);
-         
-         return NextResponse.json(
-           { error: axiosError.response.data.error || 'Failed to fetch order' },
-           { status: axiosError.response.status }
-         );
-       }
-       
-       throw axiosError; // Re-throw if it's not a response error
-     }
-   } catch (error: any) {
-     console.error('Error fetching order:', error);
-     
-     return NextResponse.json(
-       { error: error.message || 'Failed to fetch order' },
-       { status: 500 }
-     );
-   }
- }
+    // Fetch order from Strapi
+    const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337';
+    
+    try {
+      const response = await axios.get(`${API_URL}/api/orders/${orderId}`);
+      
+      return NextResponse.json(response.data);
+    } catch (axiosError: any) {
+      if (axiosError.response) {
+        return NextResponse.json(
+          { error: 'Failed to fetch order from Strapi' },
+          { status: axiosError.response.status || 500 }
+        );
+      }
+      
+      return NextResponse.json(
+        { error: 'Network error when fetching order' },
+        { status: 500 }
+      );
+    }
+  } catch (error: any) {
+    console.error('Error fetching order:', error);
+    
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
