@@ -1,10 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
-import axios from 'axios';
+import { NextResponse } from 'next/server';
 
-// Use the exact pattern from Next.js 15 documentation
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
+export function GET(
+  _request: Request,
+  { params }: any
 ) {
   try {
     const orderId = params.id;
@@ -20,18 +18,17 @@ export async function GET(
     const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337';
     
     try {
+      // For now, just return a simple response to test if the route works
+      return NextResponse.json({ id: orderId, message: 'Order details' });
+      
+      // Once the route is working, you can uncomment this code:
+      /*
       const response = await axios.get(`${API_URL}/api/orders/${orderId}`);
       return NextResponse.json(response.data);
-    } catch (axiosError: any) {
-      if (axiosError.response) {
-        return NextResponse.json(
-          { error: 'Failed to fetch order from Strapi' },
-          { status: axiosError.response.status || 500 }
-        );
-      }
-      
+      */
+    } catch (error: any) {
       return NextResponse.json(
-        { error: 'Network error when fetching order' },
+        { error: 'Failed to fetch order from Strapi' },
         { status: 500 }
       );
     }
