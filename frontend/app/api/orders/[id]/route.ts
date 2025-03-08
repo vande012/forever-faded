@@ -1,9 +1,8 @@
-import { NextResponse } from 'next/server';
-import axios from 'axios';
+import { NextRequest, NextResponse } from 'next/server';
 
-// Use the correct type definition for the route handler
+// Correctly typed Route Handler for Next.js 15
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -24,10 +23,10 @@ export async function GET(
       return NextResponse.json({ id: orderId, message: 'Order details' });
       
       // Once the route is working, you can uncomment this code:
-      
+      /*
       const response = await axios.get(`${API_URL}/api/orders/${orderId}`);
       return NextResponse.json(response.data);
-      
+      */
     } catch (error: any) {
       return NextResponse.json(
         { error: 'Failed to fetch order from Strapi' },
