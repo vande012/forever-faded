@@ -31,7 +31,7 @@ export default function PodcastPage() {
                   </p>
                   <p className="text-gray-300 mb-4">
                     Each episode will feature a successful barber that will share their journey and insights on how to
-                    succeed in today's market.
+                    succeed in today&apos;s market.
                   </p>
                   <p className="text-gray-300">
                     Subscribe now to get notified when new episodes drop and connect with other barbers who are committed to

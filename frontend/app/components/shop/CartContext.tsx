@@ -84,7 +84,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       console.error('Checkout failed:', error);
       throw error;
     }
-  }, [clearCart, cart]);
+  }, [clearCart]); // Removed 'cart' from dependency array
 
   const value = {
     cart,

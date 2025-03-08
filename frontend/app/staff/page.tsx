@@ -21,7 +21,7 @@ export default function StaffPage() {
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
           <h1 className="text-6xl md:text-8xl font-bold mb-4 text-[#D4AF37]">Our Team</h1>
           <p className="text-2xl bg-black/80 rounded-lg max-w-4xl py-4 px-2">
-            Meet the skilled professionals behind Forever Faded's reputation for excellence
+            Meet the skilled professionals behind Forever Faded&apos;s reputation for excellence
           </p>
         </div>
       </div>
@@ -35,7 +35,7 @@ export default function StaffPage() {
             Each member brings their unique style and expertise, ensuring that every client receives the perfect cut.
           </p>
           <p className="text-lg text-gray-300">
-            Whether you're looking for a classic cut, a modern style, or a complete transformation, our team has the
+            Whether you&apos;re looking for a classic cut, a modern style, or a complete transformation, our team has the
             skills and experience to exceed your expectations.
           </p>
         </div>
@@ -137,7 +137,7 @@ export default function StaffPage() {
             <div>
               <h2 className="text-3xl font-bold mb-4 gold-gradient-text">Join Our Team</h2>
               <p className="text-gray-300 mb-6">
-                Are you passionate about barbering and committed to excellence? We're always looking for talented
+                Are you passionate about barbering and committed to excellence? We are always looking for talented
                 professionals to join our team at Forever Faded.
               </p>
               <p className="text-gray-300 mb-6">
