@@ -1,16 +1,12 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import axios from 'axios';
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    // Fix the warning by ensuring params is properly awaited
-    const { id } = params;
-    const orderId = id;
-    
-    console.log(`Fetching order details for order ID: ${orderId}`);
+    const orderId = params.id;
     
     if (!orderId) {
       return NextResponse.json(
