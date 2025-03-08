@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Correctly typed Route Handler for Next.js 15
+// Using a simpler type definition that should work with Next.js 15
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
