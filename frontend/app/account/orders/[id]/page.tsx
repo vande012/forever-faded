@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { format } from 'date-fns';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
 interface OrderItem {
   name: string;
@@ -34,7 +34,12 @@ interface Order {
   }
 }
 
-export default function OrderDetail({ params }: { params: { id: string } }) {
+// Change the component definition to use useParams instead of receiving params as props
+export default function OrderDetail() {
+  // Use the useParams hook to get the id parameter
+  const params = useParams();
+  const orderId = params.id as string;
+  
   const [order, setOrder] = useState<Order | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -45,14 +50,14 @@ export default function OrderDetail({ params }: { params: { id: string } }) {
     // In a real app, you'd use your authentication system
     const email = localStorage.getItem('userEmail');
     if (!email) {
-      router.push(`/login?redirect=/account/orders/${params.id}`);
+      router.push(`/login?redirect=/account/orders/${orderId}`);
       return;
     }
     
     const fetchOrder = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/orders/${params.id}`
+          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/orders/${orderId}`
         );
         
         const orderData = response.data.data;
@@ -73,7 +78,7 @@ export default function OrderDetail({ params }: { params: { id: string } }) {
     };
     
     fetchOrder();
-  }, [params.id, router]);
+  }, [orderId, router]);
   
   if (isLoading) {
     return (
