@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
+import axios from 'axios';
 
-export function GET(
-  _request: Request,
-  { params }: any
+// Use the correct type definition for the route handler
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } }
 ) {
   try {
     const orderId = params.id;
@@ -22,10 +24,10 @@ export function GET(
       return NextResponse.json({ id: orderId, message: 'Order details' });
       
       // Once the route is working, you can uncomment this code:
-      /*
+      
       const response = await axios.get(`${API_URL}/api/orders/${orderId}`);
       return NextResponse.json(response.data);
-      */
+      
     } catch (error: any) {
       return NextResponse.json(
         { error: 'Failed to fetch order from Strapi' },
