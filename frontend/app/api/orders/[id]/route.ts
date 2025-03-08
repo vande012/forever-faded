@@ -2,9 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 
 // Next.js 15 route handler pattern
+type Context = {
+  params: {
+    id: string;
+  };
+};
+
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  context: Context
 ) {
   try {
     const orderId = context.params.id;
