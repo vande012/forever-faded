@@ -16,14 +16,11 @@ export async function GET(
       );
     }
     
-    console.log(`Fetching order details for order ID: ${orderId}`);
-    
     // Fetch order from Strapi
     const API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337';
     
     try {
       const response = await axios.get(`${API_URL}/api/orders/${orderId}`);
-      
       return NextResponse.json(response.data);
     } catch (axiosError: any) {
       if (axiosError.response) {
