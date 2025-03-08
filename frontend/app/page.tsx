@@ -41,8 +41,7 @@ export default async function Home() {
         <BackToTop />
         <RecentBlogPosts />
         <MapAndContact hours={hoursBlock} />
-        
-      
+
     </main>
   );
 }

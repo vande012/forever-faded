@@ -1,7 +1,3 @@
 node_modules/
 
-# SQLite files
-.tmp/data.db
-*.db
-*.sqlite
-*.sqlite3
+
