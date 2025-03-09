@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { getStrapiURL } from "../utils/get-strapi-url";
+import { getStrapiMedia } from "../utils/get-strapi-url";
 import { Carousel, CarouselContent, CarouselItem } from "../components/ui/carousel";
 import { CarouselApi } from "../components/ui/carousel";
 
@@ -25,7 +25,7 @@ export default function FullScreenSlider({ galleryBlock }: FullScreenSliderProps
   const [api, setApi] = useState<CarouselApi>();
 
   const images = galleryBlock.galleryimages.map(image => ({
-    src: `${getStrapiURL()}${image.url}`,
+    src: getStrapiMedia(image.url),  // Fixed: Use getStrapiMedia instead
     alt: image.alternativeText || 'Gallery image'
   }));
 

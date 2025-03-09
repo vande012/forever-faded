@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getHomepageData } from "../data/loaders";
-import { getStrapiURL } from "../utils/get-strapi-url";
+import { getStrapiMedia } from "../utils/get-strapi-url";
 
 interface HeroSectionBlock {
   __component: "blocks.hero-section";
@@ -121,18 +121,9 @@ export default function Hero() {
   }
 
   // Get the full URLs for media
-  const logoUrl = heroSection.logo
-    ? `${getStrapiURL()}${heroSection.logo.url}`
-    : null;
-  const logoAltText = heroSection.logo?.alternativeText;
-  // Choose video based on device
-  const desktopVideoUrl = heroSection.video
-    ? `${getStrapiURL()}${heroSection.video.url}`
-    : null;
-  
-  const mobileVideoUrl = heroSection.mobilevideo
-    ? `${getStrapiURL()}${heroSection.mobilevideo.url}`
-    : '/mobile-hero.mp4'; // Fallback to static file if not in CMS
+  const logoUrl = heroSection.logo ? getStrapiMedia(heroSection.logo.url) : null;
+  const desktopVideoUrl = heroSection.video ? getStrapiMedia(heroSection.video.url) : null;
+  const mobileVideoUrl = heroSection.mobilevideo ? getStrapiMedia(heroSection.mobilevideo.url) : '/mobile-hero.mp4';
   
   const videoUrl = isMobile ? mobileVideoUrl : desktopVideoUrl;
 
@@ -159,7 +150,7 @@ export default function Hero() {
           {logoUrl && (
             <Image
               src={logoUrl}
-              alt={logoAltText || "Hero Logo"}
+              alt={heroSection.logo?.alternativeText || "Forever Faded Logo"}
               width={600}
               height={600}
               className={`mx-auto ${isMobile ? 'mb-6 w-64 h-64' : 'mb-8 w-80 h-80 sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-96 lg:h-96'}`}

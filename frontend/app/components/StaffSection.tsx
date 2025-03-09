@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { getHomepageData } from "../data/loaders";
-import { getStrapiURL } from "../utils/get-strapi-url";
+import { getStrapiMedia } from "../utils/get-strapi-url";
 
 const placeholderCard = {
   id: 'placeholder',
@@ -97,9 +97,7 @@ export default function StaffSection() {
 
         <div className="flex flex-wrap justify-center gap-8">
           {[...data.staffcard, placeholderCard].map((member: any) => {
-            const imageUrl = member.image?.url 
-              ? `${getStrapiURL()}${member.image.url}`
-              : "/placeholder.svg";
+            const imageUrl = member.image?.url ? getStrapiMedia(member.image.url) : "/placeholder.svg";
 
             return (
               <div

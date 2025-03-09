@@ -10,7 +10,7 @@ import {
 } from "../components/ui/carousel";
 import { useState, useEffect } from "react";
 import { getHomepageData } from "../data/loaders";
-import { getStrapiURL } from "../utils/get-strapi-url";
+import { getStrapiMedia } from "../utils/get-strapi-url";
 
 
 
@@ -108,7 +108,7 @@ export default function MerchSlider() {
   }
 
   const merchImages = merchSection.merchslider.merchimage.map(image => ({
-    url: `${getStrapiURL()}${image.url}`,
+    url: getStrapiMedia(image.url),
     alt: image.alternativeText || 'Forever Faded Merch'
   }));
 

@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { motion } from "framer-motion"
 import type { GalleryItem } from "../../../types/gallery"
+import { getStrapiMedia } from "@/app/utils/get-strapi-url"
 
 // Add your Strapi URL here
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337"
@@ -17,10 +18,7 @@ export function GalleryCard({ item, index, onClick }: GalleryCardProps) {
   // Function to get the full image URL
   const getImageUrl = (image: any) => {
     if (!image) return "/placeholder.svg"
-    // If the URL already starts with http, return it as is
-    if (image.url.startsWith("http")) return image.url
-    // Otherwise, prepend the Strapi URL
-    return `${STRAPI_URL}${image.url}`
+    return getStrapiMedia(image.url)
   }
 
   // Animation variants

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { SiFacebook, SiInstagram, SiX, SiYoutube } from "react-icons/si";
-import { getStrapiURL } from "../utils/get-strapi-url";
+import { getStrapiMedia } from "../utils/get-strapi-url";
 
 interface FooterProps {
   data: {
@@ -26,7 +26,7 @@ interface FooterProps {
 }
 export default function Footer({ data }: FooterProps) {
   const footerData = data.data;
-  const logoUrl = footerData.logo ? `${getStrapiURL()}${footerData.logo.url}` : "/LogoFooter.png";
+  const logoUrl = footerData.logo ? getStrapiMedia(footerData.logo.url) : "/LogoFooter.png";
 
   const getSocialIcon = (platform: string) => {
     switch (platform) {
