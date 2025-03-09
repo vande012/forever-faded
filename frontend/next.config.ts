@@ -11,9 +11,9 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'harmonious-luck-fd75090c58.strapiapp.com',
+        hostname: 'harmonious-luck-fd75090c58.media.strapiapp.com',
         port: '',
-        pathname: '/uploads/**',
+        pathname: '/**',
       },
     ],
     // Add this to help with image loading in development
