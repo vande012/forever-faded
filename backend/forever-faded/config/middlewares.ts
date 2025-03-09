@@ -10,10 +10,9 @@ export default [
         'https://forever-faded.vercel.app', // Production
         'http://localhost:3000', // Local development
         (ctx) => {
-          const origin = ctx.request.header.origin;
-          // Match any Vercel preview deployment URL
-          if (origin && origin.match(/https:\/\/.*\.vercel\.app$/)) {
-            return origin;
+          const requestOrigin = ctx.request.header.origin;
+          if (requestOrigin?.includes('-vande012s-projects.vercel.app')) {
+            return requestOrigin;
           }
           return false;
         }
