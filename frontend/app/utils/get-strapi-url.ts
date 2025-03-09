@@ -9,22 +9,23 @@ export function getStrapiURL(path = "") {
 export function getStrapiMedia(url: string | null) {
   if (!url) return "";
   
-  // If the URL already contains the media domain, return it as is
-  if (url.includes('.media.strapiapp.com')) {
-    return url;
-  }
+  // Define the media domain
+  const mediaDomain = 'harmonious-luck-fd75090c58.media.strapiapp.com';
   
-  // If it's a full URL but not a media URL, it might be incorrect
-  if (url.startsWith('http')) {
-    // Extract the path part of the URL
-    try {
-      const urlObj = new URL(url);
-      return `https://harmonious-luck-fd75090c58.media.strapiapp.com${urlObj.pathname}`;
-    } catch {
+  try {
+    // Try to parse the URL to check if it's already a valid URL
+    const parsedUrl = new URL(url);
+    
+    // If it's already a media URL, return it as is
+    if (parsedUrl.hostname === mediaDomain) {
       return url;
     }
+    
+    // If it's a different URL, use just the pathname with the media domain
+    return `https://${mediaDomain}${parsedUrl.pathname}`;
+  } catch {
+    // If URL parsing fails, it's a relative path
+    const cleanPath = url.startsWith('/') ? url : `/${url}`;
+    return `https://${mediaDomain}${cleanPath}`;
   }
-  
-  // If it's a relative URL, prepend the media domain
-  return `https://harmonious-luck-fd75090c58.media.strapiapp.com${url.startsWith('/') ? url : `/${url}`}`;
 }
