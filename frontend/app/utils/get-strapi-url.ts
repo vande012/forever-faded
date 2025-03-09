@@ -1,30 +1,25 @@
 export function getStrapiURL(path = "") {
-  return `${
-    process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337"
-  }${path}`;
+  const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
+  // Remove trailing slash from strapiUrl and leading slash from path if they exist
+  const cleanStrapiUrl = strapiUrl.replace(/\/$/, '');
+  const cleanPath = path.replace(/^\//, '');
+  return `${cleanStrapiUrl}/${cleanPath}`;
 }
 
-// Add this new function to handle media URLs
 export function getStrapiMedia(url: string | null) {
   if (!url) return "";
   
   const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
   
-  // If the URL already includes the Strapi hostname, return it as is
-  if (url.includes(strapiUrl)) {
+  try {
+    // Try to parse the URL to check if it's already a valid absolute URL
+    new URL(url);
     return url;
+  } catch {
+    // If URL parsing fails, it's a relative URL
+    // Remove any duplicate slashes and combine the URLs properly
+    const cleanStrapiUrl = strapiUrl.replace(/\/$/, '');
+    const cleanPath = url.replace(/^\//, '');
+    return `${cleanStrapiUrl}/${cleanPath}`;
   }
-  
-  // If the URL already includes the backend hostname, ensure it's properly formatted
-  if (url.includes('backend:1337')) {
-    return url.replace('http://backend:1337', 'http://localhost:1337');
-  }
-  
-  // If it's a relative URL, prepend the Strapi URL
-  if (url.startsWith('/')) {
-    return `${strapiUrl}${url}`;
-  }
-  
-  // Otherwise return the URL as is
-  return url;
 }
