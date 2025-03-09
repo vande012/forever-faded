@@ -11,15 +11,34 @@ export function getStrapiMedia(url: string | null) {
   
   const mediaDomain = 'harmonious-luck-fd75090c58.media.strapiapp.com';
   
-  // If it's already a media URL, return it as is
-  if (url.includes(mediaDomain)) {
-    return url;
-  }
-  
-  // Remove any existing URLs from the path
-  const cleanPath = url
-    .replace(/https?:\/\/[^/]+/g, '')
-    .replace(/^\//, '');
+  try {
+    // First, try to decode the URL if it's encoded
+    const decodedUrl = decodeURIComponent(url);
     
-  return `https://${mediaDomain}/${cleanPath}`;
+    // If it's already a media URL, return it as is
+    if (decodedUrl.includes(mediaDomain)) {
+      return decodedUrl;
+    }
+    
+    // Extract just the filename/path part
+    const matches = decodedUrl.match(/([^/]+\.[^/]+)$/);
+    if (matches) {
+      return `https://${mediaDomain}/${matches[1]}`;
+    }
+    
+    // If no matches, clean the path and construct the URL
+    const cleanPath = decodedUrl
+      .replace(/https?:\/\/[^/]+/g, '')
+      .replace(/^\//, '');
+      
+    return `https://${mediaDomain}/${cleanPath}`;
+  } catch (error) {
+    // If decoding fails, work with the original URL
+    console.error('Error processing URL:', error);
+    const cleanPath = url
+      .replace(/https?:\/\/[^/]+/g, '')
+      .replace(/^\//, '');
+      
+    return `https://${mediaDomain}/${cleanPath}`;
+  }
 }
