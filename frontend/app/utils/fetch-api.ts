@@ -20,16 +20,12 @@ export async function fetchAPI(path: string, options: FetchAPIOptions = {}) {
     throw new Error('Missing API token');
   }
 
-  // Check if the path is already a full URL (for media files)
-  if (path.startsWith('http')) {
-    return path;
-  }
-
   // For API calls, append /api to the base URL
-  const url = `${apiUrl}/api${path.startsWith('/') ? path : `/${path}`}`;
+  // Remove any existing http URLs from the path
+  const cleanPath = path.replace(/https?:\/\/[^/]+/g, '');
+  const url = `${apiUrl}/api${cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`}`;
   
   try {
-    // Ensure we don't override the Authorization header if it's already set
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
       ...(options.headers || {}),
@@ -39,21 +35,18 @@ export async function fetchAPI(path: string, options: FetchAPIOptions = {}) {
       headers['Authorization'] = `Bearer ${apiToken}`;
     }
     
-    // Add a timeout to prevent hanging requests
-    const signal = options.signal || AbortSignal.timeout(15000); // 15 second timeout
+    const signal = options.signal || AbortSignal.timeout(15000);
     
     const response = await fetch(url, {
       headers,
       signal,
-      next: { revalidate: 3600 }, // Cache for 1 hour
+      next: { revalidate: 3600 },
       ...options,
     });
   
     if (!response.ok) {
       const errorText = await response.text();
       console.error(`HTTP error ${response.status} for ${url}:`, errorText);
-      
-      // Return a structured error response
       return {
         data: null,
         error: true,
@@ -66,8 +59,6 @@ export async function fetchAPI(path: string, options: FetchAPIOptions = {}) {
     return data;
   } catch (error) {
     console.error(`Fetch error for ${url}:`, error);
-    
-    // Return a structured error response
     return { 
       data: null, 
       error: true, 
