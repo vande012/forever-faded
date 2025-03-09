@@ -17,7 +17,7 @@ export default [
           return false;
         }
       ],
-      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
       headers: ['*'],
       credentials: true,
       keepHeaderOnError: true,
