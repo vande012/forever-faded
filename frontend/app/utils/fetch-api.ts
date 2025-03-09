@@ -20,6 +20,12 @@ export async function fetchAPI(path: string, options: FetchAPIOptions = {}) {
     throw new Error('Missing API token');
   }
 
+  // Check if the path is already a full URL (for media files)
+  if (path.startsWith('http')) {
+    return path;
+  }
+
+  // For API calls, append /api to the base URL
   const url = `${apiUrl}/api${path.startsWith('/') ? path : `/${path}`}`;
   
   try {
