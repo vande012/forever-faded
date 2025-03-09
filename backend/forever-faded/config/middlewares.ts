@@ -6,7 +6,7 @@ export default [
     name: 'strapi::cors',
     config: {
       
-      origin: ['*'], // Add your Next.js frontend URLs here
+      origin: ['https://forever-faded.vercel.app', 'https://*.vercel.app', 'http://localhost:3000'], // Add your Next.js frontend URLs here
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
       headers: ['*'],
       credentials: true,
