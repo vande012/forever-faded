@@ -1,5 +1,3 @@
-
-
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getStrapiMedia } from '../../utils/get-strapi-url';
@@ -7,26 +5,65 @@ import { getArticleBySlug } from '../../data/loaders';
 import { ArticleContent } from './ArticleContent';
 
 interface PageProps {
-    params: {
-      slug: string;
+  params: Promise<{
+    slug: string;
+  }>;
+}
+
+export const dynamic = 'force-dynamic';
+
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
+  if (!slug) return { title: 'Article Not Found' };
+
+  try {
+    const response = await getArticleBySlug(slug);
+    const article = response.data?.[0];
+
+    if (!article) return { title: 'Article Not Found' };
+
+    return {
+      title: article.title,
+      description: article.description || article.title,
+      openGraph: article.cover?.url
+        ? {
+            images: [{ url: getStrapiMedia(article.cover.url) }],
+          }
+        : undefined,
     };
+  } catch (error) {
+    console.error('Error generating metadata:', error);
+    return { title: 'Blog Article' };
   }
-  
-  // Make this an async server component
-  export default async function ArticlePage({ params }: PageProps) {
-    if (!params?.slug) return notFound();
-  
-    const response = await getArticleBySlug(params.slug);
+}
+
+export default async function ArticlePage({ params }: PageProps) {
+  const { slug } = await params;
+  if (!slug) return notFound();
+
+  try {
+    const response = await getArticleBySlug(slug);
+
+    if (!response || !response.data) {
+      console.error('Failed to fetch article data');
+      return (
+        <div className="pt-[160px] bg-[#1d1d1d] min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-white mb-4">Loading Article...</h1>
+            <p className="text-gray-400">Please wait while we fetch the content</p>
+          </div>
+        </div>
+      );
+    }
+
     const article = response.data[0];
-  
     if (!article) return notFound();
-    
-    const richTextContent = article.blocks[0].body;
-  
+
+    const richTextContent = article.blocks?.[0]?.body || '';
+
     return (
-      <div className="pt-[160px] bg-[#1d1d1d]"> {/* Add padding-top here in a wrapper */}
+      <div className="pt-[160px] bg-[#1d1d1d]">
         <article className="container mx-auto px-4 md:px-6 lg:px-8 max-w-4xl">
-          {/* Article Header */}
           <div className="mb-8 md:mb-12 mt-14">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight gold-gradient-text">
               {article.title}
@@ -39,14 +76,13 @@ interface PageProps {
                   {new Date(article.publishedAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
-                    day: 'numeric'
+                    day: 'numeric',
                   })}
                 </time>
               </div>
             )}
           </div>
-  
-          {/* Featured Image */}
+
           {article.cover?.url && (
             <div className="relative aspect-[16/9] w-full mb-8 md:mb-12 rounded-xl overflow-hidden">
               <Image
@@ -59,12 +95,22 @@ interface PageProps {
               />
             </div>
           )}
-  
-          {/* Article Content */}
+
           <div className="prose prose-lg md:prose-xl prose-invert max-w-none pb-10">
             <ArticleContent content={richTextContent} />
           </div>
         </article>
       </div>
     );
+  } catch (error) {
+    console.error('Error fetching article:', error);
+    return (
+      <div className="pt-[160px] bg-[#1d1d1d] min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-white mb-4">Something went wrong</h1>
+          <p className="text-gray-400">We could not load this article. Please try again later.</p>
+        </div>
+      </div>
+    );
   }
+}

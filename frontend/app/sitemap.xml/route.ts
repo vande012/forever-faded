@@ -8,10 +8,11 @@ type Article = {
 }
 
 export async function GET() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://foreverfaded.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://foreverfadedmke.com';
   
+  // Fetch articles and handle errors gracefully
   const articles = await getArticles()
-    .then(response => response.data as Article[])
+    .then(response => response.data as Article[] || [])
     .catch(() => [] as Article[]);
 
   // Create XML content
