@@ -95,8 +95,8 @@ console.log(`/api/homepage?${homePageQuery}`);
 
 
 export async function getHomepageData() {
-  const path = `/api/homepage?${homePageQuery}`;
-  return await fetchAPI(path, {
+  // Just use the path, not a full URL
+  return await fetchAPI(`/homepage?${homePageQuery}`, {
     method: "GET",
     next: {
       revalidate: 60
@@ -125,14 +125,15 @@ const footerQuery = qs.stringify(
 console.log(`/api/footer?${footerQuery}`);
 
 export async function getFooterData() {
-  const path = `/footer?${footerQuery}`;
-  return await fetchAPI(path, {
+  // Just use the path, not a full URL
+  return await fetchAPI(`/footer?${footerQuery}`, {
     method: "GET",
     next: {
       revalidate: 60
     }
   });
 }
+
 //navbar
 const navbarQuery = qs.stringify(
   {
@@ -164,14 +165,15 @@ const navbarQuery = qs.stringify(
 console.log(`/api/navbar?${navbarQuery}`);
 
 export async function getNavbarData() {
-  const path = `/navbar?${navbarQuery}`;
-  return await fetchAPI(path, {
+  // Just use the path, not a full URL
+  return await fetchAPI(`/navbar?${navbarQuery}`, {
     method: "GET",
     next: {
       revalidate: 60
     }
   });
 }
+
 
 const articleQuery = qs.stringify(
   {
@@ -196,14 +198,14 @@ const articleQuery = qs.stringify(
 );
 
 export async function getArticles() {
-  const path = `/articles?${articleQuery}`;
-  return await fetchAPI(path, {
+  return await fetchAPI(`/articles?${articleQuery}`, {
     method: "GET",
     next: {
       revalidate: 60
     }
   });
 }
+
 export async function getArticleBySlug(slug: string) {
   const query = qs.stringify({
     filters: {
