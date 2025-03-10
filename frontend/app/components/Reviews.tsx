@@ -134,43 +134,7 @@ const Reviews = () => {
     fetchReviews();
   }, []);
   
-  const loadMore = React.useCallback(() => {
-    setIsLoadingMore(true);
-    
-    const currentCount = displayedReviews.length;
-    const nextBatch = reviews.slice(currentCount, currentCount + REVIEWS_PER_PAGE);
-    
-    if (nextBatch.length > 0) {
-      setDisplayedReviews(prev => [...prev, ...nextBatch]);
-      setHasMore(currentCount + nextBatch.length < reviews.length);
-    } else {
-      setHasMore(false);
-    }
-    
-    setIsLoadingMore(false);
-  }, [displayedReviews.length, reviews]);
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
-
-  if (error) {
-    return (
-      <div className="py-16 relative overflow-hidden bg-[#1D1D1D]">
-        <div className="container mx-auto px-4">
-          <div className="text-center">
-            <h2 className="text-white text-xl mb-4">Error loading reviews</h2>
-            <button 
-              onClick={() => window.location.reload()}
-              className="px-6 py-2 gold-gradient-bg text-black font-semibold rounded-lg hover:opacity-90 transition-all duration-300"
-            >
-              Try Again
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  
 
   return (
       <section className="py-16 relative overflow-hidden">
@@ -225,25 +189,6 @@ const Reviews = () => {
               <ReviewCard key={`${review.author_name}-${index}`} review={review} />
             ))}
           </div>
-
-          {hasMore && (
-            <div className="mt-12 text-center">
-              <button
-                onClick={loadMore}
-                disabled={isLoadingMore}
-                className="px-8 py-3 gold-gradient-bg text-black font-semibold rounded-lg hover:opacity-90 transition-all duration-300 disabled:opacity-50 flex items-center gap-2 mx-auto"
-              >
-                {isLoadingMore ? (
-                  <>
-                     <LoadingSpinnerSmall />
-                    <span>Loading...</span>
-                  </>
-                ) : (
-                  'Load More Reviews'
-                )}
-              </button>
-            </div>
-          )}
 
           <div className="mt-12 text-center">
             <a
