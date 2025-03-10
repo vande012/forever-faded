@@ -1,3 +1,5 @@
+import type { NextConfig } from 'next';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -16,22 +18,27 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-     // Add configuration for local images
-     dangerouslyAllowSVG: true,
-     contentDispositionType: 'attachment',
-     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-     minimumCacheTTL: 60,
-     formats: ['image/webp'],
+    // Add configuration for local images
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    minimumCacheTTL: 60,
+    formats: ['image/webp'],
     // Add this to help with image loading in development
     unoptimized: process.env.NODE_ENV === 'development',
   },
   // Keep standalone for production builds
   output: 'standalone',
-  webpack(config: any) {
+  webpack: (config) => {
+    // @ts-ignore
     config.module.rules.push({
       test: /\.(png|jpg|gif|svg|ico|webp)$/i,
-      type: 'asset/resource'
+      type: 'asset/resource',
+      generator: {
+        filename: 'static/media/[name].[hash][ext]'
+      }
     });
+
     return config;
   },
   // Skip type checking during build to avoid issues with dynamic data
@@ -45,7 +52,7 @@ const nextConfig = {
     NEXT_PHASE: process.env.NEXT_PHASE || '',
     NEXT_PUBLIC_STRAPI_API_URL: process.env.NEXT_PUBLIC_STRAPI_API_URL,
     STRAPI_API_TOKEN: process.env.STRAPI_API_TOKEN,
-  },
-}
+  }
+} as NextConfig;
 
-module.exports = nextConfig
+module.exports = nextConfig;

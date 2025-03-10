@@ -11,11 +11,19 @@ type Article = {
   }
   
 
-export const metadata: Metadata = {
-  title: 'Blog Sitemap | Forever Faded',
-  description: 'Complete listing of all blog posts on Forever Faded',
-  robots: 'noindex, follow' // We don't want this page indexed
-};
+  export const metadata: Metadata = {
+    title: 'Blog Sitemap | Forever Faded',
+    description: 'Complete listing of all blog posts on Forever Faded',
+    robots: {
+      index: false,
+      follow: true
+    },
+    openGraph: {
+      title: 'Blog Sitemap | Forever Faded',
+      description: 'Complete listing of all blog posts on Forever Faded',
+      type: 'website'
+    }
+  };
 
 export default async function BlogSitemap() {
     const response = await getArticles();

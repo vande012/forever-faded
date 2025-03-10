@@ -17,8 +17,13 @@ type Article = {
 }
 
 export const metadata: Metadata = {
-  title: 'Blog | Your Site Name',
-  description: 'Read our latest articles and updates',
+  title: 'Blog | Forever Faded Barbershop',
+  description: 'Stay updated with the latest news, trends, and updates from Forever Faded Barbershop in Waukesha, WI',
+  openGraph: {
+    title: 'Blog | Forever Faded Barbershop',
+    description: 'Stay updated with the latest news, trends, and updates from Forever Faded Barbershop',
+    type: 'website'
+  }
 };
 
 export default async function Page() {

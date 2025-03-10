@@ -2,6 +2,17 @@ import Image from "next/image"
 import Link from "next/link"
 import MapAndContact from "../components/MapSection"
 import { getAboutPageHours } from "../data/loaders";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Us | Forever Faded Barbershop",
+  description: "Learn about Forever Faded Barbershop, a premier barbershop in Waukesha, WI offering professional haircuts, beard trims, and grooming services.",
+  openGraph: {
+    title: "About Us | Forever Faded Barbershop",
+    description: "Learn about Forever Faded Barbershop, a premier barbershop in Waukesha, WI offering professional haircuts, beard trims, and grooming services.",
+    type: "website"
+  }
+};
 
 export default async function AboutUs() {
     const homepageData = await getAboutPageHours();

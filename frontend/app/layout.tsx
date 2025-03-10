@@ -1,5 +1,3 @@
-
-
 import "./globals.css";
 import { Urbanist, Roboto, Italianno } from "next/font/google";
 import Navbar from "./components/Navbar";
@@ -11,12 +9,14 @@ import { usePathname } from 'next/navigation'
 import NavbarWrapper from "./components/NavbarWrapper";
 import { CartProvider } from "./components/shop/CartContext";
 import { LoadingProvider } from './components/ui/LoadingContext';
+import type { Metadata } from "next";
 
 const urbanist = Urbanist({ subsets: ["latin"], variable: "--font-urbanist" });
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-roboto",
+  display: "swap", // Add this for better loading behavior
 });
 const italianno = Italianno({
   subsets: ["latin"],
@@ -25,10 +25,24 @@ const italianno = Italianno({
   display: "swap", // Add this for better loading behavior
 });
 
-
-export const metadata = {
-  title: "Forever Faded Barbershop | Waukesha, WI",
-  description: "Your site description",
+export const metadata: Metadata = {
+  metadataBase: new URL('https://forever-faded.vercel.app'),
+  title: {
+    default: "Forever Faded Barbershop | Waukesha, WI",
+    template: "%s | Forever Faded Barbershop"
+  },
+  description: "Premier barbershop in Waukesha, WI offering professional haircuts, beard trims, and grooming services",
+  keywords: ["barbershop", "Waukesha", "haircuts", "beard trims", "grooming"],
+  robots: {
+    index: true,
+    follow: true
+  },
+  viewport: "width=device-width, initial-scale=1",
+  icons: {
+    icon: [
+      { url: '/favicon.ico' }
+    ]
+  }
 };
 
 export default async function RootLayout({

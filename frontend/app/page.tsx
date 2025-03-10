@@ -11,7 +11,13 @@ import { notFound } from "next/navigation";
 import MerchSlider  from "./components/MerchSlider"
 import MapAndContact from "./components/MapSection";
 import RecentBlogPosts from "./components/RecentBlogPosts";
+import type { Metadata } from 'next'
 
+
+export const metadata: Metadata = {
+  title: "Forever Faded Barbershop | Waukesha, WI",
+  description: "Experience premium barbering services at Forever Faded Barbershop in Waukesha, WI. Book your appointment today for expert haircuts and beard trims.",
+};
 
 async function loader() {
   const data = await getHomepageData();
