@@ -171,7 +171,7 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                     </div>
                     <div className="relative h-[400px] rounded-lg overflow-hidden order-1 md:order-2">
                         <Image
-                            src="/Tim.jpg"
+                            src="/theowner.jpg"
                             alt="Tim, Founder"
                             width={600}
                             height={400}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { SiFacebook, SiInstagram, SiX, SiYoutube } from "react-icons/si";
+import { MdEmail, MdStarRate } from "react-icons/md";
 import { getStrapiMedia } from "../utils/get-strapi-url";
 
 interface FooterProps {
@@ -30,10 +31,10 @@ export default function Footer({ data }: FooterProps) {
 
   const getSocialIcon = (platform: string) => {
     switch (platform) {
-      case 'Facebook': return <SiFacebook className="w-5 h-5" />;
-      case 'Instagram': return <SiInstagram className="w-5 h-5" />;
-      case 'X': return <SiX className="w-5 h-5" />;
-      case 'Youtube': return <SiYoutube className="w-5 h-5" />;
+      case 'Facebook': return <SiFacebook className="w-8 h-8" />;
+      case 'Instagram': return <SiInstagram className="w-8 h-8" />;
+      case 'X': return <SiX className="w-8 h-8" />;
+      case 'Youtube': return <SiYoutube className="w-8 h-8" />;
       default: return null;
     }
   };
@@ -43,7 +44,7 @@ export default function Footer({ data }: FooterProps) {
       <div className="container px-4 py-8 mx-auto">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-5 gold-gradient-bg rounded-xl p-8">
           {/* Logo Column */}
-          <div className="flex justify-center md:justify-start">
+          <div className="flex flex-col items-center md:items-start">
             <Image
               priority
               src={logoUrl || "/LogoFooter.png"}
@@ -55,40 +56,68 @@ export default function Footer({ data }: FooterProps) {
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-3 text-center md:text-left">
-            <h3 className="font-urbanist font-semibold">Quick Links</h3>
-            <ul className="space-y-2 font-roboto text-sm">
+          <div className="space-y-4 text-center md:text-left">
+            <h3 className="font-urbanist font-bold text-xl mb-4">Quick Links</h3>
+            <ul className="space-y-3 pl-4 font-roboto">
               {footerData.links.map((link) => (
                 <li key={link.id}>
-                  <Link href={link.url}>{link.displayName}</Link>
+                  <Link 
+                    href={link.url} 
+                    className="text-base font-semibold hover:text-[#CA2C2B] transition-colors"
+                  >
+                    {link.displayName}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Stay Connected */}
-          <div className="space-y-3 text-center md:text-left">
-            <h3 className="font-urbanist font-semibold">Stay Connected</h3>
-            <ul className="space-y-2 font-roboto text-sm">
+          {/* Contact Info */}
+          <div className="space-y-4 text-center md:text-left">
+            <h3 className="font-urbanist font-bold text-xl mb-4">Contact Us</h3>
+            <div className="space-y-3 pl-4">
+              <a 
+                href="mailto:FOREVERFADED11@YAHOO.COM"
+                className="flex items-center justify-center md:justify-start space-x-2 text-base font-semibold hover:text-[#CA2C2B] transition-colors"
+              >
+                <MdEmail className="w-6 h-6" />
+                <span>Send us an Email</span>
+              </a>
+              <a 
+                href="https://g.page/r/CclCTZfShsdHEAE/review"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center md:justify-start space-x-2 text-base font-semibold hover:text-[#CA2C2B] transition-colors"
+              >
+                <MdStarRate className="w-6 h-6" />
+                <span>Leave us a Review</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Social Icons */}
+          <div className="space-y-4 text-center md:text-left col-span-2">
+            <h3 className="font-urbanist font-bold text-xl pl-6 mb-4">Follow Us</h3>
+            <div className="flex items-center justify-center md:justify-start space-x-6 pl-6">
               {footerData.socials.map((social) => (
-                <li key={social.id}>
-                  <Link href={social.url}>{social.platform}</Link>
-                </li>
+                <Link 
+                  key={social.id} 
+                  href={social.url} 
+                  className="hover:text-[#CA2C2B] transition-colors"
+                  aria-label={`Follow us on ${social.platform}`}
+                >
+                  {getSocialIcon(social.platform)}
+                </Link>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="flex flex-col items-center justify-between pt-8 mt-8 border-t md:flex-row text-white">
-          <p className="text-sm font-roboto text-center md:text-left">{footerData.Copyright}</p>
-          <div className="flex items-center space-x-4 mt-4 md:mt-0">
-            {footerData.socials.map((social) => (
-              <Link key={social.id} href={social.url} className="hover:opacity-80">
-                {getSocialIcon(social.platform)}
-              </Link>
-            ))}
-          </div>
+        {/* Bottom Section - Copyright only */}
+        <div className="flex justify-center pt-8 mt-8 border-t">
+          <p className="text-sm font-roboto text-white text-center">
+            {footerData.Copyright}
+          </p>
         </div>
       </div>
     </footer>

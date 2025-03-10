@@ -22,7 +22,6 @@ export const metadata: Metadata = {
 async function loader() {
   const data = await getHomepageData();
   if (!data) notFound();
-  console.log(data);
   return { ...data.data };
 }
 

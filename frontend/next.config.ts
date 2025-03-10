@@ -7,6 +7,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'harmonious-luck-fd75090c58.strapiapp.com',
         port: '',
         pathname: '/**',

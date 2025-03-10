@@ -1,7 +1,7 @@
 import { fetchAPI } from "../utils/fetch-api";
 import qs from "qs";
-import { ArticlesResponse } from "../../types/article";
-
+import { CACHE_TIMES, CACHE_TAGS } from '../lib/cache-config';
+import { cachedFetch } from '../lib/cached-fetch';
 
 const homePageQuery = qs.stringify(
   {
@@ -91,17 +91,45 @@ const homePageQuery = qs.stringify(
   },
 );
 
-console.log(`/api/homepage?${homePageQuery}`);
 
 
 export async function getHomepageData() {
-  // Just use the path, not a full URL
-  return await fetchAPI(`/homepage?${homePageQuery}`, {
-    method: "GET",
-    next: {
-      revalidate: 60
+  const cacheKey = `homepage:${homePageQuery}`;
+  
+  try {
+    // Try session storage first
+    if (typeof window !== 'undefined') {
+      const cached = sessionStorage.getItem(cacheKey);
+      if (cached) {
+        const { data, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < CACHE_TIMES.MEDIUM * 1000) {
+          return data;
+        }
+      }
     }
-  });
+
+    // Fetch from API with caching
+    const data = await fetchAPI(`/homepage?${homePageQuery}`, {
+      method: "GET",
+      next: {
+        revalidate: CACHE_TIMES.MEDIUM,
+        tags: [CACHE_TAGS.HOMEPAGE, CACHE_TAGS.SERVICES]
+      }
+    });
+
+    // Cache in session storage
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem(cacheKey, JSON.stringify({
+        data,
+        timestamp: Date.now()
+      }));
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching homepage data:", error);
+    throw error;
+  }
 }
 const footerQuery = qs.stringify(
   {
@@ -122,7 +150,6 @@ const footerQuery = qs.stringify(
   }
 );
 
-console.log(`/api/footer?${footerQuery}`);
 
 export async function getFooterData() {
   // Just use the path, not a full URL
@@ -162,7 +189,7 @@ const navbarQuery = qs.stringify(
     encodeValuesOnly: true
   }
 );
-console.log(`/api/navbar?${navbarQuery}`);
+
 
 export async function getNavbarData() {
   // Just use the path, not a full URL
@@ -275,7 +302,7 @@ const galleryQuery = qs.stringify(
 );
 
 export async function getGalleryData() {
-  console.log(`Fetching gallery with query: /gallery?${galleryQuery}`);
+ 
   try {
     const data = await fetchAPI(`/gallery?${galleryQuery}`, {
       method: "GET",

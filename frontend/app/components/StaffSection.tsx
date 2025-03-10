@@ -68,7 +68,18 @@ export default function StaffSection() {
     fetchData();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div className="h-screen w-full bg-black flex text-white font-roboto font-bold text-2xl items-center justify-center">
+    <div className="container flex flex-col items-center justify-center">
+            <Image
+              src="/loadinganimation.gif"
+              alt="Loading..."
+              width={200}
+              height={200}
+              priority
+             />
+       <div className="text-center col-span-2">Loading...</div>
+       </div>
+    </div>;
   if (error || !data) return <div>Error loading staff section</div>;
 
    // Function to render the appropriate social media icon

@@ -244,6 +244,9 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
         {isMenuOpen && (
           <div className="md:hidden bg-black/90 rounded-md text-white mt-4 py-6 px-4 max-h-[calc(100vh-200px)] overflow-y-auto">
             <div className="grid grid-cols-1 gap-6">
+            <NavLink href="/" mobile>
+              Home
+            </NavLink>
               {navData.links.map((link) => (
                 <NavLink key={link.id} href={link.href} mobile>
                   {link.text}

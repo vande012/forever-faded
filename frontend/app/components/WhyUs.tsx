@@ -4,7 +4,7 @@ import React from "react";
 import CountUp from "react-countup";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getHomepageData } from "../data/loaders";
 import { getStrapiMedia } from "../utils/get-strapi-url";
 
@@ -33,6 +33,31 @@ export default function WhyUs() {
   const [data, setData] = useState<HomepageData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<any | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.3 // Trigger when 30% of the section is visible
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,8 +77,17 @@ export default function WhyUs() {
 
   if (isLoading) {
     return (
-      <div className="h-screen flex items-center justify-center">
-        Loading...
+      <div className="h-screen w-full bg-black flex text-white font-roboto font-bold text-2xl items-center justify-center">
+      <div className="container flex flex-col items-center justify-center">
+        <Image
+          src="/loadinganimation.gif"
+          alt="Loading..."
+          width={200}
+          height={200}
+          priority
+        />
+        <div className="text-center col-span-2">Loading...</div>
+      </div>
       </div>
     );
   }
@@ -132,7 +166,7 @@ export default function WhyUs() {
             {imageUrl && (
               <Image
                 src={imageUrl}
-                alt={imageAltText}
+                alt={imageAltText || "Why Us Image"}
                 fill
                 style={{ objectFit: "cover" }}
                 className="rounded-lg"

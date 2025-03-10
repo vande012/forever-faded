@@ -145,7 +145,7 @@ export default function StaffPageContent() {
               </p>
               <Link href="/careers">
                 <button className="bg-[#D4AF37] hover:bg-[#C4A027] text-black font-bold py-3 px-6 rounded">
-                  View Open Positions
+                  Contact Us Today
                 </button>
               </Link>
             </div>

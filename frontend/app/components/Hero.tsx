@@ -96,15 +96,24 @@ export default function Hero() {
 
   if (isLoading) {
     return (
-      <div className="h-screen flex items-center justify-center">
-        Loading...
+    <div className="h-screen w-full bg-black flex text-white font-roboto font-bold text-2xl items-center justify-center">
+      <div className="container flex flex-col items-center justify-center">
+        <Image
+          src="/loadinganimation.gif"
+          alt="Loading..."
+          width={200}
+          height={200}
+          priority
+        />
+        <div className="text-center col-span-2">Loading...</div>
+      </div>
       </div>
     );
   }
 
   if (error || !data) {
     return (
-      <div className="h-screen flex items-center justify-center">
+      <div className="h-screen bg-black flex text-white items-center justify-center">
         Error loading content
       </div>
     );

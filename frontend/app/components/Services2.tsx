@@ -1,16 +1,20 @@
 "use client";
 
+import React, { useEffect, useState, useCallback } from "react";
 import { Button } from "../components/ui/button";
-import { useEffect, useState } from "react";
-import { getHomepageData } from "../data/loaders";
+import { Suspense } from 'react';
+import LoadingSpinner from './ui/LoadingSpinner';
+import { ErrorBoundary } from './ui/ErrorBoundary';
+import { HairIcon, BeardIcon, SpecialtyIcon, MilitaryIcon } from './ui/icons';
+import { getHomepageData } from '../data/loaders';
 
-const BOOKING_URL = "https://getsquire.com/booking/book/forever-faded-llc-waukesha"
+const BOOKING_URL = "https://getsquire.com/booking/book/forever-faded-llc-waukesha";
+const CACHE_KEY = 'services-data';
 
-// Define the ServiceItem type
 interface ServiceItem {
   id: number;
   name: string;
-  description: string;
+  description: string | null;
   cost?: string;  
   time?: string;  
 }
@@ -25,316 +29,185 @@ interface ServiceBlock {
   category1: string;
   category2: string;
 }
+
 interface HomepageData {
   id: number;
-  blocks: any[];
+  documentId: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  blocks: any[];
 }
 
-export default function ServicesSection() {
-  const [data, setData] = useState<HomepageData | null>(null);
-  const [ setIsLoading] = useState<boolean>(true);
+const ServiceCard = React.memo(({ item }: { item: ServiceItem }) => (
+  <a 
+    href={BOOKING_URL} 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="block space-y-2 border-b border-gray-800 pb-3 hover:bg-gray-900/30 transition-colors duration-200 rounded-md p-2 cursor-pointer"
+  >
+    <div className="flex justify-between items-center">
+      <h3 className="font-urbanist text-lg text-white">
+        {item.name}
+      </h3>
+      {item.cost && (
+        <span className="font-urbanist text-lg text-[#D3A84C]">
+          ${item.cost}
+        </span>
+      )}
+    </div>
+    <div className="flex justify-between">
+      <p className="font-roboto text-sm text-gray-400">
+        {item.description}
+      </p>
+      {item.time && (
+        <span className="font-roboto text-sm text-gray-400">
+          {item.time}
+        </span>
+      )}
+    </div>
+  </a>
+));
+
+ServiceCard.displayName = 'ServiceCard';
+
+function ServicesContent() {
+  const [data, setData] = useState<ServiceBlock | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const homepageData = await getHomepageData();
-        setData(homepageData.data);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('An error occurred'));
-        console.error("Error fetching homepage data:", err);
-      } 
-    };
+  const fetchData = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      const response = await getHomepageData();
+      console.log('Raw homepage response:', response);
 
-    fetchData();
+      // Debug logs
+      if (!response?.data) {
+        console.error('Response has no data property');
+        throw new Error('Invalid response structure');
+      }
+
+      // Access blocks directly from data
+      if (!Array.isArray(response.data.blocks)) {
+        console.error('Blocks is not an array:', response.data);
+        throw new Error('Invalid response structure: blocks is not an array');
+      }
+
+      // Find the service section block
+      const serviceBlock = response.data.blocks.find(
+        (block: any): block is ServiceBlock => block.__component === "blocks.service-section"
+      );
+
+      console.log('Found service block:', serviceBlock);
+
+      if (!serviceBlock) {
+        throw new Error('Service section not found in blocks');
+      }
+
+      // Validate the service block structure
+      if (!serviceBlock.service || !serviceBlock.service1 || !serviceBlock.service2) {
+        console.error('Invalid service block structure:', serviceBlock);
+        throw new Error('Invalid service block structure');
+      }
+
+      setData(serviceBlock);
+    } catch (err) {
+      console.error("Error fetching homepage data:", err);
+      setError(err instanceof Error ? err : new Error('Failed to load services'));
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
-  if (error || !data) {
-    return <p>Error loading services</p>;
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  if (isLoading) {
+    return (
+      <div className="w-full py-12 bg-black flex justify-center items-center">
+        <LoadingSpinner />
+      </div>
+    );
   }
 
-  const isServiceSectionBlock = (block: any): block is ServiceBlock => {
-    return block.__component === "blocks.service-section";
-  };
-
-  const servicesData = data.blocks.find(isServiceSectionBlock);
-
-  if (!servicesData) {
-    return <div>Services section not found</div>;
+  if (error || !data) {
+    return (
+      <div className="py-16 relative overflow-hidden bg-black">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <h2 className="text-white text-xl mb-4">Unable to load services</h2>
+            <p className="text-gray-400 mb-6">{error?.message || 'Please try again'}</p>
+            <Button 
+              onClick={fetchData}
+              className="gold-gradient-bg text-black hover:opacity-90 transition-all duration-300"
+            >
+              Try Again
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
     <section className="w-full py-12 bg-black">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Hair Category */}
+          {/* Face & Beard Services */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-lg flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-20 h-20"
-                  viewBox="0 0 107 109"
-                  fill="none"
-                >
-                  <path
-                    d="M67.2563 0.0974627C61.0837 0.0394672 55.4072 4.66901 53.2261 10.9203C51.0274 4.61453 45.2696 -0.0344949 39.0338 0.104506C35.618 0.180816 32.0597 1.69269 28.8609 5.16021C26.268 7.97029 24.8227 11.6834 23.3434 15.4327C19.9524 20.7133 15.4162 24.6533 8.84002 26.2039C10.4225 27.7005 12.1473 28.4791 13.9617 28.8015C10.7534 30.6395 6.36982 31.6552 0.108521 31.3326C4.74916 37.5142 12.0092 39.6168 19.6133 39.4407C33.339 38.8913 40.2864 31.6158 44.3533 24.2081L48.0196 26.38C43.4109 34.775 34.6479 43.1712 19.2462 43.7772V43.9463C19.2462 45.3708 19.5446 47.0926 20.0795 49.0381L20.023 48.9282L26.6918 75.9008L27.7374 66.8315C31.602 74.2182 36.2532 82.0446 40.5172 88.8956L40.8844 78.065C42.2023 87.108 45.5594 95.3053 49.7149 103.181C51.8256 106.353 53.1624 108.295 53.1624 108.295C53.1624 108.295 54.7342 106.019 57.2033 102.293C57.2191 102.27 57.2376 102.243 57.253 102.22C61.9461 94.5143 65.8561 86.4283 67.751 77.3533L67.5107 86.1437C69.6225 82.7001 71.7885 79.0791 73.8757 75.4237V82.108L83.0388 57.6595C85.2716 52.5913 86.7715 48.1355 87.0302 44.9C72.1748 43.0411 61.8905 35.0713 57.1187 26.3802L60.7855 24.2083C65.2394 32.3211 75.8278 40.393 92.0528 40.8936C95.463 40.8232 98.8133 40.043 102.36 38.2373C99.0088 38.265 96.148 37.9838 93.6495 37.4303C98.9259 36.2244 103.501 33.4869 106.337 28.515C83.1568 33.5068 85.9141 14.1875 77.5847 5.15997C74.3362 1.63939 70.719 0.129865 67.2563 0.0974627Z"
-                    fill="url(#paint0_linear_84_38614)"
-                  />
-                  <defs>
-                    <linearGradient
-                      id="paint0_linear_84_38614"
-                      x1="0.108521"
-                      y1="54.1962"
-                      x2="106.337"
-                      y2="54.1962"
-                      gradientUnits="userSpaceOnUse"
-                    >
-                      <stop stopColor="#A47A1E" />
-                      <stop offset="0.24" stopColor="#D3A84C" />
-                      <stop offset="0.485" stopColor="#D3A84C" />
-                      <stop offset="0.69" stopColor="#E6BE69" />
-                      <stop offset="0.8375" stopColor="#AA8A48" />
-                      <stop offset="0.985" stopColor="#B58F3E" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
+              <BeardIcon />
               <h2 className="text-2xl md:text-2xl font-urbanist font-bold text-white">
-                {servicesData.category}
+                {data.category || 'Face & Beard Services'}
               </h2>
             </div>
             <div className="space-y-4">
-              {servicesData.service &&
-                servicesData.service.map((item) => (
-                  <a 
-                    key={item.id} 
-                    href={BOOKING_URL} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="block space-y-2 border-b border-gray-800 pb-3 hover:bg-gray-900/30 transition-colors duration-200 rounded-md p-2 cursor-pointer"
-                  >
-                    <div className="flex justify-between items-center">
-                      <h3 className="font-urbanist text-lg text-white">
-                        {item.name}
-                      </h3>
-                      {item.cost && (
-                        <span className="font-urbanist text-lg text-[#D3A84C]">
-                          ${item.cost}
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex justify-between">
-                      <p className="font-roboto text-sm text-gray-400">
-                        {item.description}
-                      </p>
-                      {item.time && (
-                        <span className="font-roboto text-sm text-gray-400">
-                          {item.time}
-                        </span>
-                      )}
-                    </div>
-      
-                
-                  </a>
-                ))}
+              {data.service?.map((item) => (
+                <ServiceCard key={item.id} item={item} />
+              ))}
             </div>
           </div>
-          
-          {/* Face & Beard Category */}
+
+          {/* Hair Services */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-lg flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="88"
-                  height="87"
-                  viewBox="0 0 88 87"
-                  fill="none"
-                >
-                  <path
-                    d="M74.0999 4.6553L48.0656 30.3722L56.7437 38.9446L87.117 8.94146V4.6553M43.7266 45.3738C43.1512 45.3738 42.5994 45.148 42.1925 44.7461C41.7857 44.3442 41.5571 43.7991 41.5571 43.2307C41.5571 42.6623 41.7857 42.1172 42.1925 41.7153C42.5994 41.3134 43.1512 41.0876 43.7266 41.0876C44.302 41.0876 44.8538 41.3134 45.2607 41.7153C45.6676 42.1172 45.8961 42.6623 45.8961 43.2307C45.8961 43.7991 45.6676 44.3442 45.2607 44.7461C44.8538 45.148 44.302 45.3738 43.7266 45.3738ZM17.6924 77.52C15.3908 77.52 13.1835 76.6168 11.556 75.0092C9.92856 73.4016 9.01427 71.2212 9.01427 68.9477C9.01427 66.6742 9.92856 64.4938 11.556 62.8861C13.1835 61.2785 15.3908 60.3754 17.6924 60.3754C19.9939 60.3754 22.2012 61.2785 23.8287 62.8861C25.4561 64.4938 26.3704 66.6742 26.3704 68.9477C26.3704 71.2212 25.4561 73.4016 23.8287 75.0092C22.2012 76.6168 19.9939 77.52 17.6924 77.52ZM17.6924 26.0861C15.3908 26.0861 13.1835 25.1829 11.556 23.5753C9.92856 21.9677 9.01427 19.7873 9.01427 17.5138C9.01427 15.2403 9.92856 13.0599 11.556 11.4522C13.1835 9.84461 15.3908 8.94146 17.6924 8.94146C19.9939 8.94146 22.2012 9.84461 23.8287 11.4522C25.4561 13.0599 26.3704 15.2403 26.3704 17.5138C26.3704 19.7873 25.4561 21.9677 23.8287 23.5753C22.2012 25.1829 19.9939 26.0861 17.6924 26.0861ZM33.4865 24.5431C34.4844 22.4 35.0485 20.0426 35.0485 17.5138C35.0485 12.9667 33.2199 8.60593 29.965 5.39069C26.7101 2.17545 22.2955 0.369141 17.6924 0.369141C13.0892 0.369141 8.6746 2.17545 5.41969 5.39069C2.16477 8.60593 0.336182 12.9667 0.336182 17.5138C0.336182 22.0608 2.16477 26.4216 5.41969 29.6369C8.6746 32.8521 13.0892 34.6584 17.6924 34.6584C20.2524 34.6584 22.6389 34.1012 24.8084 33.1154L35.0485 43.2307L24.8084 53.3461C22.6389 52.3602 20.2524 51.803 17.6924 51.803C13.0892 51.803 8.6746 53.6093 5.41969 56.8246C2.16477 60.0398 0.336182 64.4006 0.336182 68.9477C0.336182 73.4947 2.16477 77.8555 5.41969 81.0708C8.6746 84.286 13.0892 86.0923 17.6924 86.0923C22.2955 86.0923 26.7101 84.286 29.965 81.0708C33.2199 77.8555 35.0485 73.4947 35.0485 68.9477C35.0485 66.4188 34.4844 64.0615 33.4865 61.9184L43.7266 51.803L74.0999 81.8061H87.117V77.52L33.4865 24.5431Z"
-                    fill="url(#paint0_linear_84_38635)"
-                  />
-                  <defs>
-                    <linearGradient
-                      id="paint0_linear_84_38635"
-                      x1="0.336182"
-                      y1="43.2307"
-                      x2="87.117"
-                      y2="43.2307"
-                      gradientUnits="userSpaceOnUse"
-                    >
-                      <stop stopColor="#A47A1E" />
-                      <stop offset="0.24" stopColor="#D3A84C" />
-                      <stop offset="0.485" stopColor="#D3A84C" />
-                      <stop offset="0.69" stopColor="#E6BE69" />
-                      <stop offset="0.8375" stopColor="#AA8A48" />
-                      <stop offset="0.985" stopColor="#B58F3E" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
+              <HairIcon />
               <h2 className="text-2xl md:text-2xl font-urbanist font-bold text-white">
-                {servicesData.category1}
+                {data.category1 || 'Hair Services'}
               </h2>
             </div>
             <div className="space-y-4">
-              {servicesData.service1 &&
-                servicesData.service1.map((item) => (
-                  <a 
-                  key={item.id} 
-                  href={BOOKING_URL} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="block space-y-2 border-b border-gray-800 pb-3 hover:bg-gray-900/30 transition-colors duration-200 rounded-md p-2 cursor-pointer"
-                >
-                    <div className="flex justify-between items-center">
-                      <h3 className="font-urbanist text-lg text-white">
-                        {item.name}
-                      </h3>
-                      {item.cost && (
-                        <span className="font-urbanist text-lg text-[#D3A84C]">
-                          ${item.cost}
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex justify-between">
-                      <p className="font-roboto text-sm text-gray-400">
-                        {item.description}
-                      </p>
-                      {item.time && (
-                        <span className="font-roboto text-sm text-gray-400">
-                          {item.time}
-                        </span>
-                      )}
-                    </div>
-                  </a>
-                ))}
+              {data.service1?.map((item) => (
+                <ServiceCard key={item.id} item={item} />
+              ))}
             </div>
           </div>
-          
-          {/* Specialty Category */}
+
+          {/* Specialty Services */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-lg flex items-center justify-center">
-              <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="80"
-                  height="80"
-                  viewBox="0 0 512 512"
-                  fill="none"
-                >
-                  <path
-                    d="M208,512a24.84,24.84,0,0,1-23.34-16l-39.84-103.6a16.06,16.06,0,0,0-9.19-9.19L32,343.34a25,25,0,0,1,0-46.68l103.6-39.84a16.06,16.06,0,0,0,9.19-9.19L184.66,144a25,25,0,0,1,46.68,0l39.84,103.6a16.06,16.06,0,0,0,9.19,9.19l103,39.63A25.49,25.49,0,0,1,400,320.52a24.82,24.82,0,0,1-16,22.82l-103.6,39.84a16.06,16.06,0,0,0-9.19,9.19L231.34,496A24.84,24.84,0,0,1,208,512Zm66.85-254.84h0Z"
-                    fill="url(#paint0_linear_84_38626)"
-                  />
-                  <path
-                    d="M88,176a14.67,14.67,0,0,1-13.69-9.4L57.45,122.76a7.28,7.28,0,0,0-4.21-4.21L9.4,101.69a14.67,14.67,0,0,1,0-27.38L53.24,57.45a7.31,7.31,0,0,0,4.21-4.21L74.16,9.79A15,15,0,0,1,86.23.11,14.67,14.67,0,0,1,101.69,9.4l16.86,43.84a7.31,7.31,0,0,0,4.21,4.21L166.6,74.31a14.67,14.67,0,0,1,0,27.38l-43.84,16.86a7.28,7.28,0,0,0-4.21,4.21L101.69,166.6A14.67,14.67,0,0,1,88,176Z"
-                    fill="url(#paint0_linear_84_38626)"
-                  />
-                  <path
-                    d="M400,256a16,16,0,0,1-14.93-10.26l-22.84-59.37a8,8,0,0,0-4.6-4.6l-59.37-22.84a16,16,0,0,1,0-29.86l59.37-22.84a8,8,0,0,0,4.6-4.6L384.9,42.68a16.45,16.45,0,0,1,13.17-10.57,16,16,0,0,1,16.86,10.15l22.84,59.37a8,8,0,0,0,4.6,4.6l59.37,22.84a16,16,0,0,1,0,29.86l-59.37,22.84a8,8,0,0,0-4.6,4.6l-22.84,59.37A16,16,0,0,1,400,256Z"
-                    fill="url(#paint0_linear_84_38626)"
-                  />
-                  <defs>
-                    <linearGradient
-                      id="paint0_linear_84_38626"
-                      x1="0.6875"
-                      y1="39.959"
-                      x2="75.9769"
-                      y2="39.959"
-                      gradientUnits="userSpaceOnUse"
-                    >
-                      <stop stopColor="#A47A1E" />
-                      <stop offset="0.24" stopColor="#D3A84C" />
-                      <stop offset="0.485" stopColor="#D3A84C" />
-                      <stop offset="0.69" stopColor="#E6BE69" />
-                      <stop offset="0.8375" stopColor="#AA8A48" />
-                      <stop offset="0.985" stopColor="#B58F3E" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
+              <SpecialtyIcon />
               <h2 className="text-2xl md:text-2xl font-urbanist font-bold text-white">
-                {servicesData.category2}
+                {data.category2 || 'Specialty Services'}
               </h2>
             </div>
             <div className="space-y-4">
-              {servicesData.service2 &&
-                servicesData.service2.map((item) => (
-                  <a 
-                    key={item.id} 
-                    href={BOOKING_URL} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="block space-y-2 border-b border-gray-800 pb-3 hover:bg-gray-900/30 transition-colors duration-200 rounded-md p-2 cursor-pointer"
-                  >
-                    <div className="flex justify-between items-center">
-                      <h3 className="font-urbanist text-lg text-white">
-                        {item.name}
-                      </h3>
-                      {item.cost && (
-                        <span className="font-urbanist text-lg text-[#D3A84C]">
-                          ${item.cost}
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex justify-between">
-                      <p className="font-roboto text-sm text-gray-400">
-                        {item.description}
-                      </p>
-                      {item.time && (
-                        <span className="font-roboto text-sm text-gray-400">
-                          {item.time}
-                        </span>
-                      )}
-                    </div>
-                  </a>
-                ))}
+              {data.service2?.map((item) => (
+                <ServiceCard key={item.id} item={item} />
+              ))}
             </div>
           </div>
         </div>
 
         {/* Military & First Responder Discount */}
-
         <div className="mt-12 p-6 bg-gradient-to-r from-[#C6A55C]/10 via-[#E3CC88]/10 to-[#C6A55C]/10 rounded-lg border border-[#C6A55C]/20">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="99"
-                  height="72"
-                  viewBox="0 0 99 72"
-                  fill="none"
-                >
-                  <path
-                    d="M0.723877 0.669678V39.828H98.4815V31.9964H53.3626V24.1647H98.4815V16.333H53.3626V8.50135H98.4815V0.669678H0.723877ZM8.24369 4.58551C9.24088 4.58551 10.1972 4.99807 10.9023 5.73244C11.6075 6.4668 12.0036 7.4628 12.0036 8.50135C12.0036 9.53989 11.6075 10.5359 10.9023 11.2703C10.1972 12.0046 9.24088 12.4172 8.24369 12.4172C7.2465 12.4172 6.29016 12.0046 5.58504 11.2703C4.87992 10.5359 4.48378 9.53989 4.48378 8.50135C4.48378 7.4628 4.87992 6.4668 5.58504 5.73244C6.29016 4.99807 7.2465 4.58551 8.24369 4.58551ZM23.2833 4.58551C24.2805 4.58551 25.2369 4.99807 25.942 5.73244C26.6471 6.4668 27.0432 7.4628 27.0432 8.50135C27.0432 9.53989 26.6471 10.5359 25.942 11.2703C25.2369 12.0046 24.2805 12.4172 23.2833 12.4172C22.2861 12.4172 21.3298 12.0046 20.6247 11.2703C19.9195 10.5359 19.5234 9.53989 19.5234 8.50135C19.5234 7.4628 19.9195 6.4668 20.6247 5.73244C21.3298 4.99807 22.2861 4.58551 23.2833 4.58551ZM38.3229 4.58551C39.3201 4.58551 40.2765 4.99807 40.9816 5.73244C41.6867 6.4668 42.0829 7.4628 42.0829 8.50135C42.0829 9.53989 41.6867 10.5359 40.9816 11.2703C40.2765 12.0046 39.3201 12.4172 38.3229 12.4172C37.3258 12.4172 36.3694 12.0046 35.6643 11.2703C34.9592 10.5359 34.563 9.53989 34.563 8.50135C34.563 7.4628 34.9592 6.4668 35.6643 5.73244C36.3694 4.99807 37.3258 4.58551 38.3229 4.58551ZM15.7635 16.333C16.7607 16.333 17.717 16.7456 18.4222 17.4799C19.1273 18.2143 19.5234 19.2103 19.5234 20.2489C19.5234 21.2874 19.1273 22.2834 18.4222 23.0178C17.717 23.7521 16.7607 24.1647 15.7635 24.1647C14.7663 24.1647 13.81 23.7521 13.1049 23.0178C12.3997 22.2834 12.0036 21.2874 12.0036 20.2489C12.0036 19.2103 12.3997 18.2143 13.1049 17.4799C13.81 16.7456 14.7663 16.333 15.7635 16.333ZM30.8031 16.333C31.8003 16.333 32.7567 16.7456 33.4618 17.4799C34.1669 18.2143 34.563 19.2103 34.563 20.2489C34.563 21.2874 34.1669 22.2834 33.4618 23.0178C32.7567 23.7521 31.8003 24.1647 30.8031 24.1647C29.8059 24.1647 28.8496 23.7521 28.1445 23.0178C27.4394 22.2834 27.0432 21.2874 27.0432 20.2489C27.0432 19.2103 27.4394 18.2143 28.1445 17.4799C28.8496 16.7456 29.8059 16.333 30.8031 16.333ZM45.8428 16.333C46.84 16.333 47.7963 16.7456 48.5014 17.4799C49.2065 18.2143 49.6027 19.2103 49.6027 20.2489C49.6027 21.2874 49.2065 22.2834 48.5014 23.0178C47.7963 23.7521 46.84 24.1647 45.8428 24.1647C44.8456 24.1647 43.8892 23.7521 43.1841 23.0178C42.479 22.2834 42.0829 21.2874 42.0829 20.2489C42.0829 19.2103 42.479 18.2143 43.1841 17.4799C43.8892 16.7456 44.8456 16.333 45.8428 16.333ZM8.24369 28.0805C9.24088 28.0805 10.1972 28.4931 10.9023 29.2274C11.6075 29.9618 12.0036 30.9578 12.0036 31.9964C12.0036 33.0349 11.6075 34.0309 10.9023 34.7653C10.1972 35.4996 9.24088 35.9122 8.24369 35.9122C7.2465 35.9122 6.29016 35.4996 5.58504 34.7653C4.87992 34.0309 4.48378 33.0349 4.48378 31.9964C4.48378 30.9578 4.87992 29.9618 5.58504 29.2274C6.29016 28.4931 7.2465 28.0805 8.24369 28.0805ZM23.2833 28.0805C24.2805 28.0805 25.2369 28.4931 25.942 29.2274C26.6471 29.9618 27.0432 30.9578 27.0432 31.9964C27.0432 33.0349 26.6471 34.0309 25.942 34.7653C25.2369 35.4996 24.2805 35.9122 23.2833 35.9122C22.2861 35.9122 21.3298 35.4996 20.6247 34.7653C19.9195 34.0309 19.5234 33.0349 19.5234 31.9964C19.5234 30.9578 19.9195 29.9618 20.6247 29.2274C21.3298 28.4931 22.2861 28.0805 23.2833 28.0805ZM38.3229 28.0805C39.3201 28.0805 40.2765 28.4931 40.9816 29.2274C41.6867 29.9618 42.0829 30.9578 42.0829 31.9964C42.0829 33.0349 41.6867 34.0309 40.9816 34.7653C40.2765 35.4996 39.3201 35.9122 38.3229 35.9122C37.3258 35.9122 36.3694 35.4996 35.6643 34.7653C34.9592 34.0309 34.563 33.0349 34.563 31.9964C34.563 30.9578 34.9592 29.9618 35.6643 29.2274C36.3694 28.4931 37.3258 28.0805 38.3229 28.0805ZM0.723877 47.6597V55.4914H98.4815V47.6597H0.723877ZM0.723877 63.323V71.1547H98.4815V63.323H0.723877Z"
-                    fill="url(#paint0_linear_84_38631)"
-                  />
-                  <defs>
-                    <linearGradient
-                      id="paint0_linear_84_38631"
-                      x1="0.723877"
-                      y1="35.9122"
-                      x2="98.4815"
-                      y2="35.9122"
-                      gradientUnits="userSpaceOnUse"
-                    >
-                      <stop stopColor="#A47A1E" />
-                      <stop offset="0.24" stopColor="#D3A84C" />
-                      <stop offset="0.485" stopColor="#D3A84C" />
-                      <stop offset="0.69" stopColor="#E6BE69" />
-                      <stop offset="0.8375" stopColor="#AA8A48" />
-                      <stop offset="0.985" stopColor="#B58F3E" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
+              <MilitaryIcon />
               <div>
                 <h2 className="font-urbanist text-2xl font-bold text-white bg-clip-text">
                   Military | First Responder | Senior Discount
@@ -344,7 +217,10 @@ export default function ServicesSection() {
                 </p>
               </div>
             </div>
-            <Button className="gold-gradient-bg text-black hover:from-[#E3CC88] hover:via-[#C6A55C] hover:to-[#E3CC88] transition-all duration-300">
+            <Button 
+              onClick={() => window.open(BOOKING_URL, '_blank')}
+              className="gold-gradient-bg text-black hover:opacity-90 transition-all duration-300"
+            >
               Book Now
             </Button>
           </div>
@@ -355,5 +231,31 @@ export default function ServicesSection() {
         </p>
       </div>
     </section>
+  );
+}
+
+// Wrap with ErrorBoundary
+export default function ServicesSection() {
+  return (
+    <ErrorBoundary
+      fallback={({ error, reset }) => (
+        <div className="py-16 relative overflow-hidden bg-black">
+          <div className="container mx-auto px-4">
+            <div className="text-center">
+              <h2 className="text-white text-xl mb-4">Something went wrong</h2>
+              <p className="text-gray-400 mb-6">{error.message}</p>
+              <Button 
+                onClick={reset}
+                className="gold-gradient-bg text-black hover:opacity-90 transition-all duration-300"
+              >
+                Try Again
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+    >
+      <ServicesContent />
+    </ErrorBoundary>
   );
 }
