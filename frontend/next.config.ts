@@ -16,12 +16,24 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+     // Add configuration for local images
+     dangerouslyAllowSVG: true,
+     contentDispositionType: 'attachment',
+     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+     minimumCacheTTL: 60,
+     formats: ['image/webp'],
     // Add this to help with image loading in development
     unoptimized: process.env.NODE_ENV === 'development',
   },
   // Keep standalone for production builds
   output: 'standalone',
-  
+  webpack(config: any) {
+    config.module.rules.push({
+      test: /\.(png|jpg|gif|svg|ico|webp)$/i,
+      type: 'asset/resource'
+    });
+    return config;
+  },
   // Skip type checking during build to avoid issues with dynamic data
   typescript: {
     // Still show errors in development

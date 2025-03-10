@@ -1,6 +1,7 @@
 import { getArticles } from '../data/loaders';
 import Link from 'next/link';
 import { formatDistance } from 'date-fns';
+import { Metadata } from 'next';
 
 type Article = {
     id: number;
@@ -10,7 +11,7 @@ type Article = {
   }
   
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Blog Sitemap | Forever Faded',
   description: 'Complete listing of all blog posts on Forever Faded',
   robots: 'noindex, follow' // We don't want this page indexed
