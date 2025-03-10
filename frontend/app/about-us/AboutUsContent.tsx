@@ -16,7 +16,7 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
             {/* Hero Section */}
             <div className="relative h-[500px] mt-40 w-full overflow-hidden">
                 <Image
-                    src="/storefront.jpg"
+                    src="/Storefront.jpg"
                     alt="Barber shop interior"
                     width={1920}
                     height={500}
