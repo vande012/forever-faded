@@ -6,8 +6,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { getHomepageData } from "../data/loaders";
-import { getStrapiURL } from "../utils/get-strapi-url";
-import { image } from "motion/react-client";
+import { getStrapiMedia } from "../utils/get-strapi-url";
 
 interface WhyUsBlock {
   __component: "blocks.why-us";
@@ -78,9 +77,9 @@ export default function WhyUs() {
   }
 
   const imageUrl = whyUsSection.image
-    ? `${getStrapiURL()}${whyUsSection.image.url}`
+    ? getStrapiMedia(whyUsSection.image.url)
     : null;
-  const imageAltText = whyUsSection.image?.alternativeText;
+  const imageAltText = whyUsSection.image?.alternativeText || "Why Choose Forever Faded";
 
   const subheaderText = whyUsSection?.subheader || "Default Subheader";
   const descriptionText = whyUsSection?.description || "Default Description";
@@ -133,7 +132,7 @@ export default function WhyUs() {
             {imageUrl && (
               <Image
                 src={imageUrl}
-                alt={imageAltText || "Why Us Image"}
+                alt={imageAltText}
                 fill
                 style={{ objectFit: "cover" }}
                 className="rounded-lg"

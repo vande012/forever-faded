@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useScrollPosition } from "../hooks/useScrollPosition";
 import { Phone, MapPin, Clock, Menu, X, ShoppingCart } from "lucide-react";
-import { getStrapiURL } from "../utils/get-strapi-url";
+import { getStrapiMedia } from "../utils/get-strapi-url";
 import { usePathname } from "next/navigation";
 
 interface NavbarProps {
@@ -79,7 +79,7 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
 
   const navData = data.data;
   const logoUrl = navData.navlogo
-    ? `${getStrapiURL()}${navData.navlogo.url}`
+    ? getStrapiMedia(navData.navlogo.url)
     : "/navlogo.png";
 
     const convertTo12Hour = (time: string) => {

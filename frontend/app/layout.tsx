@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation'
 import NavbarWrapper from "./components/NavbarWrapper";
 import { CartProvider } from "./components/shop/CartContext";
 import { LoadingProvider } from './components/ui/LoadingContext';
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 const urbanist = Urbanist({ subsets: ["latin"], variable: "--font-urbanist" });
 const roboto = Roboto({
@@ -37,13 +37,8 @@ export const metadata: Metadata = {
     index: true,
     follow: true
   },
-  viewport: "width=device-width, initial-scale=1",
-  icons: {
-    icon: [
-      { url: '/favicon.ico' }
-    ]
-  }
 };
+
 
 export default async function RootLayout({
   children,

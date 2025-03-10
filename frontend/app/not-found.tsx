@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 
 export const metadata: Metadata = {
   title: '404 - Page Not Found | Forever Faded',
@@ -8,6 +8,11 @@ export const metadata: Metadata = {
     index: false,
     follow: true
   }
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1
 };
 
 export default function NotFound() {
@@ -40,4 +45,4 @@ export default function NotFound() {
       </div>
     </div>
   );
-}
+} 

@@ -8,7 +8,7 @@ interface FetchAPIOptions {
 
 export async function fetchAPI(path: string, options: FetchAPIOptions = {}) {
   const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
-  const apiToken = process.env.STRAPI_API_TOKEN;
+  const apiToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
   
   if (!apiUrl) {
     console.error('NEXT_PUBLIC_STRAPI_API_URL is not set in environment variables');
@@ -16,7 +16,7 @@ export async function fetchAPI(path: string, options: FetchAPIOptions = {}) {
   }
 
   if (!apiToken) {
-    console.error('STRAPI_API_TOKEN is not set in environment variables');
+    console.error('NEXT_PUBLIC_STRAPI_API_TOKEN is not set in environment variables');
     throw new Error('Missing API token');
   }
 
