@@ -1,0 +1,25 @@
+{
+    "collectionName": "components_shared_variants",
+    "info": {
+        "displayName": "variants"
+    },
+    "options": {},
+    "attributes": {
+        "color": {
+            "type": "string"
+        },
+        "quantity": {
+            "type": "integer"
+        },
+        "images": {
+            "allowedTypes": [
+                "images",
+                "files",
+                "videos",
+                "audios"
+            ],
+            "type": "media",
+            "multiple": true
+        }
+    }
+}

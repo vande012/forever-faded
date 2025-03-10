@@ -7,16 +7,62 @@ exports.default = [
     {
         name: 'strapi::cors',
         config: {
-            origin: ['http://localhost:3000', 'https://forever-faded.vercel.app/'], // Add your Next.js frontend URLs here
-            methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-            headers: ['Content-Type', 'Authorization'],
+            enabled: true,
+            origin: [
+                'https://forever-faded.vercel.app', // Production
+                'http://localhost:3000', // Local development
+                (ctx) => {
+                    const requestOrigin = ctx.request.header.origin;
+                    if (requestOrigin === null || requestOrigin === void 0 ? void 0 : requestOrigin.includes('-vande012s-projects.vercel.app')) {
+                        return requestOrigin;
+                    }
+                    return false;
+                }
+            ],
+            methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+            headers: [
+                '*',
+                'Cache-Control',
+                'Content-Type',
+                'Authorization',
+                'X-Frame-Options',
+                'If-None-Match'
+            ],
             credentials: true,
+            keepHeaderOnError: true,
         },
     },
-    'strapi::poweredBy',
-    'strapi::query',
-    'strapi::body',
-    'strapi::session',
+    {
+        name: 'strapi::poweredBy',
+        config: { poweredBy: 'Forever Faded API' }
+    },
+    {
+        name: 'strapi::query',
+        config: {
+            cache: {
+                enabled: true,
+                maxAge: 3600000, // 1 hour in milliseconds
+            }
+        }
+    },
+    {
+        name: 'strapi::body',
+        config: {
+            jsonLimit: '10mb',
+        }
+    },
+    {
+        name: 'strapi::session',
+        config: {
+            maxAge: 86400000, // 24 hours in milliseconds
+        }
+    },
     'strapi::favicon',
-    'strapi::public',
+    {
+        name: 'strapi::public',
+        config: {
+            maxAge: 31536000, // 1 year in seconds
+            defaultIndex: false
+        }
+    },
 ];

@@ -1,0 +1,21 @@
+{
+    "collectionName": "components_shared_items",
+    "info": {
+        "displayName": "items"
+    },
+    "options": {},
+    "attributes": {
+        "productID": {
+            "type": "integer"
+        },
+        "variantColor": {
+            "type": "string"
+        },
+        "quantity": {
+            "type": "integer"
+        },
+        "amount": {
+            "type": "decimal"
+        }
+    }
+}

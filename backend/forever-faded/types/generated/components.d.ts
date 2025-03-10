@@ -170,6 +170,19 @@ export interface SharedHours extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedItems extends Struct.ComponentSchema {
+  collectionName: 'components_shared_items';
+  info: {
+    displayName: 'items';
+  };
+  attributes: {
+    amount: Schema.Attribute.Decimal;
+    productID: Schema.Attribute.Integer;
+    quantity: Schema.Attribute.Integer;
+    variantColor: Schema.Attribute.String;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -351,6 +364,21 @@ export interface SharedValues extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedVariants extends Struct.ComponentSchema {
+  collectionName: 'components_shared_variants';
+  info: {
+    displayName: 'variants';
+  };
+  attributes: {
+    color: Schema.Attribute.String;
+    images: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    quantity: Schema.Attribute.Integer;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -367,6 +395,7 @@ declare module '@strapi/strapi' {
       'shared.address': SharedAddress;
       'shared.discount': SharedDiscount;
       'shared.hours': SharedHours;
+      'shared.items': SharedItems;
       'shared.media': SharedMedia;
       'shared.merch-slider': SharedMerchSlider;
       'shared.navigation-link': SharedNavigationLink;
@@ -381,6 +410,7 @@ declare module '@strapi/strapi' {
       'shared.staff-card': SharedStaffCard;
       'shared.staff-section': SharedStaffSection;
       'shared.values': SharedValues;
+      'shared.variants': SharedVariants;
     }
   }
 }

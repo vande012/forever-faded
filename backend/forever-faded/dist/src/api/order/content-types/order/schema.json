@@ -4,46 +4,35 @@
     "info": {
         "singularName": "order",
         "pluralName": "orders",
-        "displayName": "Order"
+        "displayName": "Order",
+        "description": ""
     },
     "options": {
         "draftAndPublish": true
     },
     "attributes": {
-        "stripeSessionId": {
-            "type": "string"
-        },
         "total": {
             "type": "decimal"
         },
         "customerEmail": {
             "type": "email"
         },
-        "customerName": {
-            "type": "string"
+        "shippingAddress": {
+            "type": "json"
         },
-        "paymentStatus": {
-            "type": "enumeration",
-            "enum": [
-                "paid",
-                "unpaid",
-                "refunded"
-            ]
+        "items": {
+            "displayName": "items",
+            "type": "component",
+            "repeatable": false,
+            "component": "shared.items"
         },
-        "productStatus": {
+        "orderStatus": {
             "type": "enumeration",
             "enum": [
                 "processing",
                 "shipped",
-                "delivered",
-                "cancelled"
+                "delivered"
             ]
-        },
-        "items": {
-            "type": "json"
-        },
-        "shippingAddress": {
-            "type": "json"
         }
     }
 }
