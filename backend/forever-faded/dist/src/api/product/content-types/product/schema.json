@@ -23,7 +23,7 @@
         "variants": {
             "displayName": "variants",
             "type": "component",
-            "repeatable": false,
+            "repeatable": true,
             "component": "shared.variants"
         },
         "slug": {
