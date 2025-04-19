@@ -13,6 +13,31 @@ interface GalleryCardProps {
   imageOrientation?: 'auto' | 'portrait' | 'landscape' | 'rotate90' | 'rotate180' | 'rotate270'
 }
 
+// Function to detect images that need rotation based on URL patterns
+const detectImageRotation = (url: string | null) => {
+  if (!url) return 'auto';
+  
+  // Add specific image filenames that need rotation
+  if (url.includes('20230817_170228_e8f4ed11a7.jpg')) {
+    return 'rotate90';
+  }
+  if (url.includes('20230817_170228_e8f4ed11a7.jpg')) {
+    return 'rotate90';
+  }
+  if (url.includes('DSC_02306_6b32e163e3.jpg')) {
+    return 'rotate270';
+  }
+  if (url.includes('DSC_03821_477cecff57.JPG')) {
+    return 'rotate270';
+  }
+  // Add more problematic images as needed
+  // if (url.includes('another_filename.jpg')) {
+  //   return 'rotate270';
+  // }
+  
+  return 'auto';
+};
+
 export function GalleryCard({ item, index, onClick, imageOrientation = 'auto' }: GalleryCardProps) {
   const [orientation, setOrientation] = useState<string>("unknown")
   const [isLoaded, setIsLoaded] = useState(false)
@@ -30,9 +55,15 @@ export function GalleryCard({ item, index, onClick, imageOrientation = 'auto' }:
       return;
     }
     
-    // If manual orientation is provided, use it
+    // Check if this specific image has a known rotation issue
+    const detectedRotation = detectImageRotation(item.Image.url);
+    
+    // If a specific rotation is manually provided or detected, use it
     if (imageOrientation !== 'auto') {
       setOrientation(imageOrientation);
+      return;
+    } else if (detectedRotation !== 'auto') {
+      setOrientation(detectedRotation);
       return;
     }
     

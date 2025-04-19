@@ -7,6 +7,28 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import type { GalleryItem } from "../../../types/gallery"
 import { getStrapiMedia } from "@/app/utils/get-strapi-url"
 
+// Function to detect images that need rotation based on URL patterns
+const detectImageRotation = (url: string | null) => {
+  if (!url) return 'auto';
+  
+  // Add specific image filenames that need rotation
+  if (url.includes('20230817_170228_e8f4ed11a7.jpg')) {
+    return 'rotate90';
+  }
+  if (url.includes('DSC_02306_6b32e163e3.jpg')) {
+    return 'rotate270';
+  }
+  if (url.includes('DSC_03821_477cecff57.JPG')) {
+    return 'rotate270';
+  }
+  // Add more problematic images as needed
+  // if (url.includes('another_filename.jpg')) {
+  //   return 'rotate270';
+  // }
+  
+  return 'auto';
+};
+
 interface GalleryModalProps {
   item: GalleryItem
   items: GalleryItem[]
@@ -35,9 +57,16 @@ export function GalleryModal({ item, items, onClose, onNavigate, imageOrientatio
       return;
     }
 
-    // If manual orientation is provided, use it
+    // Check if this specific image has a known rotation issue
+    const detectedRotation = detectImageRotation(item.Image.url);
+    
+    // If a specific rotation is manually provided or detected, use it
     if (imageOrientation !== 'auto') {
       setOrientation(imageOrientation);
+      setIsLoading(false);
+      return;
+    } else if (detectedRotation !== 'auto') {
+      setOrientation(detectedRotation);
       setIsLoading(false);
       return;
     }
