@@ -12,9 +12,10 @@ interface GalleryModalProps {
   items: GalleryItem[]
   onClose: () => void
   onNavigate: (item: GalleryItem) => void
+  imageOrientation?: 'auto' | 'portrait' | 'landscape' | 'rotate90' | 'rotate180' | 'rotate270'
 }
 
-export function GalleryModal({ item, items, onClose, onNavigate }: GalleryModalProps) {
+export function GalleryModal({ item, items, onClose, onNavigate, imageOrientation = 'auto' }: GalleryModalProps) {
   const [orientation, setOrientation] = useState<string>("unknown")
   const [isLoading, setIsLoading] = useState(true)
   
@@ -30,6 +31,13 @@ export function GalleryModal({ item, items, onClose, onNavigate }: GalleryModalP
     
     if (!item.Image || !item.Image.url) {
       setOrientation("unknown");
+      setIsLoading(false);
+      return;
+    }
+
+    // If manual orientation is provided, use it
+    if (imageOrientation !== 'auto') {
+      setOrientation(imageOrientation);
       setIsLoading(false);
       return;
     }
@@ -63,7 +71,24 @@ export function GalleryModal({ item, items, onClose, onNavigate }: GalleryModalP
       };
       img.src = getStrapiMedia(item.Image.url);
     }
-  }, [item.Image]);
+  }, [item.Image, imageOrientation]);
+  
+  // Get orientation class for rotated images
+  const getOrientationClass = () => {
+    switch (orientation) {
+      case 'rotate90':
+        return 'rotate-90';
+      case 'rotate180':
+        return 'rotate-180';
+      case 'rotate270':
+        return '-rotate-90';
+      default:
+        return '';
+    }
+  };
+
+  // Determine if we should use a rotation or aspect ratio based approach
+  const isRotated = ['rotate90', 'rotate180', 'rotate270'].includes(orientation);
   
   const currentIndex = items.findIndex((i) => i.id === item.id)
 
@@ -126,6 +151,7 @@ export function GalleryModal({ item, items, onClose, onNavigate }: GalleryModalP
           )}
           
           <div className={`relative ${
+            isRotated ? 'w-[70%] h-[70%] sm:w-[65%] sm:h-[65%]' :
             orientation === "portrait" ? "w-[60%] h-[85%] sm:w-[50%] sm:h-[90%]" : 
             orientation === "landscape" ? "w-[85%] h-[65%] sm:w-[90%] sm:h-[70%]" : 
             "w-[75%] h-[75%] sm:w-[70%] sm:h-[70%]"
@@ -136,7 +162,7 @@ export function GalleryModal({ item, items, onClose, onNavigate }: GalleryModalP
               fill
               unoptimized
               sizes="(max-width: 768px) 90vw, (max-width: 1200px) 80vw, 70vw"
-              className={`object-contain transition-opacity duration-300 ${isLoading ? "opacity-0" : "opacity-100"}`}
+              className={`object-contain transition-opacity duration-300 ${getOrientationClass()} ${isLoading ? "opacity-0" : "opacity-100"}`}
               priority
               onLoadingComplete={() => setIsLoading(false)}
             />

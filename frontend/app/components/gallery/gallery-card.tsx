@@ -10,9 +10,10 @@ interface GalleryCardProps {
   item: GalleryItem
   index: number
   onClick: () => void
+  imageOrientation?: 'auto' | 'portrait' | 'landscape' | 'rotate90' | 'rotate180' | 'rotate270'
 }
 
-export function GalleryCard({ item, index, onClick }: GalleryCardProps) {
+export function GalleryCard({ item, index, onClick, imageOrientation = 'auto' }: GalleryCardProps) {
   const [orientation, setOrientation] = useState<string>("unknown")
   const [isLoaded, setIsLoaded] = useState(false)
   
@@ -26,6 +27,12 @@ export function GalleryCard({ item, index, onClick }: GalleryCardProps) {
   useEffect(() => {
     if (!item.Image || !item.Image.url) {
       setOrientation("unknown");
+      return;
+    }
+    
+    // If manual orientation is provided, use it
+    if (imageOrientation !== 'auto') {
+      setOrientation(imageOrientation);
       return;
     }
     
@@ -55,7 +62,21 @@ export function GalleryCard({ item, index, onClick }: GalleryCardProps) {
       };
       img.src = getStrapiMedia(item.Image.url);
     }
-  }, [item.Image]);
+  }, [item.Image, imageOrientation]);
+
+  // Get orientation class for rotated images
+  const getOrientationClass = () => {
+    switch (orientation) {
+      case 'rotate90':
+        return 'rotate-90';
+      case 'rotate180':
+        return 'rotate-180';
+      case 'rotate270':
+        return '-rotate-90';
+      default:
+        return '';
+    }
+  };
 
   // Animation variants
   const itemVariants = {
@@ -70,6 +91,9 @@ export function GalleryCard({ item, index, onClick }: GalleryCardProps) {
     },
   }
 
+  // Determine if we should use a rotation or aspect ratio based approach
+  const isRotated = ['rotate90', 'rotate180', 'rotate270'].includes(orientation);
+  
   return (
     <motion.div
       initial="hidden"
@@ -81,6 +105,7 @@ export function GalleryCard({ item, index, onClick }: GalleryCardProps) {
     >
       {/* Responsive aspect ratio container based on orientation */}
       <div className={`relative ${
+        isRotated ? 'aspect-square' :
         orientation === "portrait" ? "aspect-[3/4]" : 
         orientation === "landscape" ? "aspect-[4/3]" : 
         "aspect-square"
@@ -91,7 +116,7 @@ export function GalleryCard({ item, index, onClick }: GalleryCardProps) {
           fill
           unoptimized
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-          className={`object-cover transition-transform duration-500 group-hover:scale-105 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+          className={`object-cover transition-transform duration-500 group-hover:scale-105 ${getOrientationClass()} ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
           style={{ objectFit: "cover" }}
           onLoadingComplete={() => setIsLoaded(true)}
         />

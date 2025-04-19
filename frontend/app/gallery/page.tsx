@@ -8,7 +8,11 @@ export const metadata: Metadata = {
   description: "Check out our latest haircuts and styles at Forever Faded Barber Shop",
 }
 
-export default async function GalleryPage() {
+export default async function GalleryPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const galleryData = await getGalleryData();
   
   // Debug: Log the gallery data structure
@@ -19,6 +23,9 @@ export default async function GalleryPage() {
   
   // Debug: Log the number of items found
   console.log(`Found ${galleryItems.length} gallery items`);
+
+  // Check for admin mode via URL parameter ?admin=true
+  const isAdmin = searchParams.admin === "true";
   
   return (
     <main className="min-h-screen bg-black pt-24">
@@ -34,7 +41,7 @@ export default async function GalleryPage() {
             <p className="text-gray-400 text-lg">No gallery items found. Please add some in your Strapi admin.</p>
           </div>
         ) : (
-          <GalleryGrid galleryItems={galleryItems} />
+          <GalleryGrid galleryItems={galleryItems} isAdmin={isAdmin} />
         )}
       </div>
     </main>
