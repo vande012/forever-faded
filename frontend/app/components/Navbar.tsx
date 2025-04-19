@@ -154,7 +154,7 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
           </div>
 
           {/* Center Section */}
-          <div className="hidden md:flex items-center text-white absolute left-1/2 transform -translate-x-1/2">
+          <div className="hidden lg:flex items-center text-white absolute left-1/2 transform -translate-x-1/2">
             <Clock size={16} className="mr-2" />
             <span className="whitespace-nowrap">
               {currentDay} Hours: {currentHours}
@@ -177,37 +177,40 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
 
       {/* Main Navigation */}
       <nav
-        className={`${navBgClass} transition-all duration-300 py-6 px-4 md:px-6 w-full left-0`}
+        className={`${navBgClass} transition-all duration-300  px-4 md:px-6 w-full left-0`}
       >
         <div className="flex items-center justify-between z-50">
-          <Link
-            href="/"
-            className="hidden md:flex items-center hover:text-[#CA2C2B] transition-colors"
-          >
-            <Image
-              priority
-              src={logoUrl}
-              alt={navData.navlogo?.alternativeText || "Logo Title"}
-              width={50}
-              height={50}
-              className="object-contain ml-5"
-            />
-            {/* Right side - New text logo (visible on desktop) */}
-            <div className="hidden md:block">
-              <div className="h-10 flex items-center"> {/* Container with fixed height */}
-                <Image 
-                  src="/FFText.png" 
-                  alt="Forever Faded Text Logo" 
-                  width={180} 
-                  height={45} 
-                  className="h-auto w-auto max-w-[300px] pt-7 object-contain" 
-                />
-              </div>
+          {/* Logo container with responsive width */}
+          <div className="hidden lg:block w-[450px] transition-all duration-300">
+            <Link
+              href="/"
+              className="flex items-center hover:text-[#CA2C2B] transition-colors"
+            >
+              <Image
+                priority
+                src={logoUrl}
+                alt={navData.navlogo?.alternativeText || "Logo Title"}
+                width={110}
+                height={110}
+                className="object-contain w-auto h-[110px]"
+              />
+              {/* Right side - New text logo (visible on desktop) */}
+              <div className="block pt-4">
+                <div className="h-12 flex items-center"> {/* Container with fixed height */}
+                  <Image 
+                    src="/FFText.png" 
+                    alt="Forever Faded Text Logo" 
+                    width={280} 
+                    height={100} 
+                    className="max-w-[450px] object-contain" 
+                  />
                 </div>
-          </Link>
+              </div>
+            </Link>
+          </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-9">
+          {/* Desktop Menu - with adjusted responsive spacing */}
+          <div className="hidden lg:flex items-center space-x-9">
             {navData.links.map((link) => (
               <NavLink key={link.id} href={link.href}>
                 {link.text}
@@ -215,34 +218,28 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
             ))}
           </div>
 
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden lg:flex items-center space-x-6">
             <Link
               href={navData.cta.href}
-              className="gold-gradient-bg text-white px-6 py-2 rounded hover:bg-[#262974] transition-colors shadow-md"
+              className="gold-gradient-bg text-white px-6 mr-20 py-2 rounded hover:bg-[#262974] transition-colors shadow-md"
             >
               {navData.cta.text}
-            </Link>
-            <Link
-              href="/cart"
-              className="text-white hover:text-[#CA2C2B] transition-colors"
-            >
-              <ShoppingCart size={24} />
             </Link>
           </div>
           
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Now visible on md screens too */}
           <button
-            className="md:hidden text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
+            className="lg:hidden text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Now used on md screens too */}
         {isMenuOpen && (
-          <div className="md:hidden bg-black/90 rounded-md text-white mt-4 py-6 px-4 max-h-[calc(100vh-200px)] overflow-y-auto">
+          <div className="lg:hidden bg-black/90 rounded-md text-white mt-4 py-6 px-4 max-h-[calc(100vh-200px)] overflow-y-auto">
             <div className="grid grid-cols-1 gap-6">
             <NavLink href="/" mobile>
               Home

@@ -24,9 +24,6 @@ export default async function GalleryPage() {
     <main className="min-h-screen bg-black pt-24">
       <GalleryHeader />
       <div className="container mx-auto px-4 py-12">
-        <h1 className="text-4xl font-bold gold-gradient-text mb-6 text-center font-urbanist">
-          {galleryData?.data?.Title || "Gallery"}
-        </h1>
         <p className="text-gray-300 text-center max-w-3xl mx-auto mb-12 font-roboto">
           {galleryData?.data?.Description || ""}
         </p>

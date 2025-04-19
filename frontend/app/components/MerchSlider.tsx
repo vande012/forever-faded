@@ -126,16 +126,6 @@ export default function MerchSlider() {
             {merchSection.description}
           </p>
         </div>
-        <div className="text-center mt-8 pb-4">
-          <a
-            href={merchSection.cta.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-gradient-to-r from-[#A47A1E] via-[#D3A84C] to-[#B58F3E] text-black font-bold px-8 py-3 rounded-full"
-          >
-            {merchSection.cta.text}
-          </a>
-        </div>
         <Carousel
           setApi={setApi}
           className="w-full max-w-5xl mx-auto"

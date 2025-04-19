@@ -226,7 +226,7 @@ export default function PodcastPage() {
         <h2 className="text-5xl font-bold mb-7 gold-gradient-text">The Change</h2>
         <p className="text-2xl mb-4 text-[#D4AF37]">Insights Into Self Empowerment</p>
         <p className="text-gray-300 text-2xl mb-6">
-        “Change is inevitable. Growth is optional.” John C. Maxwell “You will have to Grow Through what you Go Through.” This statement is just as true today, as the first day I heard it…
+        &quot;Change is inevitable. Growth is optional.&quot; John C. Maxwell &quot;You will have to Grow Through what you Go Through.&quot; This statement is just as true today, as the first day I heard it…
         </p>
         <Link href="/thechange.pdf" target="_blank" rel="noopener noreferrer">
           <Button className="gold-gradient-bg">Download Free PDF</Button>
@@ -273,16 +273,13 @@ export default function PodcastPage() {
                   Educator, Master Barber, and Owner of Forever Faded Barbershop, Waukesha, WI
                 </p>
                 <div className="flex gap-8 mb-6">
-                  <Link href="#" className="text-[#D4AF37] hover:text-[#C4A027] transition-colors">
+                  <Link href="https://www.facebook.com/foreverFadedwi" target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] hover:text-[#C4A027] transition-colors">
                     <Facebook className="w-10 h-10" />
                   </Link>
-                  <Link href="#" className="text-[#D4AF37] hover:text-[#C4A027] transition-colors">
-                    <Instagram className="w-10 h-10" />
-                  </Link>
-                  <Link href="#" className="text-[#D4AF37] hover:text-[#C4A027] transition-colors">
+                  <Link href="https://www.linkedin.com/in/tretic/" target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] hover:text-[#C4A027] transition-colors">
                     <Linkedin className="w-10 h-10" />
                   </Link>
-                  <Link href="#" className="text-[#D4AF37] hover:text-[#C4A027] transition-colors">
+                  <Link href="https://www.youtube.com/user/tretic13" target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] hover:text-[#C4A027] transition-colors">
                     <Youtube className="w-10 h-10" />
                   </Link>
                 </div>

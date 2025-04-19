@@ -1,0 +1,99 @@
+/* Blog styles with accessibility improvements */
+
+.blog-content {
+  color: #e5e5e5;
+}
+
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+  font-weight: bold;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+.blog-content p {
+  margin-bottom: 1.25rem;
+  color: #e5e5e5;
+  line-height: 1.7;
+}
+
+.blog-content ul,
+.blog-content ol {
+  color: #e5e5e5;
+  margin-bottom: 1.25rem;
+  margin-left: 1.5rem;
+}
+
+.blog-content li {
+  margin-bottom: 0.5rem;
+  color: #e5e5e5;
+}
+
+.blog-content ul {
+  list-style-type: disc;
+}
+
+.blog-content ol {
+  list-style-type: decimal;
+}
+
+.blog-content b,
+.blog-content strong {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.blog-content blockquote {
+  border-left: 4px solid #D4AF37;
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+  font-style: italic;
+  color: #cccccc;
+}
+
+.blog-content a {
+  color: #D4AF37;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.blog-content a:hover {
+  color: #E6BE69;
+}
+
+.blog-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 2rem 0;
+}
+
+.blog-content code {
+  background-color: #2a2a2a;
+  color: #e5e5e5;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+.blog-content pre {
+  background-color: #2a2a2a;
+  color: #e5e5e5;
+  padding: 1rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+/* Tailwind prose overrides for dark mode */
+.prose-invert ul > li::before {
+  background-color: #e5e5e5;
+}
+
+.prose-invert ol > li::before {
+  color: #e5e5e5;
+} 

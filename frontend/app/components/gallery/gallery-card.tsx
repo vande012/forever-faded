@@ -2,11 +2,9 @@
 
 import Image from "next/image"
 import { motion } from "framer-motion"
+import { useState, useEffect } from "react"
 import type { GalleryItem } from "../../../types/gallery"
 import { getStrapiMedia } from "@/app/utils/get-strapi-url"
-
-// Add your Strapi URL here
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337"
 
 interface GalleryCardProps {
   item: GalleryItem
@@ -15,11 +13,49 @@ interface GalleryCardProps {
 }
 
 export function GalleryCard({ item, index, onClick }: GalleryCardProps) {
+  const [orientation, setOrientation] = useState<string>("unknown")
+  const [isLoaded, setIsLoaded] = useState(false)
+  
   // Function to get the full image URL
   const getImageUrl = (image: any) => {
-    if (!image) return "/placeholder.svg"
+    if (!image || !image.url) return "/placeholder.svg"
     return getStrapiMedia(image.url)
   }
+
+  // Effect to handle image loading and orientation detection
+  useEffect(() => {
+    if (!item.Image || !item.Image.url) {
+      setOrientation("unknown");
+      return;
+    }
+    
+    // Initial orientation guess based on metadata (if available)
+    if (item.Image.width && item.Image.height) {
+      if (item.Image.width > item.Image.height) {
+        setOrientation("landscape");
+      } else if (item.Image.height > item.Image.width) {
+        setOrientation("portrait");
+      } else {
+        setOrientation("square");
+      }
+    } else {
+      // If no dimensions in metadata, load the image to check
+      const img = new globalThis.Image();
+      img.onload = () => {
+        if (img.width > img.height) {
+          setOrientation("landscape");
+        } else if (img.height > img.width) {
+          setOrientation("portrait");
+        } else {
+          setOrientation("square");
+        }
+      };
+      img.onerror = () => {
+        setOrientation("unknown");
+      };
+      img.src = getStrapiMedia(item.Image.url);
+    }
+  }, [item.Image]);
 
   // Animation variants
   const itemVariants = {
@@ -43,15 +79,21 @@ export function GalleryCard({ item, index, onClick }: GalleryCardProps) {
       className="relative overflow-hidden rounded-lg cursor-pointer group"
       onClick={onClick}
     >
-      {/* UPDATED: Larger aspect ratio for bigger images */}
-      <div className="relative aspect-[3/3] overflow-hidden">
+      {/* Responsive aspect ratio container based on orientation */}
+      <div className={`relative ${
+        orientation === "portrait" ? "aspect-[3/4]" : 
+        orientation === "landscape" ? "aspect-[4/3]" : 
+        "aspect-square"
+      } overflow-hidden`}>
         <Image
           src={getImageUrl(item.Image)}
           alt={item.Image?.alternativeText || item.Category || "Gallery image"}
           fill
+          unoptimized
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105 rotate-90"
-          style={{ objectPosition: "center" }}
+          className={`object-cover transition-transform duration-500 group-hover:scale-105 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+          style={{ objectFit: "cover" }}
+          onLoadingComplete={() => setIsLoaded(true)}
         />
         
         {/* Overlay that appears on hover */}

@@ -1,10 +1,34 @@
 'use client'
 
+import { useEffect } from "react";
 import Image from "next/image"
 import Link from "next/link"
-import StaffSection from "../components/StaffSection"
+import { useSearchParams, usePathname } from "next/navigation";
+import StaffProfiles from "../components/StaffProfile"
 
 export default function StaffPageContent() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  
+  // Handle scrolling to anchor links
+  useEffect(() => {
+    // Check if the URL has a hash fragment
+    if (typeof window !== 'undefined') {
+      // Get hash from URL (e.g., #barber-angel)
+      const hash = window.location.hash;
+      
+      if (hash) {
+        // Wait for the DOM to be fully loaded
+        setTimeout(() => {
+          const element = document.getElementById(hash.substring(1));
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 500);
+      }
+    }
+  }, [pathname, searchParams]);
+
   return (
     <div className="flex flex-col min-h-screen bg-black text-white">
       {/* Hero Section */}
@@ -40,8 +64,8 @@ export default function StaffPageContent() {
         </div>
       </div>
 
-      {/* Staff Section Component */}
-      <StaffSection />
+      {/* Staff Profiles Component - Replaces the original StaffSection */}
+      <StaffProfiles />
 
       {/* Team Values */}
       <div className="bg-zinc-900 py-16">
@@ -129,39 +153,6 @@ export default function StaffPageContent() {
         </div>
       </div>
 
-      {/* Join Our Team Section */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="bg-zinc-800 rounded-lg p-8 md:p-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h2 className="text-3xl font-bold mb-4 gold-gradient-text">Join Our Team</h2>
-              <p className="text-gray-300 mb-6">
-                Are you passionate about barbering and committed to excellence? We are always looking for talented
-                professionals to join our team at Forever Faded.
-              </p>
-              <p className="text-gray-300 mb-6">
-                Working with us means being part of a supportive community that values growth, creativity, and
-                exceptional service.
-              </p>
-              <Link href="/careers">
-                <button className="bg-[#D4AF37] hover:bg-[#C4A027] text-black font-bold py-3 px-6 rounded">
-                  Contact Us Today
-                </button>
-              </Link>
-            </div>
-            <div className="relative h-[700px] rounded-lg overflow-hidden">
-              <Image
-                src="/FFSign.jpg"
-                alt="Barber workspace"
-                fill
-                className="object-cover rounded-lg"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* CTA Section */}
       <div className="gold-gradient-bg text-black py-12">
         <div className="container mx-auto px-4 text-center">
@@ -169,7 +160,7 @@ export default function StaffPageContent() {
           <p className="text-lg mb-8 max-w-2xl mx-auto">
             Book an appointment with one of our skilled barbers today and discover the Forever Faded difference.
           </p>
-          <Link href="/book-now">
+          <Link href="https://getsquire.com/booking/book/forever-faded-llc-waukesha">
             <button className="bg-black hover:bg-zinc-800 text-white font-bold py-3 px-8 rounded-lg">
               Book Your Appointment
             </button>

@@ -19,9 +19,11 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                     src="/Storefront.jpg"
                     alt="Barber shop interior"
                     width={1920}
-                    height={500}
+                    height={1080}
                     priority
+                    quality={100}
                     className="object-cover w-full h-full brightness-75"
+                    sizes="100vw"
                 />
                 
                 {/* Black overlay on right side */}
@@ -58,11 +60,13 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                     </div>
                     <div className="relative h-[400px] rounded-lg overflow-hidden">
                         <Image
-                            src="/FFSign2.jpg"
+                            src="/history.jpg"
                             alt="Forever Faded history"
-                            width={600}
-                            height={400}
+                            width={800}
+                            height={600}
+                            quality={100}
                             className="object-cover w-full h-full"
+                            sizes="(min-width: 768px) 50vw, 100vw"
                         />
                     </div>
                 </div>
@@ -119,7 +123,7 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                             <h3 className="text-xl font-bold mb-2">Community</h3>
                             <p>
                                 {`We believe in creating a welcoming space where everyone feels valued. Our barbershop is more than a
-                                place for haircuts—it&apos;s a community hub.`}
+                                place for haircuts—it is a community hub.`}
                             </p>
                         </div>
                         <div className="bg-zinc-800 p-6 rounded-lg text-center">
@@ -161,12 +165,12 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                         </p>
                         <p className="mb-4">
                             {`"I wanted to create a place where people could not only get an exceptional haircut but also feel like they
-                            belong to something special," says James. "At Forever Faded, we&apos;re not just cutting hair—we&apos;re building
+                            belong to something special," says James. "At Forever Faded, we are not just cutting hair—we are building
                             confidence and community."`}
                         </p>
                         <p>
-                            {`James&apos;s dedication to quality and customer service has been the driving force behind Forever Faded&apos;s
-                            success and reputation as Waukesha&apos;s premier barbershop.`}
+                            {`James's dedication to quality and customer service has been the driving force behind Forever Faded's
+                            success and reputation as Waukesha's premier barbershop.`}
                         </p>
                     </div>
                     <div className="relative h-[400px] rounded-lg overflow-hidden order-1 md:order-2">
@@ -186,16 +190,16 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                 <div className="container mx-auto px-4 text-center max-w-3xl">
                     <h2 className="text-3xl font-bold mb-6 gold-gradient-text">Our Commitment to You</h2>
                     <p className="text-lg mb-8">
-                        {`At Forever Faded, we promise to provide you with more than just a haircut. We&apos;re committed to delivering an
+                        {`At Forever Faded, we promise to provide you with more than just a haircut. We are committed to delivering an
                         experience that makes you look good, feel good, and want to come back.`}
                     </p>
                     <div className="flex justify-center gap-4">
-                        <Link href="/book-now">
+                        <Link href="https://getsquire.com/booking/book/forever-faded-llc-waukesha">
                             <button className="bg-[#D4AF37] hover:bg-[#C4A027] text-black font-bold py-3 px-6 rounded">
                                 Book Now
                             </button>
                         </Link>
-                        <Link href="/contact">
+                        <Link href="mailto:FOREVERFADED11@YAHOO.COM">
                             <button className="border border-[#D4AF37] gold-gradient-text hover:bg-[#D4AF37] hover:text-black font-bold py-3 px-6 rounded">
                                 Contact Us
                             </button>
@@ -204,32 +208,14 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                 </div>
             </div>
 
-            {/* Gallery Section */}
-            <div className="container mx-auto px-4 py-16">
-                <h2 className="text-3xl font-bold mb-12 text-center gold-gradient-text">Our Shop</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {[1, 2, 3, 4, 5, 6].map((item) => (
-                        <div key={item} className="relative h-64 rounded-lg overflow-hidden">
-                            <Image
-                                src={`/placeholder.svg?height=300&width=400`}
-                                alt={`Barbershop gallery image ${item}`}
-                                width={400}
-                                height={300}
-                                className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
-                            />
-                        </div>
-                    ))}
-                </div>
-            </div>
-
             {/* CTA Section */}
             <div className="gold-gradient-bg text-black py-12">
                 <div className="container mx-auto px-4 text-center">
                     <h2 className="text-3xl font-bold mb-4">Ready to Experience the Forever Faded Difference?</h2>
                     <p className="text-lg mb-8 max-w-2xl mx-auto">
-                        {`Join our community of satisfied clients and discover why we&apos;re Waukesha&apos;s premier barbershop.`}
+                        {`Join our community of satisfied clients and discover why we are Waukesha's premier barbershop.`}
                     </p>
-                    <Link href="/book-now">
+                    <Link href="https://getsquire.com/booking/book/forever-faded-llc-waukesha">
                         <button className="bg-black hover:bg-zinc-800 text-white font-bold py-3 px-8 rounded-lg">
                             Book Your Appointment
                         </button>

@@ -95,35 +95,37 @@ const homePageQuery = qs.stringify(
 
 export async function getHomepageData() {
   const cacheKey = `homepage:${homePageQuery}`;
+  // Add a cache-busting timestamp to force a fresh request
+  const cacheBuster = `&_t=${Date.now()}`;
   
   try {
-    // Try session storage first
-    if (typeof window !== 'undefined') {
-      const cached = sessionStorage.getItem(cacheKey);
-      if (cached) {
-        const { data, timestamp } = JSON.parse(cached);
-        if (Date.now() - timestamp < CACHE_TIMES.MEDIUM * 1000) {
-          return data;
-        }
-      }
-    }
+    // Bypass session storage caching temporarily to ensure fresh data
+    // if (typeof window !== 'undefined') {
+    //   const cached = sessionStorage.getItem(cacheKey);
+    //   if (cached) {
+    //     const { data, timestamp } = JSON.parse(cached);
+    //     if (Date.now() - timestamp < CACHE_TIMES.MEDIUM * 1000) {
+    //       return data;
+    //     }
+    //   }
+    // }
 
-    // Fetch from API with caching
-    const data = await fetchAPI(`/homepage?${homePageQuery}`, {
+    // Fetch from API with short cache time
+    const data = await fetchAPI(`/homepage?${homePageQuery}${cacheBuster}`, {
       method: "GET",
       next: {
-        revalidate: CACHE_TIMES.MEDIUM,
+        revalidate: 30, // Changed from 0 to 30 seconds to enable static generation
         tags: [CACHE_TAGS.HOMEPAGE, CACHE_TAGS.SERVICES]
       }
     });
 
-    // Cache in session storage
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem(cacheKey, JSON.stringify({
-        data,
-        timestamp: Date.now()
-      }));
-    }
+    // Temporarily disable session storage caching
+    // if (typeof window !== 'undefined') {
+    //   sessionStorage.setItem(cacheKey, JSON.stringify({
+    //     data,
+    //     timestamp: Date.now()
+    //   }));
+    // }
 
     return data;
   } catch (error) {

@@ -2,6 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 14px; /* Thicker than default */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #121212; /* Dark background */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #A47A1E, #D3A84C, #E6BE69); /* Gold gradient */
+  border-radius: 8px;
+  border: 3px solid #121212; /* Border to create padding effect */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #D3A84C, #E6BE69, #F5D78E); /* Lighter gold on hover */
+}
+
+/* Firefox support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #D3A84C #121212;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }

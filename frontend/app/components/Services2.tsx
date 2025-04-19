@@ -160,7 +160,7 @@ function ServicesContent() {
           {/* Face & Beard Services */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <BeardIcon />
+              <HairIcon />
               <h2 className="text-2xl md:text-2xl font-urbanist font-bold text-white">
                 {data.category || 'Face & Beard Services'}
               </h2>
@@ -175,7 +175,7 @@ function ServicesContent() {
           {/* Hair Services */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <HairIcon />
+            <BeardIcon />
               <h2 className="text-2xl md:text-2xl font-urbanist font-bold text-white">
                 {data.category1 || 'Hair Services'}
               </h2>

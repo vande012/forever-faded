@@ -1,13 +1,11 @@
 "use client"
 
-import { useEffect, useCallback } from "react"
+import { useEffect, useCallback, useState } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import type { GalleryItem } from "../../../types/gallery"
-
-// Add your Strapi URL here
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337"
+import { getStrapiMedia } from "@/app/utils/get-strapi-url"
 
 interface GalleryModalProps {
   item: GalleryItem
@@ -17,15 +15,56 @@ interface GalleryModalProps {
 }
 
 export function GalleryModal({ item, items, onClose, onNavigate }: GalleryModalProps) {
+  const [orientation, setOrientation] = useState<string>("unknown")
+  const [isLoading, setIsLoading] = useState(true)
+  
   // Function to get the full image URL
-  const getImageUrl = (url: string | undefined) => {
-    if (!url) return "/placeholder.svg"
-    // If the URL already starts with http, return it as is
-    if (url.startsWith("http")) return url
-    // Otherwise, prepend the Strapi URL
-    return `${STRAPI_URL}${url}`
+  const getImageUrl = (image: any) => {
+    if (!image || !image.url) return "/placeholder.svg"
+    return getStrapiMedia(image.url)
   }
 
+  // Effect to handle image loading and orientation detection
+  useEffect(() => {
+    setIsLoading(true);
+    
+    if (!item.Image || !item.Image.url) {
+      setOrientation("unknown");
+      setIsLoading(false);
+      return;
+    }
+    
+    // Initial orientation guess based on metadata (if available)
+    if (item.Image.width && item.Image.height) {
+      if (item.Image.width > item.Image.height) {
+        setOrientation("landscape");
+      } else if (item.Image.height > item.Image.width) {
+        setOrientation("portrait");
+      } else {
+        setOrientation("square");
+      }
+      setIsLoading(false);
+    } else {
+      // If no dimensions in metadata, load the image to check
+      const img = new globalThis.Image();
+      img.onload = () => {
+        if (img.width > img.height) {
+          setOrientation("landscape");
+        } else if (img.height > img.width) {
+          setOrientation("portrait");
+        } else {
+          setOrientation("square");
+        }
+        setIsLoading(false);
+      };
+      img.onerror = () => {
+        setOrientation("unknown");
+        setIsLoading(false);
+      };
+      img.src = getStrapiMedia(item.Image.url);
+    }
+  }, [item.Image]);
+  
   const currentIndex = items.findIndex((i) => i.id === item.id)
 
   const navigateToImage = useCallback(
@@ -78,16 +117,28 @@ export function GalleryModal({ item, items, onClose, onNavigate }: GalleryModalP
         className="relative w-full max-w-[95vw] sm:max-w-[90vw] md:max-w-5xl max-h-[95vh] bg-black rounded-lg overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Improved container for the rotated image */}
+        {/* Image container with adaptive sizing based on orientation */}
         <div className="relative h-[70vh] sm:h-[75vh] md:h-[80vh] flex items-center justify-center">
-          <div className="relative w-[85%] h-[85%] sm:w-[80%] sm:h-[80%]">
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-12 h-12 border-4 border-gray-600 border-t-gold-500 rounded-full animate-spin"></div>
+            </div>
+          )}
+          
+          <div className={`relative ${
+            orientation === "portrait" ? "w-[60%] h-[85%] sm:w-[50%] sm:h-[90%]" : 
+            orientation === "landscape" ? "w-[85%] h-[65%] sm:w-[90%] sm:h-[70%]" : 
+            "w-[75%] h-[75%] sm:w-[70%] sm:h-[70%]"
+          }`}>
             <Image
-              src={getImageUrl(item.Image?.url)}
+              src={getImageUrl(item.Image)}
               alt={item.Image?.alternativeText || item.Category || "Gallery image"}
               fill
+              unoptimized
               sizes="(max-width: 768px) 90vw, (max-width: 1200px) 80vw, 70vw"
-              className="object-contain rotate-90"
+              className={`object-contain transition-opacity duration-300 ${isLoading ? "opacity-0" : "opacity-100"}`}
               priority
+              onLoadingComplete={() => setIsLoading(false)}
             />
           </div>
         </div>

@@ -15,39 +15,42 @@ export async function GET() {
     .then(response => response.data as Article[] || [])
     .catch(() => [] as Article[]);
 
-  // Create XML content
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      <!-- Static Pages -->
-      <url>
-        <loc>${baseUrl}</loc>
-        <lastmod>${new Date().toISOString()}</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>1.0</priority>
-      </url>
-      <url>
-        <loc>${baseUrl}/blog</loc>
-        <lastmod>${new Date().toISOString()}</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.8</priority>
-      </url>
-      
-      <!-- Blog Posts -->
-      ${articles.map((post: Article) => `
-        <url>
-          <loc>${baseUrl}/blog/${post.slug}</loc>
-          <lastmod>${new Date(post.updatedAt || post.publishedAt).toISOString()}</lastmod>
-          <changefreq>weekly</changefreq>
-          <priority>0.7</priority>
-        </url>
-      `).join('')}
-    </urlset>`;
+  // Static pages with their priorities and change frequencies
+  const staticPages = [
+    { path: '', changefreq: 'daily', priority: '1.0' },
+    { path: '/about-us', changefreq: 'monthly', priority: '0.8' },
+    { path: '/gallery', changefreq: 'weekly', priority: '0.8' },
+    { path: '/staff', changefreq: 'monthly', priority: '0.8' },
+    { path: '/blog', changefreq: 'daily', priority: '0.8' },
+    { path: '/podcast', changefreq: 'weekly', priority: '0.6' },
+  ];
 
-  // Return the XML with proper headers
+  // Create XML content with proper formatting
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Static Pages -->
+${staticPages.map(page => `  <url>
+    <loc>${baseUrl}${page.path}</loc>
+    <lastmod>${new Date().toISOString()}</lastmod>
+    <changefreq>${page.changefreq}</changefreq>
+    <priority>${page.priority}</priority>
+  </url>`).join('\n')}
+  
+  <!-- Blog Posts -->
+${articles.map((post: Article) => `  <url>
+    <loc>${baseUrl}/blog/${post.slug}</loc>
+    <lastmod>${new Date(post.updatedAt || post.publishedAt).toISOString()}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>`).join('\n')}
+</urlset>`;
+
+  // Return the XML with proper headers for search engines
   return new Response(xml.trim(), {
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600'
+      'Cache-Control': 'public, max-age=3600, s-maxage=86400',
+      'X-Content-Type-Options': 'nosniff'
     },
   });
 }

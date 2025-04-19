@@ -175,6 +175,8 @@ export default function MerchSection() {
         >
           Elevate your style with our exclusive collection. Each piece is designed to make you stand out, just like our
           cuts.
+
+          Ask about our merch at the shop!
         </motion.p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {merchItems.map((item, index) => (
@@ -187,12 +189,6 @@ export default function MerchSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2, delay: 0.4 }}
         >
-          <Link
-            href="/shop"
-            className="inline-block bg-gold-gradient text-black gold-gradient-bg font-urbanist font-bold py-3 px-8 rounded-full hover:opacity-90 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-          >
-            View All Merch
-          </Link>
         </motion.div>
       </div>
       <div className="absolute inset-0 pointer-events-none">

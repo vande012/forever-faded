@@ -197,13 +197,13 @@ const Reviews = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
             >
-              <span>Read all reviews on</span>
+              <span className="text-xl">Read all reviews on</span>
               <Image
                 src="/google-logo.png"
                 alt="Google"
-                width={60}
-                height={20}
-                className="h-5 w-auto"
+                width={90}
+                height={90}
+                className="h-9 w-auto"
                 loading="lazy"
               />
             </a>

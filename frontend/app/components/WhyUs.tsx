@@ -48,13 +48,15 @@ export default function WhyUs() {
       }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentRef = sectionRef.current;
+    
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
@@ -101,13 +103,18 @@ export default function WhyUs() {
   }
 
   const isWhyUsSectionBlock = (block: any): block is WhyUsBlock => {
-    return block.__component === "blocks.why-us";
+    return block?.__component === "blocks.why-us";
   };
 
-  const whyUsSection = data.blocks.find(isWhyUsSectionBlock);
+  const whyUsSection = data?.blocks?.find(isWhyUsSectionBlock);
 
   if (!whyUsSection) {
-    return <div>Why Us section not found</div>;
+    return <div className="bg-[#1D1D1D] min-h-[400px] p-8 md:p-12 lg:p-16">
+      <div className="max-w-6xl mx-auto text-white">
+        <h2 className="text-3xl font-bold mb-6 gold-gradient-text">Why Choose Forever Faded</h2>
+        <p className="text-gray-400">Loading content...</p>
+      </div>
+    </div>;
   }
 
   const imageUrl = whyUsSection.image

@@ -7,17 +7,23 @@ export function getStrapiURL(path = "") {
 export function getStrapiMedia(url: string | null) {
   if (!url) return "";
   
-  // If the URL is already a media URL, return it
-  if (url.includes('.media.strapiapp.com')) {
-    return url;
-  }
-  
-  // If the URL contains the API URL, extract just the media URL part
-  if (url.includes('.strapiapp.com')) {
-    const mediaUrlMatch = url.match(/https:\/\/[^/]+\.media\.strapiapp\.com\/[^/]+\.[^/]+$/);
-    if (mediaUrlMatch) {
-      return mediaUrlMatch[0];
+  // Return absolute URLs as is - including those with http:// or https://
+  if (url.match(/^https?:\/\//)) {
+    // If the URL is already a media URL, return it
+    if (url.includes('.media.strapiapp.com')) {
+      return url;
     }
+    
+    // If the URL contains the API URL, extract just the media URL part
+    if (url.includes('.strapiapp.com')) {
+      const mediaUrlMatch = url.match(/https:\/\/[^/]+\.media\.strapiapp\.com\/[^/]+\.[^/]+$/);
+      if (mediaUrlMatch) {
+        return mediaUrlMatch[0];
+      }
+    }
+    
+    // Return other absolute URLs as is
+    return url;
   }
   
   // For relative paths, construct the media URL

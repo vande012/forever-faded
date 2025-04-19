@@ -177,16 +177,7 @@ export default function Hero() {
                 {heroSection.cta1.text}
               </Link>
             )}
-            {heroSection.cta2 && (
-              <Link
-                href={heroSection.cta2.href}
-                className={`rounded border-2 border-white bg-transparent font-roboto font-semibold text-white transition-colors hover:bg-white hover:text-[#1E1E1E] ${
-                  isMobile ? 'block w-64 mx-auto px-4 py-2 text-base' : 'inline-block px-4 py-2 sm:px-6 sm:py-3 text-base sm:text-lg'
-                }`}
-              >
-                {heroSection.cta2.text}
-              </Link>
-            )}
+            
           </div>
         </div>
       </div>

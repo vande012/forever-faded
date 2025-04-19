@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { SiFacebook, SiInstagram, SiX, SiYoutube } from "react-icons/si";
+import { SiFacebook, SiLinkedin, SiX, SiYoutube } from "react-icons/si";
 import { MdEmail, MdStarRate } from "react-icons/md";
 import { getStrapiMedia } from "../utils/get-strapi-url";
 
@@ -32,7 +32,7 @@ export default function Footer({ data }: FooterProps) {
   const getSocialIcon = (platform: string) => {
     switch (platform) {
       case 'Facebook': return <SiFacebook className="w-8 h-8" />;
-      case 'Instagram': return <SiInstagram className="w-8 h-8" />;
+      case 'LinkedIn': return <SiLinkedin className="w-8 h-8" />;
       case 'X': return <SiX className="w-8 h-8" />;
       case 'Youtube': return <SiYoutube className="w-8 h-8" />;
       default: return null;
@@ -99,16 +99,57 @@ export default function Footer({ data }: FooterProps) {
           <div className="space-y-4 text-center md:text-left col-span-2">
             <h3 className="font-urbanist font-bold text-xl pl-6 mb-4">Follow Us</h3>
             <div className="flex items-center justify-center md:justify-start space-x-6 pl-6">
-              {footerData.socials.map((social) => (
-                <Link 
-                  key={social.id} 
-                  href={social.url} 
-                  className="hover:text-[#CA2C2B] transition-colors"
-                  aria-label={`Follow us on ${social.platform}`}
-                >
-                  {getSocialIcon(social.platform)}
-                </Link>
-              ))}
+              {/* Hardcoded social media icons */}
+              <Link 
+                href="https://www.facebook.com/foreverFadedwi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#CA2C2B] transition-colors"
+                aria-label="Follow us on Facebook"
+              >
+                <SiFacebook className="w-8 h-8" />
+              </Link>
+              
+              <Link 
+                href="https://www.linkedin.com/in/tretic/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#CA2C2B] transition-colors"
+                aria-label="Follow us on LinkedIn"
+              >
+                <SiLinkedin className="w-8 h-8" />
+              </Link>
+              
+              <Link 
+                href="https://www.youtube.com/user/tretic13"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#CA2C2B] transition-colors"
+                aria-label="Subscribe to our YouTube channel"
+              >
+                <SiYoutube className="w-8 h-8" />
+              </Link>
+              
+              {/* Keep any remaining dynamic social icons that aren't duplicates */}
+              {footerData.socials.map((social) => {
+                // Skip if we've hardcoded this platform already
+                if (social.platform === 'Facebook' || social.platform === 'LinkedIn' || social.platform === 'Youtube') {
+                  return null;
+                }
+                
+                return (
+                  <Link 
+                    key={social.id} 
+                    href={social.url} 
+                    className="hover:text-[#CA2C2B] transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Follow us on ${social.platform}`}
+                  >
+                    {getSocialIcon(social.platform)}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
