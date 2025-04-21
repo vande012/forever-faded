@@ -200,7 +200,7 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                             </button>
                         </Link>
                         <Link href="mailto:FOREVERFADED11@YAHOO.COM">
-                            <button className="gold-border-btn gold-gradient-text font-bold py-3 px-6 rounded">
+                            <button className="gold-border-btn  font-bold py-3 px-6 rounded">
                                 Contact Us
                             </button>
                         </Link>

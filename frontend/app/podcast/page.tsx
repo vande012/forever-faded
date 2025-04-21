@@ -11,8 +11,8 @@ export default function PodcastPage() {
       {/* Welcome Section - Now at the top */}
       <section className="py-16 lg:mt-40 mt-20 bg-zinc-900">
             <div className="container mx-auto px-4">
-              <div className="grid md:grid-cols-2 gap-4 items-center">
-                <div className="relative w-[300px] h-[300px] mx-auto md:mx-0 rounded-lg overflow-hidden">
+              <div className="grid md:grid-cols-2 gap-1 items-center">
+                <div className="relative w-[300px] h-[300px] mx-auto md:flex md:mx-0 md:justify-center rounded-lg overflow-hidden">
                   <Image
                     src="/podcast.webp"
                     alt="Vintage barbershop"
