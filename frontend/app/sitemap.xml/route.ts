@@ -60,7 +60,7 @@ ${articles.map((post: Article) => `  <url>
       <news:title>${post.title}</news:title>
     </news:news>` : ''}
     ${post.cover?.url ? `<image:image>
-      <image:loc>${baseUrl}${post.cover.url}</image:loc>
+      <image:loc>${post.cover.url.startsWith('http') ? post.cover.url : `${baseUrl}${post.cover.url}`}</image:loc>
       <image:title>${post.title || 'Blog post image'}</image:title>
       <image:caption>${post.description || post.title || 'Blog post'}</image:caption>
     </image:image>` : ''}
