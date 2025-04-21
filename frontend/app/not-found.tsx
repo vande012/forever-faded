@@ -30,14 +30,14 @@ export default function NotFound() {
         <div className="mt-8 space-y-4">
           <Link 
             href="/"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-[#D4AF37] hover:bg-[#C4A027] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#D4AF37]"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black gold-gradient-bg"
           >
             Return Home
           </Link>
           
           <Link 
             href="/book-now"
-            className="w-full flex justify-center py-2 px-4 border border-[#D4AF37] rounded-md shadow-sm text-sm font-medium text-[#D4AF37] bg-transparent hover:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#D4AF37]"
+            className="w-full flex justify-center py-2 px-4 border border-[#D4AF37] rounded-md shadow-sm text-sm font-medium gold-border-btn"
           >
             Book an Appointment
           </Link>

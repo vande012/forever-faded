@@ -96,7 +96,7 @@ export default function Hero() {
 
   if (isLoading) {
     return (
-    <div className="h-screen w-full bg-black flex text-white font-roboto font-bold text-2xl items-center justify-center">
+    <section className="h-screen w-full bg-black flex text-white font-roboto font-bold text-2xl items-center justify-center">
       <div className="container flex flex-col items-center justify-center">
         <Image
           src="/loadinganimation.gif"
@@ -107,15 +107,15 @@ export default function Hero() {
         />
         <div className="text-center col-span-2">Loading...</div>
       </div>
-      </div>
+      </section>
     );
   }
 
   if (error || !data) {
     return (
-      <div className="h-screen bg-black flex text-white items-center justify-center">
-        Error loading content
-      </div>
+      <section className="h-screen bg-black flex text-white items-center justify-center">
+        <h2>Error loading content</h2>
+      </section>
     );
   }
 
@@ -126,7 +126,7 @@ export default function Hero() {
   const heroSection = data.blocks.find(isHeroSectionBlock);
 
   if (!heroSection) {
-    return <div>Hero section not found</div>;
+    return <section><h2>Hero section not found</h2></section>;
   }
 
   // Get the full URLs for media
@@ -137,7 +137,7 @@ export default function Hero() {
   const videoUrl = isMobile ? mobileVideoUrl : desktopVideoUrl;
 
   return (
-    <div className="relative h-screen w-full overflow-hidden">
+    <section className="relative h-screen w-full overflow-hidden">
       {videoUrl && (
         <video
           ref={videoRef}
@@ -146,12 +146,13 @@ export default function Hero() {
           muted
           playsInline
           className="absolute top-0 left-0 h-full w-full object-cover z-0"
+          aria-hidden="true"
         >
           <source src={videoUrl} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       )}
-      <div className="absolute top-0 left-0 h-full w-full bg-black/50 z-10" />
+      <div className="absolute top-0 left-0 h-full w-full bg-black/50 z-10" aria-hidden="true" />
       
       {/* Content container - centered on desktop, bottom-aligned on mobile */}
       <div className={`relative z-20 flex h-full ${isMobile ? 'items-end pb-16' : 'items-center'} justify-center`}>
@@ -170,7 +171,7 @@ export default function Hero() {
             {heroSection.cta1 && (
               <Link
                 href={heroSection.cta1.href}
-                className={`rounded gold-gradient-bg font-roboto font-semibold text-white transition-colors hover:bg-[#262974] ${
+                className={`rounded gold-gradient-bg font-roboto font-semibold text-white ${
                   isMobile ? 'block w-64 mx-auto px-5 py-2.5 text-base' : 'inline-block px-5 py-2.5 sm:px-7 sm:py-3.5 text-base sm:text-lg'
                 }`}
               >
@@ -181,6 +182,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

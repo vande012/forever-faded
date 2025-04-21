@@ -202,7 +202,7 @@ export function GalleryModal({ item, items, onClose, onNavigate, imageOrientatio
         <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
           <button
             onClick={onClose}
-            className="p-2 sm:p-3 rounded-full bg-black/70 text-white hover:bg-black transition-colors"
+            className="p-2 sm:p-3 rounded-full bg-black/70 text-white hover:bg-black transition-all"
             aria-label="Close modal"
           >
             <X className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -216,7 +216,7 @@ export function GalleryModal({ item, items, onClose, onNavigate, imageOrientatio
               const prevItem = navigateToImage("prev")
               onNavigate(prevItem)
             }}
-            className="p-2 sm:p-3 rounded-full bg-black/70 text-white hover:bg-black transition-colors"
+            className="p-2 sm:p-3 rounded-full bg-black/70 text-white hover:bg-black transition-all"
             aria-label="Previous image"
           >
             <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -230,7 +230,7 @@ export function GalleryModal({ item, items, onClose, onNavigate, imageOrientatio
               const nextItem = navigateToImage("next")
               onNavigate(nextItem)
             }}
-            className="p-2 sm:p-3 rounded-full bg-black/70 text-white hover:bg-black transition-colors"
+            className="p-2 sm:p-3 rounded-full bg-black/70 text-white hover:bg-black transition-all"
             aria-label="Next image"
           >
             <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />

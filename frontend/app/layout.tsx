@@ -10,6 +10,7 @@ import NavbarWrapper from "./components/NavbarWrapper";
 import { CartProvider } from "./components/shop/CartContext";
 import { LoadingProvider } from './components/ui/LoadingContext';
 import type { Metadata, Viewport } from "next";
+import BackToTopWrapper from './components/BackToTopWrapper';
 
 const urbanist = Urbanist({ subsets: ["latin"], variable: "--font-urbanist" });
 const roboto = Roboto({
@@ -99,9 +100,16 @@ export default async function RootLayout({
          <LoadingProvider>
           <CartProvider>
             <ClientImageFixer />
-            <NavbarWrapper data={navbarData} />
-              <main>{children}</main>
-            <Footer data={footerData} />
+            <header>
+              <NavbarWrapper data={navbarData} />
+            </header>
+            <main>
+              {children}
+            </main>
+            <footer>
+              <Footer data={footerData} />
+            </footer>
+            <BackToTopWrapper />
           </CartProvider>
         </LoadingProvider>
       </body>

@@ -34,7 +34,7 @@ export default function PodcastPage() {
                     succeed in today&apos;s market.
                   </p>
                   <p className="text-gray-300">
-                    Subscribe now to get notified when new episodes drop and connect with other barbers who are committed to
+                    Subscribe on your favorite platform now to get notified when new episodes drop and connect with other barbers who are committed to
                     excellence.
                   </p>
                 </div>

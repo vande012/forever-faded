@@ -259,7 +259,7 @@ export default function StaffProfiles() {
                         <div className="flex flex-col sm:flex-row gap-4">
                           <Link 
                             href="mailto:retict1@gmail.com?subject=Forever%20Faded%20Inquiry"
-                            className="inline-block w-full sm:w-auto text-center bg-transparent hover:bg-black/30 border border-[#D3A84C] text-[#D3A84C] px-8 py-3 rounded-md transition-all font-medium text-lg"
+                            className="inline-block w-full sm:w-auto text-center gold-border-btn px-8 py-3 rounded-md font-medium text-lg"
                           >
                             Contact Tim
                           </Link>
@@ -268,9 +268,18 @@ export default function StaffProfiles() {
                             href={bookingUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block w-full sm:w-auto text-center gold-gradient-bg text-white px-8 py-3 rounded-md hover:bg-opacity-90 transition-all font-medium text-lg"
+                            className="inline-block w-full sm:w-auto text-center gold-gradient-bg text-white px-8 py-3 rounded-md font-medium text-lg"
                           >
                             Book SMP Consultation
+                          </Link>
+                          
+                          <Link 
+                            href="https://smplab.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block w-full sm:w-auto text-center gold-border-btn px-8 py-3 rounded-md font-medium text-lg"
+                          >
+                            Learn more about SMP
                           </Link>
                         </div>
                       ) : (
@@ -278,7 +287,7 @@ export default function StaffProfiles() {
                           href={bookingUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-block gold-gradient-bg text-white px-8 py-3 rounded-md hover:bg-opacity-90 transition-all font-medium text-lg"
+                          className="inline-block gold-gradient-bg text-white px-8 py-3 rounded-md font-medium text-lg"
                         >
                           Book with {member.name}
                         </Link>

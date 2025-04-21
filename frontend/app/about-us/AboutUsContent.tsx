@@ -195,12 +195,12 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                     </p>
                     <div className="flex justify-center gap-4">
                         <Link href="https://getsquire.com/booking/book/forever-faded-llc-waukesha">
-                            <button className="bg-[#D4AF37] hover:bg-[#C4A027] text-black font-bold py-3 px-6 rounded">
+                            <button className="gold-gradient-bg text-black font-bold py-3 px-6 rounded button-enhance">
                                 Book Now
                             </button>
                         </Link>
                         <Link href="mailto:FOREVERFADED11@YAHOO.COM">
-                            <button className="border border-[#D4AF37] gold-gradient-text hover:bg-[#D4AF37] hover:text-black font-bold py-3 px-6 rounded">
+                            <button className="gold-border-btn gold-gradient-text font-bold py-3 px-6 rounded">
                                 Contact Us
                             </button>
                         </Link>

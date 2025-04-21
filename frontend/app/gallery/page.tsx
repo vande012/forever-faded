@@ -3,9 +3,35 @@ import GalleryGrid from "../components/gallery/gallery-grid"
 import { GalleryHeader } from "../components/gallery/gallery-header"
 import { getGalleryData } from "../data/loaders"
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://foreverfadedmke.com';
+
 export const metadata: Metadata = {
   title: "Gallery | Forever Faded",
-  description: "Check out our latest haircuts and styles at Forever Faded Barber Shop",
+  description: "Check out our latest haircuts and styles at Forever Faded Barber Shop in Waukesha, WI. Browse our professional haircut gallery featuring fades, tapers, beard trims, and more.",
+  keywords: ["barber gallery", "haircut gallery", "fade haircuts", "Waukesha barber", "Forever Faded gallery"],
+  alternates: {
+    canonical: `${siteUrl}/gallery`,
+  },
+  openGraph: {
+    title: "Gallery | Forever Faded Barbershop",
+    description: "Browse our collection of professional haircuts and styles at Forever Faded Barber Shop in Waukesha, WI.",
+    url: `${siteUrl}/gallery`,
+    type: "website",
+    images: [
+      {
+        url: `${siteUrl}/hero-logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "Forever Faded Barbershop Gallery",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Forever Faded Barbershop Gallery",
+    description: "Browse our collection of professional haircuts and styles at Forever Faded Barber Shop in Waukesha, WI.",
+    images: [`${siteUrl}/hero-logo.png`],
+  },
 }
 
 export default async function GalleryPage() {
@@ -23,20 +49,20 @@ export default async function GalleryPage() {
   return (
     <main className="min-h-screen bg-black pt-24">
       <GalleryHeader />
-      <div className="container mx-auto px-4 py-12">
-        <p className="text-gray-300 text-center max-w-3xl mx-auto mb-12 font-roboto">
-          {galleryData?.data?.Description || ""}
-        </p>
+      <section className="container mx-auto px-4 py-12">
+        <div className="text-gray-300 text-center max-w-3xl mx-auto mb-12 font-roboto">
+          <p>{galleryData?.data?.Description || ""}</p>
+        </div>
         
         {/* Show a message if no items are found */}
         {galleryItems.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-400 text-lg">No gallery items found. Please add some in your Strapi admin.</p>
+            <h2 className="text-gray-400 text-lg">No gallery items found. Please add some in your Strapi admin.</h2>
           </div>
         ) : (
           <GalleryGrid galleryItems={galleryItems} />
         )}
-      </div>
+      </section>
     </main>
   )
 }

@@ -27,12 +27,17 @@ export default function BackToTop() {
   }, []);
 
   return (
-    <div className={`fixed bottom-4 right-4 z-50 ${isVisible ? "block" : "hidden"}`}>
+    <div 
+      className={`fixed bottom-6 md:bottom-8 right-6 md:right-8 z-50 transition-opacity duration-300 ${
+        isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}
+    >
       <button
         onClick={scrollToTop}
-        className="p-3 rounded-full bg-black text-white hover:bg-gray-700 transition-colors"
+        aria-label="Back to top"
+        className="gold-gradient-bg text-black p-3 md:p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center"
       >
-        <ChevronUp size={24} />
+        <ChevronUp className="w-6 h-6 md:w-7 md:h-7" />
       </button>
     </div>
   );

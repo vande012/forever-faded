@@ -62,8 +62,34 @@ body {
 .gold-gradient-bg:hover {
   animation: goldShimmer 3s ease infinite;
   background-size: 200% auto;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 0 15px rgba(211,168,76,0.5);
+}
+
+/* Enhanced button animation class - can be added to any button */
+.button-enhance {
+  transition: all 0.3s ease;
+}
+
+.button-enhance:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 15px rgba(211,168,76,0.5);
+}
+
+/* Gold border button with enhanced animation */
+.gold-border-btn {
+  background: black;
+  border: 1px solid #D3A84C;
+  color: #D3A84C;
+  transition: all 0.3s ease;
+}
+
+.gold-border-btn:hover {
+  background: #0f0f0f;
+  border-color: #E6BE69;
+  color: #E6BE69;
+  transform: translateY(-4px);
+  box-shadow: 0 0 15px rgba(211,168,76,0.5);
 }
 
 .custom-icon svg {

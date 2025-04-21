@@ -213,7 +213,7 @@ export default function StaffSection() {
                           scroll={true}
                           prefetch={true}
                         >
-                          <Button className="w-full bg-transparent hover:bg-black/30 border border-[#D3A84C] text-[#D3A84C] font-medium">
+                          <Button className="w-full gold-border-btn font-medium">
                             Read Bio
                           </Button>
                         </Link>

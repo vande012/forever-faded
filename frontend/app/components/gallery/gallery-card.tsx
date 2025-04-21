@@ -125,6 +125,10 @@ export function GalleryCard({ item, index, onClick, imageOrientation = 'auto' }:
   // Determine if we should use a rotation or aspect ratio based approach
   const isRotated = ['rotate90', 'rotate180', 'rotate270'].includes(orientation);
   
+  // Determine if image should be lazy loaded based on its position
+  // First 4 images are considered "above the fold" and should not be lazy loaded
+  const shouldLazyLoad = index >= 4;
+  
   return (
     <motion.div
       initial="hidden"
@@ -135,12 +139,15 @@ export function GalleryCard({ item, index, onClick, imageOrientation = 'auto' }:
       onClick={onClick}
     >
       {/* Responsive aspect ratio container based on orientation */}
-      <div className={`relative ${
-        isRotated ? 'aspect-square' :
-        orientation === "portrait" ? "aspect-[3/4]" : 
-        orientation === "landscape" ? "aspect-[4/3]" : 
-        "aspect-square"
-      } overflow-hidden`}>
+      <div 
+        className={`relative ${
+          isRotated ? 'aspect-square' :
+          orientation === "portrait" ? "aspect-[3/4]" : 
+          orientation === "landscape" ? "aspect-[4/3]" : 
+          "aspect-square"
+        } overflow-hidden`}
+        aria-label={item.Category || "Gallery image"}
+      >
         <Image
           src={getImageUrl(item.Image)}
           alt={item.Image?.alternativeText || item.Category || "Gallery image"}
@@ -150,6 +157,8 @@ export function GalleryCard({ item, index, onClick, imageOrientation = 'auto' }:
           className={`object-cover transition-transform duration-500 group-hover:scale-105 ${getOrientationClass()} ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
           style={{ objectFit: "cover" }}
           onLoadingComplete={() => setIsLoaded(true)}
+          loading={shouldLazyLoad ? "lazy" : "eager"}
+          fetchPriority={shouldLazyLoad ? "auto" : "high"}
         />
         
         {/* Overlay that appears on hover */}
