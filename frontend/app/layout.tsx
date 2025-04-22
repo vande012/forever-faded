@@ -1,13 +1,11 @@
 import "./globals.css";
 import { Urbanist, Roboto, Italianno } from "next/font/google";
-import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import type React from "react"; // Import React
 import { getFooterData, getNavbarData } from "./data/loaders";
 import ClientImageFixer from "./components/ClientImageFixer";
-import { usePathname } from 'next/navigation'
 import NavbarWrapper from "./components/NavbarWrapper";
-import { CartProvider } from "./components/shop/CartContext";
+
 import { LoadingProvider } from './components/ui/LoadingContext';
 import type { Metadata, Viewport } from "next";
 import BackToTopWrapper from './components/BackToTopWrapper';
@@ -98,7 +96,6 @@ export default async function RootLayout({
         className={`${urbanist.variable} ${roboto.variable} ${italianno.variable} font-roboto`}
       >
          <LoadingProvider>
-          <CartProvider>
             <ClientImageFixer />
             <header>
               <NavbarWrapper data={navbarData} />
@@ -110,7 +107,6 @@ export default async function RootLayout({
               <Footer data={footerData} />
             </footer>
             <BackToTopWrapper />
-          </CartProvider>
         </LoadingProvider>
       </body>
     </html>

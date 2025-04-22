@@ -180,6 +180,7 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                             width={600}
                             height={400}
                             className="object-cover w-full h-full"
+                            sizes="(min-width: 768px) 50vw, 100vw"
                         />
                     </div>
                 </div>

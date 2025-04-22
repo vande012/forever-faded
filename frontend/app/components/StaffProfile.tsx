@@ -201,7 +201,7 @@ export default function StaffProfiles() {
                 <div className={style.layoutClass}>
                   {/* Image column - adaptive height based on bio length */}
                   <div className={style.imageContainerClass}>
-                    <div className={`lg:sticky lg:top-0 ${style.imageClass} relative flex items-center justify-center bg-black`}>
+                    <div className={`lg:relative lg:top-0 ${style.imageClass} relative flex items-center justify-center bg-black`}>
                       {member.id === "juan" ? (
                         <div className="w-full h-full flex items-center justify-center py-4">
                           <Image
@@ -219,6 +219,7 @@ export default function StaffProfiles() {
                               src={member.image}
                               alt={member.name}
                               fill
+                              sizes="(min-width: 768px) 33vw, 100vw"
                               className="object-cover"
                               style={{ objectPosition: "center -100px" }}
                             />
@@ -229,6 +230,7 @@ export default function StaffProfiles() {
                           src={member.image}
                           alt={member.name}
                           fill
+                          sizes="(min-width: 768px) 33vw, 100vw"
                           className={style.imageObjectFit}
                           style={{
                             objectPosition: "top center"

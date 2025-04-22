@@ -144,14 +144,14 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
         <div className="container mx-auto flex justify-between items-center text-sm md:text-base gap-3 sm:gap-6 px-4">
           {/* Left Section */}
           <div className="flex items-center space-x-6 md:space-x-10">
-            <a
+            <Link
               href={`tel:${navData.phone}`}
               className="flex items-center hover:text-[#D1DCE5] text-white transition-color whitespace-nowrap"
               aria-label="Call us"
             >
               <Phone size={16} className="mr-2" aria-hidden="true" />
               {navData.phone}
-            </a>
+            </Link>
           </div>
 
           {/* Center Section */}
@@ -164,7 +164,7 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
 
           {/* Right Section */}
           <div className="flex">
-            <a
+            <Link
               href={navData.Address.url}
               className="flex items-center text-white hover:text-[#D1DCE5] transition-colors text-xs md:text-base"
               aria-label="Find our location"
@@ -174,7 +174,7 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
               <MapPin size={16} className="mr-2 flex-shrink-0" aria-hidden="true" />
               <span className="hidden md:inline">{navData.Address.Label}</span>
               <span className="md:hidden">Location</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -207,8 +207,8 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
                     src="/FFText.png" 
                     alt="Forever Faded Text Logo" 
                     width={280} 
-                    height={100} 
-                    className="max-w-[280px] object-contain" 
+                    height={40} 
+                    className="max-w-[280px] h-auto object-contain" 
                   />
                 </div>
               </div>
