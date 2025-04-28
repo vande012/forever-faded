@@ -9,6 +9,7 @@ export default [
       origin: [
         'https://foreverfadedmke.com', // Production
         'http://localhost:3000', // Local development
+        'https://harmonious-luck-fd75090c58.strapiapp.com', // Strapi Cloud URL
         (ctx) => {
           const requestOrigin = ctx.request.header.origin;
           if (requestOrigin?.includes('-vande012s-projects.vercel.app')) {
