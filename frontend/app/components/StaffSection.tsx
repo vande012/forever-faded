@@ -1,19 +1,32 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { getHomepageData } from "../data/loaders";
 import { getStrapiMedia } from "../utils/get-strapi-url";
 import Link from "next/link";
+import { 
+  Dialog, 
+  DialogTrigger, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogDescription,
+  DialogFooter,
+  DialogClose
+} from "./ui/dialog";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+import { CareerApplicationModal } from "./CareerApplicationModal";
 
 const placeholderCard = {
   id: 'placeholder',
   name: 'We are hiring!',
   title: 'Check out our open positions and apply today!',
   cta: {
-    text: 'Open positions',
-    href: '/careers'
+    text: 'Apply Now',
+    href: '#'
   }
 };
 
@@ -46,10 +59,13 @@ const TiktokIcon = () => (
   </svg>
 );
 
+// Career Application Modal Component has been moved to its own file
+
 export default function StaffSection() {
   const [data, setData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Helper function to get the correct barber bio link
   const getBarberBioLink = (name: string) => {
@@ -124,108 +140,118 @@ export default function StaffSection() {
     }
   };
 
+  // Handle hiring card click
+  const handleHiringCardClick = () => {
+    setIsModalOpen(true);
+  };
+
   return (
-    <section className="py-12 bg-[#1d1d1d]">
-      <div className="container mx-auto px-4">
-        <h2 className="text-6xl font-bold gold-gradient-text text-center mb-8">
-          {data.title || "Meet Our Team"}
-        </h2>
+    <>
+      <section className="py-12 bg-[#1d1d1d]">
+        <div className="container mx-auto px-4">
+          <h2 className="text-6xl font-bold gold-gradient-text text-center mb-8">
+            {data.title || "Meet Our Team"}
+          </h2>
 
-        <div className="flex flex-wrap justify-center gap-8">
-          {[...data.staffcard, placeholderCard].map((member: any) => {
-            const imageUrl = member.image?.url ? getStrapiMedia(member.image.url) : "/placeholder.svg";
+          <div className="flex flex-wrap justify-center gap-8">
+            {[...data.staffcard, placeholderCard].map((member: any) => {
+              const imageUrl = member.image?.url ? getStrapiMedia(member.image.url) : "/placeholder.svg";
 
-            return (
-              <div
-                key={member.id}
-                className="bg-black/50 rounded-lg shadow-md overflow-hidden w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1rem)] hover:shadow-lg hover:shadow-[#D3A84C]/20 transition-all duration-300"
-              >
-                {member.id === 'placeholder' ? (
-                  <div className="p-4 flex flex-col items-center justify-center h-full min-h-[300px] text-center">
-                    <h3 className="font-bold text-2xl gold-gradient-text mb-4">
-                      {member.name}
-                    </h3>
-                    <p className="text-sm text-gray-400 mb-6">{member.title}</p>
-                    <Button className="w-full gold-gradient-bg">
-                      {member.cta.text}
-                    </Button>
-                  </div>
-                ) : (
-                  <>
-                    <div className="relative bg-black">
-                      <Image
-                        src={imageUrl}
-                        alt={member.name || "Staff member"}
-                        width={300}
-                        height={300}
-                        className="w-full h-56 sm:h-64 object-cover"
-                        style={{
-                          objectPosition: member.name === "Tim" ? "center -70px" : 
-                                          member.name === "Bryan" ? "center -60px" :
-                                          member.name === "Juan" ? "center -140px" : 
-                                          member.name === "Cristian" ? "center -50px" : 
-                                          member.name === "Chelsea" ? "center -140px" :
-                                          member.name === "Angel" ? "center -20px" :
-                                          "top"
-                        }}
-                      />
+              return (
+                <div
+                  key={member.id}
+                  className="bg-black/50 rounded-lg shadow-md overflow-hidden w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1rem)] hover:shadow-lg hover:shadow-[#D3A84C]/20 transition-all duration-300"
+                >
+                  {member.id === 'placeholder' ? (
+                    <div className="p-4 flex flex-col items-center justify-center h-full min-h-[300px] text-center">
+                      <h3 className="font-bold text-2xl gold-gradient-text mb-4">
+                        {member.name}
+                      </h3>
+                      <p className="text-sm text-gray-400 mb-6">{member.title}</p>
+                      <Button className="w-full gold-gradient-bg" onClick={handleHiringCardClick}>
+                        {member.cta.text}
+                      </Button>
                     </div>
-                    <div className="p-4">
-                      <div className="flex justify-between items-start mb-1">
-                        <h3 className="font-bold text-lg gold-gradient-text">
-                          {member.name}
-                        </h3>
-                        
-                        {/* Social Media Icons moved here */}
-                        {member.socials && member.socials.length > 0 && (
-                          <div className="flex space-x-2">
-                            {member.socials.map((social: any, index: number) => (
-                              <a 
-                                key={index}
-                                href={social.url} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="text-white hover:text-[#D3A84C] transition-colors"
-                                aria-label={`${social.platform} profile`}
-                              >
-                                {renderSocialIcon(social.platform)}
-                              </a>
-                            ))}
-                          </div>
-                        )}
+                  ) : (
+                    <>
+                      <div className="relative bg-black">
+                        <Image
+                          src={imageUrl}
+                          alt={member.name || "Staff member"}
+                          width={300}
+                          height={300}
+                          className="w-full h-56 sm:h-64 object-cover"
+                          style={{
+                            objectPosition: member.name === "Tim" ? "center -70px" : 
+                                            member.name === "Bryan" ? "center -60px" :
+                                            member.name === "Juan" ? "center -90px" : 
+                                            member.name === "Cristian" ? "center -50px" : 
+                                            member.name === "Chelsea" ? "center -140px" :
+                                            member.name === "Angel" ? "center -20px" :
+                                            "top"
+                          }}
+                        />
                       </div>
-                      
-                      <p className="text-sm text-gray-400">{member.title}</p>
-                      <p className="text-sm mb-4 text-white">{member.description}</p>
-                      <div className="flex flex-col space-y-2">
-                        {member.cta && (
-                          <a href={member.cta.href} target="_blank" rel="noopener noreferrer" className="w-full">
-                            <Button className="w-full gold-gradient-bg text-white font-medium">
-                              {member.cta.text}
+                      <div className="p-4">
+                        <div className="flex justify-between items-start mb-1">
+                          <h3 className="font-bold text-lg gold-gradient-text">
+                            {member.name}
+                          </h3>
+                          
+                          {/* Social Media Icons moved here */}
+                          {member.socials && member.socials.length > 0 && (
+                            <div className="flex space-x-2">
+                              {member.socials.map((social: any, index: number) => (
+                                <a 
+                                  key={index}
+                                  href={social.url} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="text-white hover:text-[#D3A84C] transition-colors"
+                                  aria-label={`${social.platform} profile`}
+                                >
+                                  {renderSocialIcon(social.platform)}
+                                </a>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        
+                        <p className="text-sm text-gray-400">{member.title}</p>
+                        <p className="text-sm mb-4 text-white">{member.description}</p>
+                        <div className="flex flex-col space-y-2">
+                          {member.cta && (
+                            <a href={member.cta.href} target="_blank" rel="noopener noreferrer" className="w-full">
+                              <Button className="w-full gold-gradient-bg text-white font-medium">
+                                {member.cta.text}
+                              </Button>
+                            </a>
+                          )}
+                          
+                          {/* Add Read Bio Button */}
+                          <Link 
+                            href={getBarberBioLink(member.name)} 
+                            className="w-full"
+                            scroll={true}
+                            prefetch={true}
+                          >
+                            <Button className="w-full gold-border-btn font-medium">
+                              Read Bio
                             </Button>
-                          </a>
-                        )}
-                        
-                        {/* Add Read Bio Button */}
-                        <Link 
-                          href={getBarberBioLink(member.name)} 
-                          className="w-full"
-                          scroll={true}
-                          prefetch={true}
-                        >
-                          <Button className="w-full gold-border-btn font-medium">
-                            Read Bio
-                          </Button>
-                        </Link>
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                  </>
-                )}
-              </div>
-            );
-          })}
+                    </>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      
+      {/* Career Application Modal */}
+      <CareerApplicationModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
+    </>
   );
 }

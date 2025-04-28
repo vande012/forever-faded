@@ -41,7 +41,7 @@ export default function FullScreenSlider({ galleryBlock }: FullScreenSliderProps
   }, [api]);
 
   return (
-    <section className="py-8 md:py-10 bg-neutral-900">
+    <section className="py-8 md:py-10 bg-[#1d1d1d]">
       <div className="container mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-3 gold-gradient-text">
           {galleryBlock.header}

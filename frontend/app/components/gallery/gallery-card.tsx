@@ -6,40 +6,63 @@ import { useState, useEffect } from "react"
 import type { GalleryItem } from "../../../types/gallery"
 import { getStrapiMedia } from "@/app/utils/get-strapi-url"
 
+export type ImageOrientation = 'auto' | 'portrait' | 'landscape' | 'square' | 'rotate90' | 'rotate180' | 'rotate270' | 'unknown';
+
 interface GalleryCardProps {
   item: GalleryItem
   index: number
   onClick: () => void
-  imageOrientation?: 'auto' | 'portrait' | 'landscape' | 'rotate90' | 'rotate180' | 'rotate270'
+  imageOrientation?: ImageOrientation
 }
 
 // Function to detect images that need rotation based on URL patterns
-const detectImageRotation = (url: string | null) => {
+export const detectImageRotation = (url: string | null): ImageOrientation => {
   if (!url) return 'auto';
   
   // Add specific image filenames that need rotation
-  if (url.includes('20230817_170228_e8f4ed11a7.jpg')) {
+  // Rotate 90 degrees clockwise
+  if (
+    url.includes('20230817_170228_e8f4ed11a7.jpg') ||
+    url.includes('20230817_161947_a78dd97649.jpg') ||
+    url.includes('20230817_161702_f52387162a.jpg') ||
+    url.includes('DSC_0419_aa4cbdb5f3.JPG') ||
+    url.includes('DSC_0423_7af79a7cd8.JPG') ||
+    url.includes('20230817_161136_58fe0bfccc.jpg') ||
+    url.includes('20230817_161756_51658e0096.jpg') ||
+    url.includes('20230817_162745_5130036a77.jpg') ||
+    url.includes('20230817_164734_acfb160cf5.jpg') ||
+    url.includes('20230817_172948_379b1101ed.jpg') ||
+    url.includes('20230817_173149_f48366221a.jpg') ||
+    url.includes('20231103_171443_885963269c.jpg') ||
+    url.includes('DSC_03621_e2a89c2354.JPG') ||
+    url.includes('E78576_F8_88_C7_4_F13_8993_7814_C19_B2088_4567c8b248.jpeg')
+  ) {
     return 'rotate90';
   }
-  if (url.includes('20230817_170228_e8f4ed11a7.jpg')) {
-    return 'rotate90';
-  }
-  if (url.includes('DSC_02306_6b32e163e3.jpg')) {
+  
+  // Rotate 270 degrees clockwise (or 90 counter-clockwise)
+  if (
+    url.includes('DSC_02306_6b32e163e3.jpg') ||
+    url.includes('DSC_03821_477cecff57.JPG') ||
+    url.includes('DSC_0322_be11f85cb8.JPG') ||
+    url.includes('DSC_0382_c5f58ae9e2.JPG')
+  ) {
     return 'rotate270';
   }
-  if (url.includes('DSC_03821_477cecff57.JPG')) {
-    return 'rotate270';
+  
+  // Rotate 180 degrees
+  if (
+    url.includes('DSC_0118_4c5f5e8c93.JPG') ||
+    url.includes('DSC_0120_75e73b72a9.JPG')
+  ) {
+    return 'rotate180';
   }
-  // Add more problematic images as needed
-  // if (url.includes('another_filename.jpg')) {
-  //   return 'rotate270';
-  // }
   
   return 'auto';
 };
 
 export function GalleryCard({ item, index, onClick, imageOrientation = 'auto' }: GalleryCardProps) {
-  const [orientation, setOrientation] = useState<string>("unknown")
+  const [orientation, setOrientation] = useState<ImageOrientation>("unknown")
   const [isLoaded, setIsLoaded] = useState(false)
   
   // Function to get the full image URL
@@ -55,18 +78,19 @@ export function GalleryCard({ item, index, onClick, imageOrientation = 'auto' }:
       return;
     }
     
-    // Check if this specific image has a known rotation issue
+    // Check if this specific image has a known rotation issue - this should always be checked first
     const detectedRotation = detectImageRotation(item.Image.url);
     
-    // If a specific rotation is manually provided or detected, use it
-    if (imageOrientation !== 'auto') {
-      setOrientation(imageOrientation);
-      return;
-    } else if (detectedRotation !== 'auto') {
+    // If rotation is detected or manually specified, use it
+    if (detectedRotation !== 'auto') {
       setOrientation(detectedRotation);
+      return;
+    } else if (imageOrientation !== 'auto') {
+      setOrientation(imageOrientation);
       return;
     }
     
+    // If no rotation is specified, determine orientation based on dimensions
     // Initial orientation guess based on metadata (if available)
     if (item.Image.width && item.Image.height) {
       if (item.Image.width > item.Image.height) {

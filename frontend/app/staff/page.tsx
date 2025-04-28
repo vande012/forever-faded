@@ -1,16 +1,35 @@
 import React, { Suspense } from "react";
 import { Metadata } from "next";
-import StaffProfiles from "../components/StaffProfile";
+
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://foreverfadedmke.com';
 
 export const metadata: Metadata = {
   title: "Meet Our Team | Forever Faded Barbershop",
   description: "Meet the skilled barbers at Forever Faded who are dedicated to providing exceptional service and haircuts that leave you looking and feeling your best.",
+  alternates: {
+    canonical: `${siteUrl}/staff`,
+  },
   openGraph: {
     title: "Our Team | Forever Faded Barbershop",
     description: "Meet our skilled team of professional barbers at Forever Faded Barbershop in Waukesha, WI.",
     type: "website",
-    url: "/staff"
-  }
+    url: `${siteUrl}/staff`,
+    images: [
+      {
+        url: `${siteUrl}/hero-logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "Forever Faded Barbershop Team",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Our Team | Forever Faded Barbershop",
+    description: "Meet our skilled team of professional barbers at Forever Faded",
+    images: [`${siteUrl}/hero-logo.png`],
+  },
 };
 
 function StaffPageLoading() {

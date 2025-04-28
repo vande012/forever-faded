@@ -19,7 +19,7 @@ const staffData: StaffMember[] = [
     id: "tim",
     name: "Timothy L Retic SR",
     title: "Owner & SMP Specialist",
-    image: "/theowner.jpg",
+    image: "/theowner-profile.jpg",
     bio: `Timothy L Retic SR is the visionary owner behind Forever Faded Barbershop. While Tim's expertise as a Master Barber is unquestionable, he no longer cuts hair at Forever Faded. Instead, he focuses on the strategic direction of the business and mentoring his talented team of barbers who deliver exceptional service daily.
 
 Tim's true passion now lies in his specialty as a Scalp Micropigmentation (SMP) artist. Through his dedicated practice at All Star SMP Lab, he transforms lives by providing cutting-edge SMP treatments that restore confidence to those experiencing hair loss. With meticulous attention to detail and an artistic touch, Tim creates natural-looking results that have earned him a stellar reputation in the industry.
@@ -83,7 +83,7 @@ My ultimate goal is becoming a shop owner as well as opening suite rentals for a
     id: "juan",
     name: "Juan",
     title: "Barber",
-    image: "/Juan.png",
+    image: "/Juan.jpg",
     bio: `My name is Juan, I attended barber school in MATC and graduated October of 2024. I've had a passion for barbering since high school and finally decided to take it to the next level. I'm excited to learn and perfect my craft being here at the Forever Faded Barbershop.`
   }
 ];
@@ -100,15 +100,32 @@ export default function StaffProfiles() {
 
   // Function to determine card style based on bio length
   const getCardStyle = (bioLength: number, memberId: string) => {
+    // Get image positioning based on member id
+    const getImagePosition = (id: string) => {
+      switch(id) {
+      
+        case "brian": 
+        case "bryan": return "center -60px";
+        case "juan": return "center 10%";
+        case "christian": 
+        case "cristian": return "center -50px";
+        case "chelsea": return "center -140px";
+        case "angel": return "center -20px";
+       
+        default: return "top center";
+      }
+    };
+
     // Special case for Juan's image
     if (memberId === "juan") {
       return {
         containerClass: "bg-black/50 rounded-lg shadow-xl overflow-hidden",
         layoutClass: "flex flex-col md:flex-row",
         imageContainerClass: "w-full md:w-1/3 relative",
-        imageClass: "h-[250px] md:h-[300px]",
+        imageClass: "h-[350px] md:h-[400px]",
         contentClass: "w-full md:w-2/3 p-6 md:p-8",
-        imageObjectFit: "object-contain"
+        imageObjectFit: "object-contain",
+        imagePosition: "center center"
       };
     }
     // Special case for Brian's image - remove with content addition
@@ -119,7 +136,8 @@ export default function StaffProfiles() {
         imageContainerClass: "w-full md:w-1/3 relative",
         imageClass: "h-[250px] md:h-[300px]",
         contentClass: "w-full md:w-2/3 p-6 md:p-8",
-        imageObjectFit: "object-cover !object-top"
+        imageObjectFit: "object-cover",
+        imagePosition: getImagePosition(memberId)
       };
     }
     // Short bios get a more compact card
@@ -130,7 +148,8 @@ export default function StaffProfiles() {
         imageContainerClass: "w-full md:w-1/3 relative",
         imageClass: "h-[250px] md:h-[300px]",
         contentClass: "w-full md:w-2/3 p-6 md:p-8",
-        imageObjectFit: "object-cover object-top"
+        imageObjectFit: "object-cover",
+        imagePosition: getImagePosition(memberId)
       };
     }
     // Medium bios
@@ -141,7 +160,8 @@ export default function StaffProfiles() {
         imageContainerClass: "w-full lg:w-2/5 relative",
         imageClass: "h-[300px] md:h-[350px] lg:h-full",
         contentClass: "w-full lg:w-3/5 p-6 lg:p-8",
-        imageObjectFit: "object-cover object-top"
+        imageObjectFit: "object-cover",
+        imagePosition: getImagePosition(memberId)
       };
     }
     // Long bios
@@ -152,7 +172,8 @@ export default function StaffProfiles() {
         imageContainerClass: "w-full lg:w-1/3 relative",
         imageClass: "h-[300px] md:h-[400px] lg:h-full",
         contentClass: "w-full lg:w-2/3 p-6 lg:p-10",
-        imageObjectFit: "object-cover object-top"
+        imageObjectFit: "object-cover",
+        imagePosition: getImagePosition(memberId)
       };
     }
   };
@@ -203,13 +224,15 @@ export default function StaffProfiles() {
                   <div className={style.imageContainerClass}>
                     <div className={`lg:relative lg:top-0 ${style.imageClass} relative flex items-center justify-center bg-black`}>
                       {member.id === "juan" ? (
-                        <div className="w-full h-full flex items-center justify-center py-4">
+                        <div className="w-full h-full relative overflow-hidden">
                           <Image
                             src={member.image}
                             alt={member.name}
-                            width={250}
-                            height={250}
-                            className="object-contain max-h-[250px]"
+                            fill
+                            sizes="(min-width: 768px) 33vw, 100vw"
+                            className="object-contain"
+                            style={{ objectPosition: style.imagePosition }}
+                            loading="lazy"
                           />
                         </div>
                       ) : member.id === "brian" ? (
@@ -221,7 +244,8 @@ export default function StaffProfiles() {
                               fill
                               sizes="(min-width: 768px) 33vw, 100vw"
                               className="object-cover"
-                              style={{ objectPosition: "center -100px" }}
+                              style={{ objectPosition: style.imagePosition }}
+                              loading="lazy"
                             />
                           </div>
                         </div>
@@ -233,8 +257,9 @@ export default function StaffProfiles() {
                           sizes="(min-width: 768px) 33vw, 100vw"
                           className={style.imageObjectFit}
                           style={{
-                            objectPosition: "top center"
+                            objectPosition: style.imagePosition
                           }}
+                          loading="lazy"
                         />
                       )}
                     </div>
@@ -260,7 +285,7 @@ export default function StaffProfiles() {
                       {member.id === "tim" ? (
                         <div className="flex flex-col sm:flex-row gap-4">
                           <Link 
-                            href="mailto:retict1@gmail.com?subject=Forever%20Faded%20Inquiry"
+                            href="mailto:tim.retic@retici.com?subject=Forever%20Faded%20Inquiry"
                             className="inline-block w-full sm:w-auto text-center gold-border-btn px-8 py-3 rounded-md font-medium text-lg"
                           >
                             Contact Tim

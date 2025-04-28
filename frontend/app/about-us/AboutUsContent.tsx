@@ -32,7 +32,7 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                 {/* Content container with positioning */}
                 <div className="absolute inset-0 flex flex-col items-center md:items-end justify-center px-4 md:px-16">
                     <div className="text-center md:text-right max-w-xl">
-                        <h1 className="text-4xl md:text-7xl font-bold mb-4 text-center gold-gradient-text">Our Story</h1>
+                        <h1 className="text-4xl md:text-7xl font-bold mb-4 text-center gold-gradient-text">About Forever Faded Barbershop</h1>
                         <p className="text-2xl text-center">Discover the passion and expertise behind Forever Faded Barbershop</p>
                     </div>
                 </div>
@@ -44,9 +44,8 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                     <div>
                         <h2 className="text-3xl font-bold mb-6 gold-gradient-text">Our History</h2>
                         <p className="mb-4">
-                            Founded in 2006, Forever Faded began as a small, one-chair barbershop with a big vision. Our founder,
-                            James Mitchell, had a passion for precision cuts and creating a community space where people could feel
-                            confident and comfortable.
+                        {` Founded in 2008, Rebranded in 2010 to Forever Faded began as owner operator  barbershop with a big vision. Our founder, Tim Retic, had a passion for precision cuts and creating a community space where people could feel confident and comfortable 
+                        Over the years, we've grown into Waukesha county's premier barbershop, known for our exceptional service, attention to detail, and welcoming atmosphere. What started as one barber's dream has evolved into a team of skilled professionals dedicated to the craft of barbering.`}
                         </p>
                         <p className="mb-4">
                             {`Over the years, we've grown into Waukesha's premier barbershop, known for our exceptional service,
@@ -54,8 +53,8 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                             of skilled professionals dedicated to the craft of barbering.`}
                         </p>
                         <p>
-                            Today, Forever Faded continues to set the standard for quality haircuts and grooming services in Waukesha,
-                            while maintaining the personal touch and community focus that has been our foundation since day one.
+                        Today, Forever Faded continues to set the standard for quality haircuts and grooming services in Waukesha County, while maintaining the personal touch and community focus that has been our foundation since day one. We are happy to announce we are now focusing our efforts on expansion, you never know one day we might be in your town
+
                         </p>
                     </div>
                     <div className="relative h-[400px] rounded-lg overflow-hidden">
@@ -165,11 +164,11 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                         </p>
                         <p className="mb-4">
                             {`"I wanted to create a place where people could not only get an exceptional haircut but also feel like they
-                            belong to something special," says James. "At Forever Faded, we are not just cutting hair—we are building
+                            belong to something special," says Tim. "At Forever Faded, we are not just cutting hair—we are building
                             confidence and community."`}
                         </p>
                         <p>
-                            {`James's dedication to quality and customer service has been the driving force behind Forever Faded's
+                            {`Tim's dedication to quality and customer service has been the driving force behind Forever Faded's
                             success and reputation as Waukesha's premier barbershop.`}
                         </p>
                     </div>
@@ -200,7 +199,7 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                                 Book Now
                             </button>
                         </Link>
-                        <Link href="mailto:FOREVERFADED11@YAHOO.COM">
+                        <Link href="mailto:tim.retic@retici.com">
                             <button className="gold-border-btn font-bold py-3 px-6 rounded">
                                 Contact Us
                             </button>

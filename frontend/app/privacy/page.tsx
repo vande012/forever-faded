@@ -1,9 +1,34 @@
 import React from "react";
 import type { Metadata } from "next";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://foreverfadedmke.com';
+
 export const metadata: Metadata = {
   title: "Privacy Policy | Forever Faded",
   description: "Privacy Policy for Forever Faded Barbershop - Learn how we protect your personal information.",
+  alternates: {
+    canonical: `${siteUrl}/privacy`,
+  },
+  openGraph: {
+    title: "Privacy Policy | Forever Faded",
+    description: "Privacy Policy for Forever Faded Barbershop - Learn how we protect your personal information.",
+    type: "website",
+    url: `${siteUrl}/privacy`,
+    images: [
+      {
+        url: `${siteUrl}/hero-logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "Forever Faded Barbershop",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy | Forever Faded",
+    description: "Privacy Policy for Forever Faded Barbershop",
+    images: [`${siteUrl}/hero-logo.png`],
+  },
 };
 
 export default function PrivacyPolicy() {

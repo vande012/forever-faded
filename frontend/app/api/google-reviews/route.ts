@@ -109,11 +109,11 @@ const getGooglePlacesData = unstable_cache(
       // Log raw reviews count
       console.log('Total raw reviews:', data.result.reviews.length);
   
-      // Filter reviews to only include those with text and 5-star ratings
+      // Filter reviews to only include those with text
+      // Note: API will only return 5 reviews maximum
       const filteredReviews = (data.result.reviews || [])
         .filter((review: GoogleReview) => {
           const isValid = 
-            review.rating === 5 && 
             review.text && 
             review.text.trim().length > 0;
           
@@ -124,9 +124,9 @@ const getGooglePlacesData = unstable_cache(
         })
         .sort((a, b) => b.time - a.time); // Sort by newest first
   
-      console.log('Filtered 5-star reviews count:', filteredReviews.length);
+      console.log('Filtered reviews count:', filteredReviews.length);
   
-      // Don't slice yet, let's see how many we actually have
+      // Make sure to include all reviews we can get (maximum 5 from Google API)
       const response = {
         reviews: filteredReviews,
         rating: data.result.rating || 0,

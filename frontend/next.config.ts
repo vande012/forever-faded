@@ -51,6 +51,43 @@ const nextConfig = {
     STRAPI_API_TOKEN: process.env.STRAPI_API_TOKEN,
   },
 
+  // Redirects for legacy URLs
+  async redirects() {
+    return [
+      
+      // Podcast redirects - map numbered podcast URLs to the podcast page
+      {
+        source: '/podcast/(.*)',
+        destination: '/podcast',
+        permanent: true,
+      },
+      
+      
+      // Shop related redirects
+      {
+        source: '/shop/(.*)',
+        destination: '/',
+        permanent: true,
+      },
+      
+      // Product category redirects
+      {
+        source: '/product-category/(.*)',
+        destination: '/',
+        permanent: true,
+      },
+      
+      
+      // Individual product redirects - all to merch page
+      {
+        source: '/product(.*)',
+        destination: '/',
+        permanent: true,
+      },
+     
+    ];
+  },
+
   // Add caching headers for static assets
   async headers() {
     return [

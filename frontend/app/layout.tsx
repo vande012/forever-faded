@@ -1,14 +1,15 @@
 import "./globals.css";
 import { Urbanist, Roboto, Italianno } from "next/font/google";
-import Footer from "./components/Footer";
 import type React from "react"; // Import React
 import { getFooterData, getNavbarData } from "./data/loaders";
 import ClientImageFixer from "./components/ClientImageFixer";
 import NavbarWrapper from "./components/NavbarWrapper";
 
 import { LoadingProvider } from './components/ui/LoadingContext';
+import { CareerModalProvider } from './components/CareerModalContext';
 import type { Metadata, Viewport } from "next";
 import BackToTopWrapper from './components/BackToTopWrapper';
+import ClientFooterWrapper from './components/ClientFooterWrapper';
 
 const urbanist = Urbanist({ subsets: ["latin"], variable: "--font-urbanist" });
 const roboto = Roboto({
@@ -29,8 +30,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://foreverfadedmke.com
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Forever Faded Barbershop | Waukesha, WI",
-    template: "%s | Forever Faded Barbershop"
+    default: "Forever Faded | Waukesha Barbershop",
+    template: "%s | Forever Faded"
   },
   description: "Premier barbershop in Waukesha, WI offering professional haircuts, beard trims, and grooming services for all hair types and styles.",
   keywords: ["barbershop", "Waukesha", "haircuts", "beard trims", "grooming", "men's haircuts", "fade haircut", "barber services"],
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: "Forever Faded Barbershop",
-    title: "Forever Faded Barbershop | Premier Barber Services in Waukesha, WI",
+    title: "Forever Faded | Waukesha Barbershop",
     description: "Premier barbershop in Waukesha offering professional haircuts, beard trims, and grooming services for all hair types and styles.",
     images: [
       {
@@ -77,7 +78,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 5,
   themeColor: '#000000',
 }
 
@@ -96,17 +96,19 @@ export default async function RootLayout({
         className={`${urbanist.variable} ${roboto.variable} ${italianno.variable} font-roboto`}
       >
          <LoadingProvider>
-            <ClientImageFixer />
-            <header>
-              <NavbarWrapper data={navbarData} />
-            </header>
-            <main>
-              {children}
-            </main>
-            <footer>
-              <Footer data={footerData} />
-            </footer>
-            <BackToTopWrapper />
+            <CareerModalProvider>
+              <ClientImageFixer />
+              <header>
+                <NavbarWrapper data={navbarData} />
+              </header>
+              <main>
+                {children}
+              </main>
+              <footer>
+                <ClientFooterWrapper data={footerData} />
+              </footer>
+              <BackToTopWrapper />
+            </CareerModalProvider>
         </LoadingProvider>
       </body>
     </html>

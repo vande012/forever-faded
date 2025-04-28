@@ -42,7 +42,7 @@ export default function StaffPageContent() {
           className="object-cover w-full h-[85%] brightness-50"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          <h1 className="text-6xl md:text-8xl font-bold mb-4 text-[#D4AF37]">Our Team</h1>
+          <h1 className="text-6xl md:text-8xl font-bold mb-4 text-[#D4AF37]">Meet the Barber Team</h1>
           <p className="text-2xl bg-black/80 rounded-lg max-w-4xl py-4 px-2">
             Meet the skilled professionals behind Forever Faded&apos;s reputation for excellence
           </p>

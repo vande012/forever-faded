@@ -1,9 +1,53 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "../components/ui/button"
-import { Input } from "../components/ui/input"
-import { Textarea } from "../components/ui/textarea"
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react"
+import { Metadata } from "next"
+import PodcastContactForm from "../components/PodcastContactForm"
+
+// Custom TikTok icon since lucide-react doesn't have one
+const TikTokIcon = () => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 448 512" 
+    fill="currentColor" 
+    className="w-10 h-10"
+  >
+    <path d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z" />
+  </svg>
+);
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://foreverfadedmke.com';
+
+export const metadata: Metadata = {
+  title: "Podcast | Forever Faded Barbershop",
+  description: "Listen to the Success After Barber School podcast by Forever Faded Barbershop for insights on building a barbering legacy.",
+  alternates: {
+    canonical: `${siteUrl}/podcast`,
+  },
+  openGraph: {
+    title: "Podcast | Forever Faded Barbershop",
+    description: "Listen to the Success After Barber School podcast by Forever Faded Barbershop",
+    type: "website",
+    url: `${siteUrl}/podcast`,
+    images: [
+      {
+        url: `${siteUrl}/podcast.webp`,
+        width: 1200,
+        height: 630,
+        alt: "Success After Barber School Podcast",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Podcast | Forever Faded Barbershop",
+    description: "Listen to the Success After Barber School podcast by Forever Faded",
+    images: [`${siteUrl}/podcast.webp`],
+  },
+};
 
 export default function PodcastPage() {
   return (
@@ -22,7 +66,7 @@ export default function PodcastPage() {
                   />
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold mb-6 gold-gradient-text">
+                  <h1 className="text-3xl text-center font-bold mb-6 gold-gradient-text">
                     Welcome to the Success After Barber School PODCAST
                   </h1>
                   <p className="text-gray-300 mb-4">
@@ -223,7 +267,7 @@ export default function PodcastPage() {
   <div className="container mx-auto px-4">
     <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
       <div>
-        <h2 className="text-5xl font-bold mb-7 gold-gradient-text">The Change</h2>
+        <h2 className="text-5xl font-bold mb-7 pb-1 gold-gradient-text">The Change</h2>
         <p className="text-2xl mb-4 text-[#D4AF37]">Insights Into Self Empowerment</p>
         <p className="text-gray-300 text-2xl mb-6">
         &quot;Change is inevitable. Growth is optional.&quot; John C. Maxwell &quot;You will have to Grow Through what you Go Through.&quot; This statement is just as true today, as the first day I heard it…
@@ -252,17 +296,7 @@ export default function PodcastPage() {
             <h2 className="text-3xl font-bold mb-12 mt-8 text-center gold-gradient-text">
               Would You Like To Be A Guest On Our Podcast?
             </h2>
-            <form className="grid gap-6 mb-16">
-              <div className="grid md:grid-cols-2 gap-6">
-                <Input placeholder="Name" className="bg-black border-[#D4AF37]" />
-                <Input placeholder="Email" type="email" className="bg-black border-[#D4AF37]" />
-              </div>
-              <Textarea
-                placeholder="Tell us about yourself and what you'd like to discuss..."
-                className="bg-black border-[#D4AF37] h-32"
-              />
-              <Button className="gold-gradient-bg w-full md:w-auto md:px-12 justify-self-center">Submit Request</Button>
-            </form>
+            <PodcastContactForm />
 
             {/* Connect with Mr. T.I.M. section with image on right */}
             <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -275,6 +309,12 @@ export default function PodcastPage() {
                 <div className="flex gap-8 mb-6">
                   <Link href="https://www.facebook.com/foreverFadedwi" target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] hover:text-[#C4A027] transition-colors">
                     <Facebook className="w-10 h-10" />
+                  </Link>
+                  <Link href="https://www.instagram.com/foreverfadedwi/" target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] hover:text-[#C4A027] transition-colors">
+                    <Instagram className="w-10 h-10" />
+                  </Link>
+                  <Link href="https://www.tiktok.com/@foreverfadedwi" target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] hover:text-[#C4A027] transition-colors">
+                    <TikTokIcon />
                   </Link>
                   <Link href="https://www.linkedin.com/in/tretic/" target="_blank" rel="noopener noreferrer" className="text-[#D4AF37] hover:text-[#C4A027] transition-colors">
                     <Linkedin className="w-10 h-10" />

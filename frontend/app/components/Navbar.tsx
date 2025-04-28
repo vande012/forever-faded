@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useScrollPosition } from "../hooks/useScrollPosition";
-import { Phone, MapPin, Clock, Menu, X, ShoppingCart } from "lucide-react";
+import { Phone, MapPin, Clock, Menu, X, ShoppingCart, Briefcase } from "lucide-react";
 import { getStrapiMedia } from "../utils/get-strapi-url";
 import { usePathname } from "next/navigation";
+import { useCareerModal } from "../components/CareerModalContext";
 
 interface NavbarProps {
   data: {
@@ -59,6 +60,7 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
   const [navBgClass, setNavBgClass] = useState<string>("bg-transparent");
   const [currentHours, setCurrentHours] = useState<string>("Closed");
   const pathname = usePathname(); 
+  const { openModal } = useCareerModal();
 
   const NavLink = ({
     href,
@@ -209,6 +211,8 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
                     width={280} 
                     height={40} 
                     className="max-w-[280px] h-auto object-contain" 
+                    loading="eager"
+                    priority
                   />
                 </div>
               </div>
@@ -241,7 +245,7 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
 
           {/* Mobile Menu Button - Now visible on md screens too */}
           <button
-            className="lg:hidden text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
+            className="lg:hidden mt-4 text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
@@ -255,7 +259,7 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
         {isMenuOpen && (
           <div 
             id="mobile-menu"
-            className="lg:hidden bg-black/90 rounded-md text-white mt-4 py-6 px-4 max-h-[calc(100vh-200px)] overflow-y-auto"
+            className="lg:hidden bg-black/90 rounded-md text-center text-white mt-4 py-6 px-4 max-h-[calc(100vh-200px)] overflow-y-auto"
           >
             <ul className="grid grid-cols-1 gap-6">
               <li>
@@ -270,6 +274,18 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
                   </NavLink>
                 </li>
               ))}
+              <li>
+                <button 
+                  onClick={() => {
+                    openModal();
+                    setIsMenuOpen(false);
+                  }}
+                  className="flex items-center justify-center w-full text-white hover:text-[#CA2C2B] transition-colors text-base md:text-lg text-center text-xl"
+                >
+                  <Briefcase className="mr-2 h-5 w-5" />
+                  Careers
+                </button>
+              </li>
             </ul>
           </div>
         )}

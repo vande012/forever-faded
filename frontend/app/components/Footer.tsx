@@ -1,8 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import { SiFacebook, SiLinkedin, SiX, SiYoutube } from "react-icons/si";
-import { MdEmail, MdStarRate } from "react-icons/md";
+import { SiFacebook, SiInstagram, SiLinkedin, SiTiktok, SiX, SiYoutube } from "react-icons/si";
+import { MdEmail, MdStarRate, MdWork } from "react-icons/md";
 import { getStrapiMedia } from "../utils/get-strapi-url";
+import { useCareerModal } from "./CareerModalContext";
 
 interface FooterProps {
   data: {
@@ -28,6 +31,7 @@ interface FooterProps {
 export default function Footer({ data }: FooterProps) {
   const footerData = data.data;
   const logoUrl = footerData.logo ? getStrapiMedia(footerData.logo.url) : "/LogoFooter.png";
+  const { openModal } = useCareerModal();
 
   const getSocialIcon = (platform: string) => {
     switch (platform) {
@@ -35,6 +39,8 @@ export default function Footer({ data }: FooterProps) {
       case 'LinkedIn': return <SiLinkedin className="w-6 h-6 md:w-7 md:h-7" />;
       case 'X': return <SiX className="w-6 h-6 md:w-7 md:h-7" />;
       case 'Youtube': return <SiYoutube className="w-6 h-6 md:w-7 md:h-7" />;
+      case 'Instagram': return <SiInstagram className="w-6 h-6 md:w-7 md:h-7" />;
+      case 'TikTok': return <SiTiktok className="w-6 h-6 md:w-7 md:h-7" />;
       default: return null;
     }
   };
@@ -83,7 +89,7 @@ export default function Footer({ data }: FooterProps) {
             <h3 className="font-urbanist font-bold text-xl mb-4 text-center md:text-left">Contact Us</h3>
             <div className="space-y-3 flex flex-col items-center md:items-start">
               <a 
-                href="mailto:FOREVERFADED11@YAHOO.COM"
+                href="mailto:tim.retic@retici.com"
                 className="flex items-center space-x-2 text-base font-medium hover:text-[#CA2C2B] transition-colors py-1"
               >
                 <MdEmail className="w-5 h-5 flex-shrink-0" />
@@ -98,6 +104,14 @@ export default function Footer({ data }: FooterProps) {
                 <MdStarRate className="w-5 h-5 flex-shrink-0" />
                 <span>Leave us a Review</span>
               </a>
+              <button
+                onClick={openModal}
+                className="flex items-center space-x-2 text-base font-medium hover:text-[#CA2C2B] transition-colors py-1"
+                aria-label="Apply for a career at Forever Faded"
+              >
+                <MdWork className="w-5 h-5 flex-shrink-0" />
+                <span>Careers</span>
+              </button>
             </div>
           </div>
 
@@ -114,6 +128,26 @@ export default function Footer({ data }: FooterProps) {
                 aria-label="Follow us on Facebook"
               >
                 <SiFacebook className="w-6 h-6 md:w-7 md:h-7" />
+              </Link>
+              
+              <Link 
+                href="https://www.instagram.com/foreverfadedwi/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#CA2C2B] transition-colors p-2 hover:bg-black/10 rounded-full"
+                aria-label="Follow us on Instagram"
+              >
+                <SiInstagram className="w-6 h-6 md:w-7 md:h-7" />
+              </Link>
+              
+              <Link 
+                href="https://www.tiktok.com/@foreverfadedwi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#CA2C2B] transition-colors p-2 hover:bg-black/10 rounded-full"
+                aria-label="Follow us on TikTok"
+              >
+                <SiTiktok className="w-6 h-6 md:w-7 md:h-7" />
               </Link>
               
               <Link 
@@ -139,7 +173,7 @@ export default function Footer({ data }: FooterProps) {
               {/* Keep any remaining dynamic social icons that aren't duplicates */}
               {footerData.socials.map((social) => {
                 // Skip if we've hardcoded this platform already
-                if (social.platform === 'Facebook' || social.platform === 'LinkedIn' || social.platform === 'Youtube') {
+                if (social.platform === 'Facebook' || social.platform === 'LinkedIn' || social.platform === 'Youtube' || social.platform === 'Instagram' || social.platform === 'TikTok') {
                   return null;
                 }
                 

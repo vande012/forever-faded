@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { GalleryModal } from "./gallery-modal"
-import { GalleryCard } from "./gallery-card"
+import { GalleryCard, detectImageRotation } from "./gallery-card"
 import type { GalleryItem } from "../../../types/gallery"
 
 interface GalleryGridProps {

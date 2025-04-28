@@ -133,14 +133,14 @@ export default function WhyUs() {
           {/* Left Content */}
           <div className="space-y-8">
             {whyUsSection.header && (
-              <motion.h2
+              <motion.h1
                 className="text-3xl md:text-4xl lg:text-7xl font-bold gold-gradient-text"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1 }}
               >
                 {whyUsSection.header}
-              </motion.h2>
+              </motion.h1>
             )}
 
             <div className="space-y-4">

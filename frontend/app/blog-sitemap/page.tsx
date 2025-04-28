@@ -10,20 +10,39 @@ type Article = {
     publishedAt: string;
   }
   
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://foreverfadedmke.com';
 
-  export const metadata: Metadata = {
+export const metadata: Metadata = {
+  title: 'Blog Sitemap | Forever Faded',
+  description: 'Complete listing of all blog posts on Forever Faded',
+  alternates: {
+    canonical: `${siteUrl}/blog-sitemap`,
+  },
+  robots: {
+    index: false,
+    follow: true
+  },
+  openGraph: {
     title: 'Blog Sitemap | Forever Faded',
     description: 'Complete listing of all blog posts on Forever Faded',
-    robots: {
-      index: false,
-      follow: true
-    },
-    openGraph: {
-      title: 'Blog Sitemap | Forever Faded',
-      description: 'Complete listing of all blog posts on Forever Faded',
-      type: 'website'
-    }
-  };
+    type: 'website',
+    url: `${siteUrl}/blog-sitemap`,
+    images: [
+      {
+        url: `${siteUrl}/hero-logo.png`,
+        width: 1200,
+        height: 630,
+        alt: "Forever Faded Barbershop",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog Sitemap | Forever Faded",
+    description: "Complete listing of all blog posts on Forever Faded",
+    images: [`${siteUrl}/hero-logo.png`],
+  },
+};
 
 export default async function BlogSitemap() {
     const response = await getArticles();

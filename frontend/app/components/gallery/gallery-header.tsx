@@ -18,7 +18,7 @@ export function GalleryHeader() {
         >
           <div className="flex items-center justify-center mb-4">
             <Scissors className="w-8 h-8 gold-gradient-bg rounded-lg mr-4" />
-            <h1 className="font-urbanist text-4xl md:text-6xl font-bold gold-gradient-text">Our Work</h1>
+            <h1 className="font-urbanist text-4xl md:text-6xl font-bold gold-gradient-text">View Our Styles</h1>
           </div>
           <motion.p
             initial={{ opacity: 0 }}

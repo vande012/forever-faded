@@ -7,6 +7,7 @@ import LoadingSpinner from './ui/LoadingSpinner';
 import { ErrorBoundary } from './ui/ErrorBoundary';
 import { HairIcon, BeardIcon, SpecialtyIcon, MilitaryIcon } from './ui/icons';
 import { getHomepageData } from '../data/loaders';
+import Script from 'next/script';
 
 const BOOKING_URL = "https://getsquire.com/booking/book/forever-faded-llc-waukesha";
 const CACHE_KEY = 'services-data';
@@ -38,6 +39,117 @@ interface HomepageData {
   publishedAt: string;
   blocks: any[];
 }
+
+// JSON-LD Schema for services
+const ServicesSchema = ({ data }: { data: ServiceBlock | null }) => {
+  if (!data) return null;
+  
+  // Function to create service offers for schema
+  const createServiceOffers = (services: ServiceItem[], category: string) => {
+    return services.map(service => ({
+      "@type": "Service",
+      "@id": `https://foreverfadedmke.com/services#${service.id}`,
+      "name": service.name,
+      "description": service.description || "",
+      "serviceType": category,
+      ...(service.cost && { 
+        "offers": {
+          "@type": "Offer",
+          "price": service.cost,
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": BOOKING_URL
+        }
+      }),
+    }));
+  };
+
+  // Combine all services
+  const allServices = [
+    ...createServiceOffers(data.service || [], data.category || 'Face & Beard Services'),
+    ...createServiceOffers(data.service1 || [], data.category1 || 'Hair Services'),
+    ...createServiceOffers(data.service2 || [], data.category2 || 'Specialty Services')
+  ];
+
+  // Create schema
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BarberShop",
+    "@id": "https://foreverfadedmke.com/#organization",
+    "name": "Forever Faded Barbershop",
+    "url": "https://foreverfadedmke.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://foreverfadedmke.com/hero-logo.png",
+      "width": "512",
+      "height": "512"
+    },
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://foreverfadedmke.com/hero-logo.png",
+      "width": "1200",
+      "height": "630"
+    },
+    "telephone": "+12628964247",
+    "description": "Premier barbershop in Waukesha, WI offering professional haircuts, beard trims, and grooming services for all hair types and styles.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1300 E Moreland Blvd",
+      "addressLocality": "Waukesha",
+      "addressRegion": "WI",
+      "postalCode": "53186",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 43.03266693114752,
+      "longitude": -88.19823762328094
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "@id": "https://foreverfadedmke.com/services#catalog",
+      "name": "Barbershop Services",
+      "itemListElement": allServices
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday"],
+        "opens": "09:00",
+        "closes": "19:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "19:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday"],
+        "opens": "08:00",
+        "closes": "15:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Sunday"],
+        "opens": "00:00",
+        "closes": "00:00"
+      }
+    ],
+    "priceRange": "$$",
+    "sameAs": [
+      "https://www.facebook.com/foreverfaded",
+      "https://www.instagram.com/foreverfadedmke" 
+    ]
+  };
+
+  return (
+    <Script id="services-schema" type="application/ld+json">
+      {JSON.stringify(schema)}
+    </Script>
+  );
+};
 
 const ServiceCard = React.memo(({ item }: { item: ServiceItem }) => (
   <a 
@@ -155,6 +267,9 @@ function ServicesContent() {
 
   return (
     <section className="w-full py-12 bg-black">
+      {/* Add Schema.org JSON-LD markup */}
+      <ServicesSchema data={data} />
+      
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Face & Beard Services */}

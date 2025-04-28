@@ -6,39 +6,20 @@ import { motion } from "framer-motion"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import type { GalleryItem } from "../../../types/gallery"
 import { getStrapiMedia } from "@/app/utils/get-strapi-url"
+import { detectImageRotation, ImageOrientation } from "./gallery-card"
 
-// Function to detect images that need rotation based on URL patterns
-const detectImageRotation = (url: string | null) => {
-  if (!url) return 'auto';
-  
-  // Add specific image filenames that need rotation
-  if (url.includes('20230817_170228_e8f4ed11a7.jpg')) {
-    return 'rotate90';
-  }
-  if (url.includes('DSC_02306_6b32e163e3.jpg')) {
-    return 'rotate270';
-  }
-  if (url.includes('DSC_03821_477cecff57.JPG')) {
-    return 'rotate270';
-  }
-  // Add more problematic images as needed
-  // if (url.includes('another_filename.jpg')) {
-  //   return 'rotate270';
-  // }
-  
-  return 'auto';
-};
+
 
 interface GalleryModalProps {
   item: GalleryItem
   items: GalleryItem[]
   onClose: () => void
   onNavigate: (item: GalleryItem) => void
-  imageOrientation?: 'auto' | 'portrait' | 'landscape' | 'rotate90' | 'rotate180' | 'rotate270'
+  imageOrientation?: ImageOrientation
 }
 
 export function GalleryModal({ item, items, onClose, onNavigate, imageOrientation = 'auto' }: GalleryModalProps) {
-  const [orientation, setOrientation] = useState<string>("unknown")
+  const [orientation, setOrientation] = useState<ImageOrientation>("unknown")
   const [isLoading, setIsLoading] = useState(true)
   
   // Function to get the full image URL
@@ -57,20 +38,21 @@ export function GalleryModal({ item, items, onClose, onNavigate, imageOrientatio
       return;
     }
 
-    // Check if this specific image has a known rotation issue
+    // Check if this specific image has a known rotation issue - this should always be checked first
     const detectedRotation = detectImageRotation(item.Image.url);
     
-    // If a specific rotation is manually provided or detected, use it
-    if (imageOrientation !== 'auto') {
-      setOrientation(imageOrientation);
+    // If rotation is detected or manually specified, use it
+    if (detectedRotation !== 'auto') {
+      setOrientation(detectedRotation);
       setIsLoading(false);
       return;
-    } else if (detectedRotation !== 'auto') {
-      setOrientation(detectedRotation);
+    } else if (imageOrientation !== 'auto') {
+      setOrientation(imageOrientation);
       setIsLoading(false);
       return;
     }
     
+    // If no rotation is specified, determine orientation based on dimensions
     // Initial orientation guess based on metadata (if available)
     if (item.Image.width && item.Image.height) {
       if (item.Image.width > item.Image.height) {

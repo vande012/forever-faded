@@ -7,7 +7,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://foreverfadedmke.com
 
 export const metadata: Metadata = {
   title: "Gallery | Forever Faded",
-  description: "Check out our latest haircuts and styles at Forever Faded Barber Shop in Waukesha, WI. Browse our professional haircut gallery featuring fades, tapers, beard trims, and more.",
+  description: "Check out our latest haircuts and styles at Forever Faded Barber Shop in Waukesha, WI.",
   keywords: ["barber gallery", "haircut gallery", "fade haircuts", "Waukesha barber", "Forever Faded gallery"],
   alternates: {
     canonical: `${siteUrl}/gallery`,

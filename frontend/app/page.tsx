@@ -13,10 +13,20 @@ import MapAndContact from "./components/MapSection";
 import RecentBlogPosts from "./components/RecentBlogPosts";
 import type { Metadata } from 'next'
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://foreverfadedmke.com';
 
 export const metadata: Metadata = {
-  title: "Forever Faded Barbershop | Waukesha, WI",
+  title: "Forever Faded | Waukesha Barbershop",
   description: "Experience premium barbering services at Forever Faded Barbershop in Waukesha, WI. Book your appointment today for expert haircuts and beard trims.",
+  alternates: {
+    canonical: siteUrl,
+  },
+  openGraph: {
+    title: "Forever Faded | Waukesha Barbershop",
+    description: "Premium barbering services in Waukesha, WI",
+    url: siteUrl,
+    type: "website"
+  }
 };
 
 async function loader() {

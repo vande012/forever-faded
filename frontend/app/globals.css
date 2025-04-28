@@ -162,3 +162,28 @@ body {
   }
 }
 
+/* Custom scrollbar for reviews */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #A47A1E, #D3A84C, #E6BE69);
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #D3A84C, #E6BE69, #F5D78E);
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #D3A84C rgba(0, 0, 0, 0.2);
+}
+
