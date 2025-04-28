@@ -7,7 +7,7 @@ export default [
     config: {
       enabled: true,
       origin: [
-        'https://forever-faded.vercel.app', // Production
+        'https://foreverfadedmke.com', // Production
         'http://localhost:3000', // Local development
         (ctx) => {
           const requestOrigin = ctx.request.header.origin;
