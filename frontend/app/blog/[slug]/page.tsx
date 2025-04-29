@@ -156,7 +156,7 @@ export default async function ArticlePage({ params }: PageProps) {
               </Link>
               
               <Link 
-                href="https://getsquire.com/booking/book/forever-faded-llc-waukesha" 
+                href="https://getsquire.com/booking/brands/forever-faded-llc" 
                 target="_blank"
                 rel="noopener noreferrer" 
                 className="px-6 py-3 bg-[#D4AF37] hover:bg-[#C4A027] text-black font-bold rounded-md flex items-center transition-colors duration-200"

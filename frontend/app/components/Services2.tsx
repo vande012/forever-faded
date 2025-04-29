@@ -9,7 +9,7 @@ import { HairIcon, BeardIcon, SpecialtyIcon, MilitaryIcon } from './ui/icons';
 import { getHomepageData } from '../data/loaders';
 import Script from 'next/script';
 
-const BOOKING_URL = "https://getsquire.com/booking/book/forever-faded-llc-waukesha";
+const BOOKING_URL = "https://getsquire.com/booking/brands/forever-faded-llc";
 const CACHE_KEY = 'services-data';
 
 interface ServiceItem {
@@ -153,7 +153,7 @@ const ServicesSchema = ({ data }: { data: ServiceBlock | null }) => {
 
 const ServiceCard = React.memo(({ item }: { item: ServiceItem }) => (
   <a 
-    href={BOOKING_URL} 
+    href="https://getsquire.com/booking/brands/forever-faded-llc" 
     target="_blank" 
     rel="noopener noreferrer"
     className="block space-y-2 border-b border-gray-800 pb-3 hover:bg-gray-900/30 transition-colors duration-200 rounded-md p-2 cursor-pointer"
@@ -333,7 +333,7 @@ function ServicesContent() {
               </div>
             </div>
             <Button 
-              onClick={() => window.open(BOOKING_URL, '_blank')}
+              onClick={() => window.open("https://getsquire.com/booking/brands/forever-faded-llc", '_blank')}
               className="gold-gradient-bg text-black hover:opacity-90 transition-all duration-300"
             >
               Book Now

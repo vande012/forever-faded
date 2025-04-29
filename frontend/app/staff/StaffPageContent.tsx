@@ -160,7 +160,7 @@ export default function StaffPageContent() {
           <p className="text-lg mb-8 max-w-2xl mx-auto">
             Book an appointment with one of our skilled barbers today and discover the Forever Faded difference.
           </p>
-          <Link href="https://getsquire.com/booking/book/forever-faded-llc-waukesha">
+          <Link href="https://getsquire.com/booking/brands/forever-faded-llc">
             <button className="bg-black hover:bg-zinc-800 text-white font-bold py-3 px-8 rounded-lg">
               Book Your Appointment
             </button>

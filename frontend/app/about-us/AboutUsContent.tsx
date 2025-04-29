@@ -194,7 +194,7 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                         experience that makes you look good, feel good, and want to come back.`}
                     </p>
                     <div className="flex justify-center gap-4">
-                        <Link href="https://getsquire.com/booking/book/forever-faded-llc-waukesha">
+                        <Link href="https://getsquire.com/booking/brands/forever-faded-llc">
                             <button className="gold-gradient-bg text-black font-bold py-3 px-6 rounded button-enhance">
                                 Book Now
                             </button>
@@ -215,7 +215,7 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                     <p className="text-lg mb-8 max-w-2xl mx-auto">
                         {`Join our community of satisfied clients and discover why we are Waukesha's premier barbershop.`}
                     </p>
-                    <Link href="https://getsquire.com/booking/book/forever-faded-llc-waukesha">
+                    <Link href="https://getsquire.com/booking/brands/forever-faded-llc">
                         <button className="bg-black hover:bg-zinc-800 text-white font-bold py-3 px-8 rounded-lg">
                             Book Your Appointment
                         </button>
