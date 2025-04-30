@@ -34,8 +34,17 @@ export const metadata: Metadata = {
     default: "Forever Faded | Waukesha Barbershop",
     template: "%s | Forever Faded"
   },
-  description: "Premier barbershop in Waukesha, WI offering professional haircuts, beard trims, and grooming services for all hair types and styles.",
+  description: "Premier barbershop in Waukesha County offering professional haircuts, beard trims, and grooming services for all hair types and styles.",
   keywords: ["barbershop", "Waukesha", "haircuts", "beard trims", "grooming", "men's haircuts", "fade haircut", "barber services"],
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' }
+    ],
+    shortcut: '/favicon.ico',
+    apple: [
+      { url: '/favicon.ico' }
+    ]
+  },
   robots: {
     index: true,
     follow: true,
@@ -95,6 +104,8 @@ export default async function RootLayout({
     <html lang="en">
       <head>
       <meta name="google-site-verification" content="usNx3H5haVdrFjQ58S2oav_WIs4g4C32CUs_gHfvGhc" />
+      <link rel="icon" href="/favicon.ico" sizes="any" />
+      <link rel="apple-touch-icon" href="/favicon.ico" />
       </head>
       <body
         className={`${urbanist.variable} ${roboto.variable} ${italianno.variable} font-roboto`}
