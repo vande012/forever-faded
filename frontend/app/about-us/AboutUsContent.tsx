@@ -44,17 +44,11 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                     <div>
                         <h2 className="text-3xl font-bold mb-6 gold-gradient-text">Our History</h2>
                         <p className="mb-4">
-                        {` Founded in 2008, Rebranded in 2010 to Forever Faded began as owner operator  barbershop with a big vision. Our founder, Tim Retic, had a passion for precision cuts and creating a community space where people could feel confident and comfortable 
+                        {`Founded in 2008, Rebranded in 2010 to Forever Faded began as an owner operator barbershop with a big vision. Our founder, Tim Retic, had a passion for precision cuts and creating a community space where people could feel confident and comfortable. 
                         Over the years, we've grown into Waukesha county's premier barbershop, known for our exceptional service, attention to detail, and welcoming atmosphere. What started as one barber's dream has evolved into a team of skilled professionals dedicated to the craft of barbering.`}
-                        </p>
-                        <p className="mb-4">
-                            {`Over the years, we've grown into Waukesha's premier barbershop, known for our exceptional service,
-                            attention to detail, and welcoming atmosphere. What started as one barber's dream has evolved into a team
-                            of skilled professionals dedicated to the craft of barbering.`}
-                        </p>
+                        </p> 
                         <p>
-                        Today, Forever Faded continues to set the standard for quality haircuts and grooming services in Waukesha County, while maintaining the personal touch and community focus that has been our foundation since day one. We are happy to announce we are now focusing our efforts on expansion, you never know one day we might be in your town
-
+                        Today, Forever Faded continues to set the standard for quality haircuts and grooming services in Waukesha County, while maintaining the personal touch and community focus that has been our foundation since day one. We are happy to announce we are now focusing our efforts on expansion, you never know one day we might be in your town!
                         </p>
                     </div>
                     <div className="relative h-[400px] rounded-lg overflow-hidden">
@@ -178,8 +172,9 @@ export default function AboutUsContent({ hours }: AboutUsContentProps) {
                             alt="Tim, Founder"
                             width={600}
                             height={400}
-                            className="object-cover w-full h-full"
+                            className="object-cover w-full h-full "
                             sizes="(min-width: 768px) 50vw, 100vw"
+                            style={{ objectPosition: 'center top' }}
                         />
                     </div>
                 </div>

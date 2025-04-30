@@ -92,6 +92,9 @@ export default async function RootLayout({
   
   return (
     <html lang="en">
+      <head>
+      <meta name="google-site-verification" content="usNx3H5haVdrFjQ58S2oav_WIs4g4C32CUs_gHfvGhc" />
+      </head>
       <body
         className={`${urbanist.variable} ${roboto.variable} ${italianno.variable} font-roboto`}
       >

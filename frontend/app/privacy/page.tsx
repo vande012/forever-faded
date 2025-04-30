@@ -36,7 +36,7 @@ export default function PrivacyPolicy() {
     <div className="min-h-screen bg-black text-white py-16 lg:pt-40">
       <div className="container mx-auto px-4 max-w-4xl">
         <h1 className="text-4xl font-bold mb-8 gold-gradient-text text-center">Privacy Policy</h1>
-        <p className="mb-6 text-gray-300"><strong>Last Updated:</strong> August 19, 2024</p>
+        <p className="mb-6 text-gray-300"><strong>Last Updated:</strong> AprilS 28, 2025</p>
 
         <section className="mb-10">
           <h2 className="text-2xl font-bold mb-4 gold-gradient-text">1. Introduction</h2>

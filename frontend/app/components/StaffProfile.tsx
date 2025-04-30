@@ -18,13 +18,11 @@ const staffData: StaffMember[] = [
   {
     id: "tim",
     name: "Timothy L Retic SR",
-    title: "Owner & SMP Specialist",
+    title: "Owner",
     image: "/theowner-profile.jpg",
     bio: `Timothy L Retic SR is the visionary owner behind Forever Faded Barbershop. While Tim's expertise as a Master Barber is unquestionable, he no longer cuts hair at Forever Faded. Instead, he focuses on the strategic direction of the business and mentoring his talented team of barbers who deliver exceptional service daily.
 
-Tim's true passion now lies in his specialty as a Scalp Micropigmentation (SMP) artist. Through his dedicated practice at All Star SMP Lab, he transforms lives by providing cutting-edge SMP treatments that restore confidence to those experiencing hair loss. With meticulous attention to detail and an artistic touch, Tim creates natural-looking results that have earned him a stellar reputation in the industry.
-
-For those interested in SMP services, Tim welcomes consultations and appointments through his specialized booking system. While you won't find him behind the chair at Forever Faded, his influence and standards of excellence permeate every aspect of the barbershop experience.`
+For those interested in SMP services, Tim welcomes consultations through his specialized booking system. While you won't find him behind the chair at Forever Faded, his influence and standards of excellence permeate every aspect of the barbershop experience.`
   },
   {
     id: "angel",
@@ -291,14 +289,6 @@ export default function StaffProfiles() {
                             Contact Tim
                           </Link>
                           
-                          <Link 
-                            href={bookingUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-block w-full sm:w-auto text-center gold-gradient-bg text-white px-8 py-3 rounded-md font-medium text-lg"
-                          >
-                            Book SMP Consultation
-                          </Link>
                           
                           <Link 
                             href="https://smplab.com/"

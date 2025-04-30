@@ -151,35 +151,43 @@ const ServicesSchema = ({ data }: { data: ServiceBlock | null }) => {
   );
 };
 
-const ServiceCard = React.memo(({ item }: { item: ServiceItem }) => (
-  <a 
-    href="https://getsquire.com/booking/brands/forever-faded-llc" 
-    target="_blank" 
-    rel="noopener noreferrer"
-    className="block space-y-2 border-b border-gray-800 pb-3 hover:bg-gray-900/30 transition-colors duration-200 rounded-md p-2 cursor-pointer"
-  >
-    <div className="flex justify-between items-center">
-      <h3 className="font-urbanist text-lg text-white">
-        {item.name}
-      </h3>
-      {item.cost && (
-        <span className="font-urbanist text-lg text-[#D3A84C]">
-          ${item.cost}
-        </span>
-      )}
-    </div>
-    <div className="flex justify-between">
-      <p className="font-roboto text-sm text-gray-400">
-        {item.description}
-      </p>
-      {item.time && (
-        <span className="font-roboto text-sm text-gray-400">
-          {item.time}
-        </span>
-      )}
-    </div>
-  </a>
-));
+const ServiceCard = React.memo(({ item }: { item: ServiceItem }) => {
+  // Check if this is a special service that should have the gold effect
+  const isSpecialService = item.name === ("Adult Cut") || item.name === ("Teen/Child Cut");
+  
+  return (
+    <a 
+      href="https://getsquire.com/booking/brands/forever-faded-llc" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className={`block space-y-2 border-b border-gray-800 pb-3 transition-all duration-200 rounded-md p-2 cursor-pointer
+        ${isSpecialService 
+          ? 'special-service-card hover:bg-gray-900/50' 
+          : 'hover:bg-gray-900/30'}`}
+    >
+      <div className="flex justify-between items-center">
+        <h3 className={`font-urbanist text-lg ${isSpecialService ? 'text-[#E3CC88]' : 'text-white'}`}>
+          {item.name}
+        </h3>
+        {item.cost && (
+          <span className="font-urbanist text-lg text-[#D3A84C]">
+            ${item.cost}
+          </span>
+        )}
+      </div>
+      <div className="flex justify-between">
+        <p className="font-roboto text-sm text-gray-400">
+          {item.description}
+        </p>
+        {item.time && (
+          <span className="font-roboto text-sm text-gray-400">
+            {item.time}
+          </span>
+        )}
+      </div>
+    </a>
+  );
+});
 
 ServiceCard.displayName = 'ServiceCard';
 
@@ -269,6 +277,56 @@ function ServicesContent() {
     <section className="w-full py-12 bg-black">
       {/* Add Schema.org JSON-LD markup */}
       <ServicesSchema data={data} />
+      
+      {/* Add CSS for the special service card animation */}
+      <style jsx global>{`
+        .special-service-card {
+          position: relative;
+          background: rgba(20, 20, 20, 0.4);
+          border: 1px solid rgba(211, 168, 76, 0.4);
+          overflow: hidden;
+          isolation: isolate;
+          transform: translateZ(0);
+        }
+        
+        /* Premium border glow */
+        .special-service-card {
+          box-shadow: 0 0 6px 1px rgba(211, 168, 76, 0.25);
+          transition: all 0.3s ease;
+        }
+        
+        .special-service-card:hover {
+          box-shadow: 0 0 10px 2px rgba(211, 168, 76, 0.4);
+          border-color: rgba(211, 168, 76, 0.6);
+        }
+        
+        /* Subtle clipper effect */
+        .special-service-card:after {
+          content: "";
+          position: absolute;
+          height: 2px;
+          width: 60%;
+          background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(211, 168, 76, 0.7) 50%, 
+            transparent 100%
+          );
+          top: 0;
+          left: -60%;
+          animation: clipperEffect 6s ease-in-out infinite;
+          z-index: 1;
+          opacity: 0.6;
+        }
+        
+        @keyframes clipperEffect {
+          0% {
+            left: -60%;
+          }
+          100% {
+            left: 100%;
+          }
+        }
+      `}</style>
       
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
