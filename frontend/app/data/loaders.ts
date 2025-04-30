@@ -95,37 +95,16 @@ const homePageQuery = qs.stringify(
 
 export async function getHomepageData() {
   const cacheKey = `homepage:${homePageQuery}`;
-  // Add a cache-busting timestamp to force a fresh request
-  const cacheBuster = `&_t=${Date.now()}`;
   
   try {
-    // Bypass session storage caching temporarily to ensure fresh data
-    // if (typeof window !== 'undefined') {
-    //   const cached = sessionStorage.getItem(cacheKey);
-    //   if (cached) {
-    //     const { data, timestamp } = JSON.parse(cached);
-    //     if (Date.now() - timestamp < CACHE_TIMES.MEDIUM * 1000) {
-    //       return data;
-    //     }
-    //   }
-    // }
-
-    // Fetch from API with short cache time
-    const data = await fetchAPI(`/homepage?${homePageQuery}${cacheBuster}`, {
+    // Fetch from API with stronger caching
+    const data = await fetchAPI(`/homepage?${homePageQuery}`, {
       method: "GET",
       next: {
-        revalidate: 30, // Changed from 0 to 30 seconds to enable static generation
+        revalidate: CACHE_TIMES.LONG, // 24 hours instead of 30 seconds
         tags: [CACHE_TAGS.HOMEPAGE, CACHE_TAGS.SERVICES]
       }
     });
-
-    // Temporarily disable session storage caching
-    // if (typeof window !== 'undefined') {
-    //   sessionStorage.setItem(cacheKey, JSON.stringify({
-    //     data,
-    //     timestamp: Date.now()
-    //   }));
-    // }
 
     return data;
   } catch (error) {
@@ -158,7 +137,8 @@ export async function getFooterData() {
   return await fetchAPI(`/footer?${footerQuery}`, {
     method: "GET",
     next: {
-      revalidate: 60
+      revalidate: CACHE_TIMES.LONG, // 24 hours
+      tags: [CACHE_TAGS.HOMEPAGE]
     }
   });
 }
@@ -198,7 +178,8 @@ export async function getNavbarData() {
   return await fetchAPI(`/navbar?${navbarQuery}`, {
     method: "GET",
     next: {
-      revalidate: 60
+      revalidate: CACHE_TIMES.LONG, // 24 hours
+      tags: [CACHE_TAGS.HOMEPAGE]
     }
   });
 }
@@ -227,30 +208,41 @@ const articleQuery = qs.stringify(
 );
 
 export async function getArticles() {
-  return await fetchAPI(`/articles?${articleQuery}`, {
-    method: "GET",
+  // Use longer cache for articles list
+  return await fetchAPI('/articles?populate=*', {
     next: {
-      revalidate: 60
+      revalidate: CACHE_TIMES.MEDIUM, // 2 hours
+      tags: [CACHE_TAGS.BLOG]
     }
   });
 }
 
 export async function getArticleBySlug(slug: string) {
-  const query = qs.stringify({
-    filters: {
-      slug: {
-        $eq: slug
-      }
+  const query = qs.stringify(
+    {
+      filters: {
+        slug: {
+          $eq: slug,
+        },
+      },
+      populate: {
+        cover: {
+          fields: ['url', 'alternativeText'],
+        },
+        blocks: {
+          populate: '*',
+        },
+      },
     },
-    populate: '*'
-  }, {
-    encodeValuesOnly: true
-  });
-
+    {
+      encodeValuesOnly: true,
+    }
+  );
+  
   return await fetchAPI(`/articles?${query}`, {
-    method: "GET",
     next: {
-      revalidate: 60
+      revalidate: CACHE_TIMES.MEDIUM, // 2 hours
+      tags: [CACHE_TAGS.BLOG, `article:${slug}`]
     }
   });
 }
