@@ -1,6 +1,7 @@
 # Forever Faded Backend - Database Management
 
 This guide outlines the database management workflow for the Forever Faded Strapi v5 backend using SQLite.
+NOTE: THIS IS FOR LOCAL DEVELOPMENT VS. STRAPI CLOUD this project is hosted in the cloud.
 
 ## Setup
 
