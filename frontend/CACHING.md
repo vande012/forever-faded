@@ -16,6 +16,19 @@ This document describes the caching implementations used to reduce API calls to 
 - **localStorage Cache**: Persistent browser caching with proper expiration times.
 - **Combined Strategy**: Fallback to cached data when API is unavailable or slow.
 
+## Analytics & Monitoring
+
+We've integrated Vercel Analytics to help track usage patterns and monitor cache performance:
+
+- **API Call Tracking**: Custom monitoring for API calls that bypass the cache
+- **Cache Statistics**: Tracking localStorage cache size and item count
+- **Performance Metrics**: Automatic collection of core web vitals through Vercel Analytics
+
+This integration helps us understand:
+- How effective our caching strategies are
+- Where we might need to adjust cache durations
+- Which pages or components generate the most API traffic
+
 ## Configuration
 
 Cache times are configured in `app/lib/cache-config.ts`:
@@ -103,5 +116,6 @@ export async function POST(request) {
 
 To monitor the effectiveness of caching:
 1. Check Strapi API usage dashboard
-2. Use browser network tab to verify cached responses
-3. Monitor API response times in production 
+2. View cache statistics in browser console during development
+3. Use Vercel Analytics dashboard to track performance metrics
+4. Monitor API response times in production 

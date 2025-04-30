@@ -4,6 +4,7 @@ import type React from "react"; // Import React
 import { getFooterData, getNavbarData } from "./data/loaders";
 import ClientImageFixer from "./components/ClientImageFixer";
 import NavbarWrapper from "./components/NavbarWrapper";
+import AnalyticsWrapper from "./components/AnalyticsWrapper";
 
 import { LoadingProvider } from './components/ui/LoadingContext';
 import { CareerModalProvider } from './components/CareerModalContext';
@@ -113,6 +114,7 @@ export default async function RootLayout({
               <BackToTopWrapper />
             </CareerModalProvider>
         </LoadingProvider>
+        <AnalyticsWrapper />
       </body>
     </html>
   );

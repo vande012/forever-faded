@@ -273,7 +273,8 @@ export async function getAboutPageHours() {
     return await fetchAPI(`/homepage?${aboutPageHoursQuery}`, {
       method: "GET",
       next: {
-        revalidate: 60
+        revalidate: CACHE_TIMES.LONG, // 24 hours instead of 60 seconds
+        tags: [CACHE_TAGS.HOMEPAGE]
       }
     });
   } catch (error) {
@@ -301,7 +302,8 @@ export async function getGalleryData() {
     const data = await fetchAPI(`/gallery?${galleryQuery}`, {
       method: "GET",
       next: {
-        revalidate: 60
+        revalidate: CACHE_TIMES.MEDIUM, // 2 hours instead of 60 seconds
+        tags: [CACHE_TAGS.IMAGES]
       }
     });
     return data;
