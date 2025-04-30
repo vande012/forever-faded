@@ -8,17 +8,34 @@ exports.default = [
         name: 'strapi::cors',
         config: {
             enabled: true,
-            origin: [
-                'https://forever-faded.vercel.app', // Production
-                'http://localhost:3000', // Local development
-                (ctx) => {
-                    const requestOrigin = ctx.request.header.origin;
-                    if (requestOrigin === null || requestOrigin === void 0 ? void 0 : requestOrigin.includes('-vande012s-projects.vercel.app')) {
-                        return requestOrigin;
-                    }
-                    return false;
+            origin: (ctx) => {
+                // Get the request origin from the header
+                const requestOrigin = ctx.request.header.origin;
+                // Allow specific origins
+                const allowedOrigins = [
+                    'https://foreverfadedmke.com',
+                    'http://localhost:3000',
+                    'https://harmonious-luck-fd75090c58.strapiapp.com',
+                ];
+                // Check if the request origin matches any of the allowed origins
+                if (allowedOrigins.includes(requestOrigin)) {
+                    return requestOrigin;
                 }
-            ],
+                // Also allow any subdomain of foreverfadedmke.com
+                if (requestOrigin === null || requestOrigin === void 0 ? void 0 : requestOrigin.includes('foreverfadedmke.com')) {
+                    return requestOrigin;
+                }
+                // Also allow any strapiapp.com domain
+                if (requestOrigin === null || requestOrigin === void 0 ? void 0 : requestOrigin.includes('strapiapp.com')) {
+                    return requestOrigin;
+                }
+                // Also allow vercel preview deployments
+                if (requestOrigin === null || requestOrigin === void 0 ? void 0 : requestOrigin.includes('-vande012s-projects.vercel.app')) {
+                    return requestOrigin;
+                }
+                // Default to false if none of the above conditions match
+                return false;
+            },
             methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
             headers: [
                 '*',
@@ -28,6 +45,7 @@ exports.default = [
                 'X-Frame-Options',
                 'If-None-Match'
             ],
+            exposedHeaders: ['Content-Range', 'X-Content-Range'],
             credentials: true,
             keepHeaderOnError: true,
         },

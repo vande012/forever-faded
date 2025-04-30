@@ -1,8 +1,5 @@
 import path from 'path';
 
-// Node.js global variables in TypeScript environment
-declare const __dirname: string;
-
 export default ({ env }) => {
   const client = env('DATABASE_CLIENT', 'sqlite');
 
