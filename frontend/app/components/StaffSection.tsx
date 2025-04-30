@@ -180,15 +180,24 @@ export default function StaffSection() {
                           alt={member.name || "Staff member"}
                           width={300}
                           height={300}
-                          className="w-full h-56 sm:h-64 object-cover"
+                          className={`w-full h-56 sm:h-64 object-cover ${
+                            member.name === "Tim" ? "mobile-tim-position" : 
+                            member.name === "Bryan" ? "mobile-bryan-position" :
+                            member.name === "Juan" ? "mobile-juan-position" : 
+                            member.name === "Cristian" ? "mobile-cristian-position" : 
+                            member.name === "Chelsea" ? "mobile-chelsea-position" :
+                            member.name === "Angel" ? "mobile-angel-position" :
+                            ""
+                          }`}
                           style={{
-                            objectPosition: member.name === "Tim" ? "center -70px" : 
-                                            member.name === "Bryan" ? "center -60px" :
-                                            member.name === "Juan" ? "center -90px" : 
-                                            member.name === "Cristian" ? "center -50px" : 
-                                            member.name === "Chelsea" ? "center -140px" :
-                                            member.name === "Angel" ? "center -20px" :
-                                            "top"
+                            objectPosition: member.name === "Tim" ? "center -100px" : 
+                                          member.name === "Bryan" ? "center -60px" :
+                                          member.name === "Juan" ? "center -70px" : 
+                                          member.name === "Cristian" ? "center -80px" : 
+                                          member.name === "Chelsea" ? "center -140px" :
+                                          member.name === "Angel" ? "center -50px" :
+                                          
+                                          "top"
                           }}
                         />
                       </div>

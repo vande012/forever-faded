@@ -187,3 +187,30 @@ body {
   scrollbar-color: #D3A84C rgba(0, 0, 0, 0.2);
 }
 
+/* Mobile Staff Image Positioning - Only applied on mobile devices */
+@media only screen and (max-width: 767px) {
+  .mobile-tim-position {
+    object-position: center -160px !important;
+  }
+  
+  .mobile-bryan-position {
+    object-position: center -150px !important;
+  }
+  
+  .mobile-juan-position {
+    object-position: center -120px !important;
+  }
+  
+  .mobile-cristian-position {
+    object-position: center -120px !important;
+  }
+  
+  .mobile-chelsea-position {
+    object-position: center -200px !important;
+  }
+  
+  .mobile-angel-position {
+    object-position: center -80px !important;
+  }
+}
+
