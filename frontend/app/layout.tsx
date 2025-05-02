@@ -38,11 +38,11 @@ export const metadata: Metadata = {
   keywords: ["barbershop", "Waukesha", "haircuts", "beard trims", "grooming", "men's haircuts", "fade haircut", "barber services"],
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' }
+      { url: `${siteUrl}/favicon.ico`, sizes: 'any' }
     ],
-    shortcut: '/favicon.ico',
+    shortcut: `${siteUrl}/favicon.ico`,
     apple: [
-      { url: '/favicon.ico' }
+      { url: `${siteUrl}/favicon.ico` }
     ]
   },
   robots: {
@@ -104,8 +104,8 @@ export default async function RootLayout({
     <html lang="en">
       <head>
       <meta name="google-site-verification" content="usNx3H5haVdrFjQ58S2oav_WIs4g4C32CUs_gHfvGhc" />
-      <link rel="icon" href="/favicon.ico" sizes="any" />
-      <link rel="apple-touch-icon" href="/favicon.ico" />
+      <link rel="icon" href={`${siteUrl}/favicon.ico`} sizes="any" />
+      <link rel="apple-touch-icon" href={`${siteUrl}/favicon.ico`} />
       </head>
       <body
         className={`${urbanist.variable} ${roboto.variable} ${italianno.variable} font-roboto`}

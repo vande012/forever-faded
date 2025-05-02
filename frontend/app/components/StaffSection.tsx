@@ -81,7 +81,8 @@ export default function StaffSection() {
       'Cristian': 'christian',
       'Chelsea': 'chelsea',
       'Megan': 'megan',
-      'Juan': 'juan'
+      'Juan': 'juan',
+      'Davy': 'davy',
     };
     
     // Get the mapped ID or fallback to lowercase name
@@ -187,6 +188,7 @@ export default function StaffSection() {
                             member.name === "Cristian" ? "mobile-cristian-position" : 
                             member.name === "Chelsea" ? "mobile-chelsea-position" :
                             member.name === "Angel" ? "mobile-angel-position" :
+                            member.name === "Davy" ? "mobile-davy-position" :
                             ""
                           }`}
                           style={{
@@ -196,7 +198,7 @@ export default function StaffSection() {
                                           member.name === "Cristian" ? "center -80px" : 
                                           member.name === "Chelsea" ? "center -140px" :
                                           member.name === "Angel" ? "center -50px" :
-                                          
+                                          member.name === "Davy" ? "center -60px" :
                                           "top"
                           }}
                         />

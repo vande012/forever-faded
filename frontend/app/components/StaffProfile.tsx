@@ -83,7 +83,20 @@ My ultimate goal is becoming a shop owner as well as opening suite rentals for a
     title: "Barber",
     image: "/Juan.jpg",
     bio: `My name is Juan, I attended barber school in MATC and graduated October of 2024. I've had a passion for barbering since high school and finally decided to take it to the next level. I'm excited to learn and perfect my craft being here at the Forever Faded Barbershop.`
-  }
+  },
+  {
+    id: "davy",
+    name: "Davy",
+    title: "Barber",
+    image: "/Davy.jpg",
+    bio: `Hello, my name is Davy
+
+I am a barber at Forever Faded Barbershop. With an ambition and motivation to master this craft. Barbering has honestly helped me in so many ways since I started 2 1/2 years ago. I had a vivid dream of myself cutting hair and being really good at it and passionate about it. Which is ironic because I was thinking of a career change and this felt like the right one.
+
+It has taught me to be more confident in myself and to share that energy and passion with my clients and the people around me. It is all about connecting and building relationships and making our people feel good about themselves when they leave. That’s what I will bring to Forever Faded as well.
+
+I am excited to learn and soak up all the knowledge. To become the best barber, friend, AND mentor to those I cut and bring into the shop. Because there is nothing more than feeling welcomed somewhere and leaving looking and feeling great. Being part of that atmosphere and team is a blessing.`
+  },
 ];
 
 export default function StaffProfiles() {
@@ -109,7 +122,8 @@ export default function StaffProfiles() {
         case "cristian": return "center -50px";
         case "chelsea": return "center -140px";
         case "angel": return "center -20px";
-       
+        case "davy": return "center -80px";
+
         default: return "top center";
       }
     };

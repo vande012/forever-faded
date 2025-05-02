@@ -212,5 +212,9 @@ body {
   .mobile-angel-position {
     object-position: center -80px !important;
   }
+
+  .mobile-davy-position {
+    object-position: center -120px !important;
+  }
 }
 
