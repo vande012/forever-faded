@@ -58,6 +58,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   priority={isCenter}
+                  unoptimized={image.src === "/placeholder.svg" || image.src?.endsWith(".svg")}
                 />
               </div>
             </div>

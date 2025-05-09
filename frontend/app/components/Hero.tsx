@@ -104,6 +104,7 @@ export default function Hero() {
           width={200}
           height={200}
           priority
+          unoptimized
         />
         <div className="text-center col-span-2">Loading...</div>
       </div>
@@ -165,6 +166,7 @@ export default function Hero() {
               height={600}
               className={`mx-auto ${isMobile ? 'mb-6 w-64 h-64' : 'mb-8 w-80 h-80 sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-96 lg:h-96'}`}
               priority
+              sizes="(max-width: 640px) 256px, (max-width: 768px) 320px, (max-width: 1024px) 384px, 600px"
             />
           )}
           <div className={`${isMobile ? 'flex flex-col space-y-4 space-x-0' : 'space-x-4'}`}>

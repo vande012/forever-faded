@@ -10,6 +10,7 @@ export default function LoadingSpinner() {
             width={200}
             height={200}
             priority
+            unoptimized
           />
           <div className="text-center col-span-2">Loading...</div>
         </div>

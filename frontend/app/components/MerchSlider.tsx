@@ -144,6 +144,7 @@ export default function MerchSlider() {
                     width={400}
                     height={400}
                     className="rounded-lg object-cover aspect-square"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33.333vw"
                   />
                 </div>
               </CarouselItem>

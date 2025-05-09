@@ -61,7 +61,11 @@ const config: Config = {
       fontFamily: {
         urbanist: ["var(--font-urbanist)", "sans-serif"],
         roboto: ["var(--font-roboto)", "sans-serif"],
-		italianno: ["var(--font-italianno)", "latin"],
+        italianno: ["var(--font-italianno)", "latin"],
+        cormorant: ["var(--font-cormorant)", "serif"],
+        sourceSans: ["var(--font-source-sans)", "sans-serif"],
+        header: ["var(--font-cormorant)", "serif"],
+        body: ["var(--font-source-sans)", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {

@@ -31,11 +31,13 @@ const nextConfig = {
       },
     ],
     // Add configuration for local images
-   
     contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    minimumCacheTTL: 60,
-    formats: ['image/webp'],
+    minimumCacheTTL: 2678400, // 31 days in seconds to reduce transformations
+    formats: ['image/webp'], // Only use WebP to reduce transformations
+    // Define specific image sizes to limit transformations
+    imageSizes: [16, 32, 64, 96, 128, 256],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
   },
 
   // Skip type checking during build to avoid issues with dynamic data

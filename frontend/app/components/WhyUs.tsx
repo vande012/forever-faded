@@ -87,6 +87,7 @@ export default function WhyUs() {
           width={200}
           height={200}
           priority
+          unoptimized
         />
         <div className="text-center col-span-2">Loading...</div>
       </div>
@@ -177,6 +178,7 @@ export default function WhyUs() {
                 fill
                 style={{ objectFit: "cover" }}
                 className="rounded-lg"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             )}
           </div>

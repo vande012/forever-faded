@@ -9,6 +9,7 @@ export default function LoadingSpinnerSmall() {
         width={24}
         height={24}
         priority
+        unoptimized
       />
     </div>
   );

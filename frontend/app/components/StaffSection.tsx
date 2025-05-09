@@ -118,6 +118,7 @@ export default function StaffSection() {
               width={200}
               height={200}
               priority
+              unoptimized
              />
        <div className="text-center col-span-2">Loading...</div>
        </div>
@@ -201,6 +202,7 @@ export default function StaffSection() {
                                           member.name === "Davy" ? "center -60px" :
                                           "top"
                           }}
+                          unoptimized={imageUrl.endsWith('.svg')}
                         />
                       </div>
                       <div className="p-4">

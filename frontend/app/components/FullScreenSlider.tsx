@@ -79,7 +79,7 @@ export default function FullScreenSlider({ galleryBlock }: FullScreenSliderProps
                       alt={image.alt}
                       fill
                       className="object-cover transition-transform duration-300 hover:scale-110"
-                      sizes="(max-width: 768px) 100vw, 33.333vw"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33.333vw"
                       priority={index === 0}
                     />
                   </div>

@@ -221,6 +221,9 @@ export default function StaffProfiles() {
               case "juan":
                 bookingUrl = "https://getsquire.com/booking/book/forever-faded-llc-waukesha/barber/juan-lazcano/services";
                 break;
+              case "davy":
+                bookingUrl = "https://getsquire.com/booking/book/forever-faded-llc-waukesha/barber/davy-obrien-2/services";
+                break;
               default:
                 bookingUrl = "https://getsquire.com/booking/book/forever-faded-llc-waukesha";
             }
