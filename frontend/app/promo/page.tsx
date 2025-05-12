@@ -6,7 +6,7 @@ import CopyButton from './CopyButton';
 
 export default function PromoPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-black text-white">
+    <main className="flex min-h-screen w-full flex-col items-center justify-center bg-black text-white overflow-hidden">
       <div className="max-w-md w-full mx-auto text-center flex flex-col items-center space-y-8">
         {/* Logo */}
         <div className="relative w-64 h-64 mb-4">
@@ -22,13 +22,13 @@ export default function PromoPage() {
 
         {/* Promo Code */}
         <div className="w-full">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#d4af37] mb-2">SUMMER20</h1>
+          <h1 className="text-4xl md:text-5xl font-bold gold-gradient-text mb-2">SUMMER20</h1>
           <p className="text-lg mb-4">20% off your next visit</p>
           
           {/* Copy Button */}
           <CopyButton 
             textToCopy="SUMMER20"
-            className="bg-[#d4af37] text-black font-bold py-2 px-6 rounded-lg mb-8 hover:bg-[#c4a137] transition-colors"
+            className="gold-gradient-bg text-black font-bold py-2 px-6 rounded-lg mb-8 hover:bg-[#c4a137] transition-colors"
           />
         </div>
 
@@ -45,7 +45,7 @@ export default function PromoPage() {
           <Link 
             href="https://getsquire.com/booking/book/forever-faded-llc-waukesha" 
             target="_blank"
-            className="bg-[#d4af37] text-black font-bold py-3 px-6 rounded-lg flex-1 flex items-center justify-center hover:bg-[#c4a137] transition-colors"
+            className="gold-gradient-bg text-black font-bold py-3 px-6 rounded-lg flex-1 flex items-center justify-center hover:bg-[#c4a137] transition-colors"
             rel="noopener noreferrer"
           >
             Book Now

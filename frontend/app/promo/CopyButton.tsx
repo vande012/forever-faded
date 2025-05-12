@@ -28,7 +28,7 @@ export default function CopyButton({ textToCopy, className = '' }: CopyButtonPro
     >
       {copied ? 'Copied!' : 'Copy Code'}
       {copied && (
-        <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-white text-black text-xs px-2 py-1 rounded">
+        <span className="absolute gold-gradient -top-8 left-1/2 transform -translate-x-1/2 bg-white text-black text-xs px-2 py-1 rounded">
           Copied!
         </span>
       )}
