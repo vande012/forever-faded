@@ -29,6 +29,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'https://forever-faded.s3.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
     // Add configuration for local images
     contentDispositionType: 'attachment',

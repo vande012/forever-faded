@@ -10,13 +10,12 @@ export default function PromoPage() {
       <div className="max-w-md w-full mx-auto text-center flex flex-col items-center space-y-8">
         {/* Logo */}
         <div className="relative w-64 h-64 mb-4">
-          <Image
-            src="/FFlogo.jpg"
+          <img
+            src="https://forever-faded.s3.amazonaws.com/FFlogo.jpg"
             alt="Forever Faded Logo"
             width={256}
             height={256}
-            className="rounded-full object-cover"
-            priority
+            style={{ borderRadius: '50%', objectFit: 'cover', width: '256px', height: '256px' }}
           />
         </div>
 
