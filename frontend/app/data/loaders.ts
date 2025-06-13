@@ -97,11 +97,11 @@ export async function getHomepageData() {
   const cacheKey = `homepage:${homePageQuery}`;
   
   try {
-    // Fetch from API with stronger caching
+    // Fetch from API with shorter caching for hours updates
     const data = await fetchAPI(`/homepage?${homePageQuery}`, {
       method: "GET",
       next: {
-        revalidate: CACHE_TIMES.LONG, // 24 hours instead of 30 seconds
+        revalidate: CACHE_TIMES.SHORT, // 5 minutes instead of 24 hours
         tags: [CACHE_TAGS.HOMEPAGE, CACHE_TAGS.SERVICES]
       }
     });
@@ -178,7 +178,7 @@ export async function getNavbarData() {
   return await fetchAPI(`/navbar?${navbarQuery}`, {
     method: "GET",
     next: {
-      revalidate: CACHE_TIMES.LONG, // 24 hours
+      revalidate: CACHE_TIMES.SHORT, // 5 minutes instead of 24 hours
       tags: [CACHE_TAGS.HOMEPAGE]
     }
   });
@@ -273,7 +273,7 @@ export async function getAboutPageHours() {
     return await fetchAPI(`/homepage?${aboutPageHoursQuery}`, {
       method: "GET",
       next: {
-        revalidate: CACHE_TIMES.LONG, // 24 hours instead of 60 seconds
+        revalidate: CACHE_TIMES.SHORT, // 5 minutes instead of 24 hours
         tags: [CACHE_TAGS.HOMEPAGE]
       }
     });
