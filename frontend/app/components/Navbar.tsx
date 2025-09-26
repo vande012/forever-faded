@@ -211,8 +211,7 @@ export default function Navbar({ data, transparentHeader = false }: NavbarProps)
                     width={280} 
                     height={40} 
                     className="max-w-[280px] h-auto object-contain" 
-                    loading="eager"
-                    priority
+                    loading="lazy"
                     unoptimized
                   />
                 </div>

@@ -29,10 +29,11 @@ export const metadata: Metadata = {
     url: `${siteUrl}/blog-sitemap`,
     images: [
       {
-        url: `${siteUrl}/hero-logo.png`,
+        url: `${siteUrl}/FFlogo.jpg?v=2025`,
         width: 1200,
         height: 630,
         alt: "Forever Faded Barbershop",
+        type: "image/jpeg",
       },
     ],
   },
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Blog Sitemap | Forever Faded",
     description: "Complete listing of all blog posts on Forever Faded",
-    images: [`${siteUrl}/hero-logo.png`],
+    images: [`${siteUrl}/FFlogo.jpg?v=2025`],
   },
 };
 

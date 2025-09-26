@@ -19,10 +19,11 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: `${siteUrl}/FFlogo.jpg`,
+        url: `${siteUrl}/FFlogo.jpg?v=2025`,
         width: 1200,
         height: 630,
         alt: "Forever Faded Barbershop Gallery",
+        type: "image/jpeg",
       },
     ],
   },
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Forever Faded Barbershop Gallery",
     description: "Browse our collection of professional haircuts and styles at Forever Faded Barber Shop in Waukesha, WI.",
-    images: [`${siteUrl}/FFlogo.jpg`],
+    images: [`${siteUrl}/FFlogo.jpg?v=2025`],
   },
 }
 

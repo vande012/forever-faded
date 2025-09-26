@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     const imageUrl = article.cover?.url 
       ? getStrapiMedia(article.cover.url) 
-      : `${siteUrl}/FFlogo.jpg`;
+      : `${siteUrl}/FFlogo.jpg?v=2025`;
 
     return {
       title: article.title,

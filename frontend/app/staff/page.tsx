@@ -17,10 +17,11 @@ export const metadata: Metadata = {
     url: `${siteUrl}/staff`,
     images: [
       {
-        url: `${siteUrl}/FFlogo.jpg`,
+        url: `${siteUrl}/FFlogo.jpg?v=2025`,
         width: 1200,
         height: 630,
         alt: "Forever Faded Barbershop Team",
+        type: "image/jpeg",
       },
     ],
   },
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Our Team | Forever Faded Barbershop",
     description: "Meet our skilled team of professional barbers at Forever Faded",
-    images: [`${siteUrl}/FFlogo.jpg`],
+    images: [`${siteUrl}/FFlogo.jpg?v=2025`],
   },
 };
 

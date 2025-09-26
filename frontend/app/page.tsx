@@ -25,7 +25,17 @@ export const metadata: Metadata = {
     title: "Forever Faded | Waukesha Barbershop",
     description: "Premium barbering services in Waukesha, WI",
     url: siteUrl,
-    type: "website"
+    type: "website",
+    images: [
+      {
+        url: `${siteUrl}/FFlogo.jpg`,
+        width: 1200,
+        height: 630,
+        alt: "Forever Faded Barbershop",
+        type: "image/jpeg",
+        secureUrl: `${siteUrl}/FFlogo.jpg`,
+      },
+    ],
   }
 };
 

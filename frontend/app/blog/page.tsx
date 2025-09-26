@@ -31,10 +31,11 @@ export const metadata: Metadata = {
     url: `${siteUrl}/blog`,
     images: [
       {
-        url: `${siteUrl}/FFlogo.jpg`,
+        url: `${siteUrl}/FFlogo.jpg?v=2025`,
         width: 1200,
         height: 630,
         alt: 'Forever Faded Barbershop Blog',
+        type: 'image/jpeg',
       },
     ],
   },
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Forever Faded Barbershop Blog',
     description: 'Stay updated with the latest haircut trends, grooming tips, and barbershop news',
-    images: [`${siteUrl}/FFlogo.jpg`],
+    images: [`${siteUrl}/FFlogo.jpg?v=2025`],
   },
 };
 
