@@ -213,6 +213,15 @@ export default function Footer({ data }: FooterProps) {
               >
                 Powered by Layer One IT
               </a>
+              <span className="text-gray-600">|</span>
+              <a 
+                href="https://www.vande-digital.com/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-sm text-[#D3A84C] hover:text-[#E6BE69] transition-colors"
+              >
+                Built by Ryan Vandehey
+              </a>
             </div>
           </div>
         </div>

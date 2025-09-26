@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     description: "Premier barbershop in Waukesha offering professional haircuts, beard trims, and grooming services for all hair types and styles.",
     images: [
       {
-        url: `${siteUrl}/hero-logo.png`,
+        url: `${siteUrl}/FFlogo.jpg`,
         width: 1200,
         height: 630,
         alt: "Forever Faded Barbershop",
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Forever Faded Barbershop",
     description: "Premier barbershop in Waukesha, WI offering professional haircuts, beard trims, and grooming services",
-    images: [`${siteUrl}/hero-logo.png`],
+    images: [`${siteUrl}/FFlogo.jpg`],
   },
   authors: [{ name: "Forever Faded Barbershop" }],
   creator: "Forever Faded Barbershop",

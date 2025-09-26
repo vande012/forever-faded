@@ -145,9 +145,9 @@ export default function WhyUs() {
             )}
 
             <div className="space-y-4">
-              <h3 className="text-white text-xl font-semibold">
+              <h2 className="text-white text-xl font-semibold">
                 {whyUsSection.subheader}
-              </h3>
+              </h2>   
               <div className="text-gray-400">
                 {whyUsSection.description}
               </div>

@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     url: `${siteUrl}/blog`,
     images: [
       {
-        url: `${siteUrl}/hero-logo.png`,
+        url: `${siteUrl}/FFlogo.jpg`,
         width: 1200,
         height: 630,
         alt: 'Forever Faded Barbershop Blog',
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Forever Faded Barbershop Blog',
     description: 'Stay updated with the latest haircut trends, grooming tips, and barbershop news',
-    images: [`${siteUrl}/hero-logo.png`],
+    images: [`${siteUrl}/FFlogo.jpg`],
   },
 };
 
